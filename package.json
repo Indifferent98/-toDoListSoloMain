@@ -2,7 +2,7 @@
   "name": "1-lesson",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://Indifferent98.github.io/toDoListSoloMain",
+  "homepage": "https://indifferent98.github.io/toDoListSoloMain/",
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
