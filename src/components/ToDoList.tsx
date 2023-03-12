@@ -7,37 +7,37 @@ type tasksType = {
 type DoToListPropType = {
   title: string;
   tasks: Array<tasksType>;
+  removeTask: (id: number) => void;
 };
 const ToDoList = (props: DoToListPropType): JSX.Element => {
-  let value;
-  let isAllDoneFalse = false;
-  for (let i = 0; i < props.tasks.length; i++) {
-    if (props.tasks[i].isDone) {
-      isAllDoneFalse = props.tasks[i].isDone;
-      break;
+  let styleForDoTolist = "ToDoList1";
+  props.tasks.forEach((t) => {
+    if (t.isDone === true) {
+      styleForDoTolist = "ToDoList";
     }
-  }
-  value = isAllDoneFalse ? "ToDoList" : "ToDoList1";
+  });
+
   return (
-    <div className={value}>
+    <div className={styleForDoTolist}>
       <h3>{props.title}</h3>
       <div>
         <input />
         <button>+</button>
       </div>
       <ul>
-        <li>
-          <input type="checkbox" checked={props.tasks[0].isDone} />{" "}
-          <span>{props.tasks[0].titleTask}</span>
-        </li>
-        <li>
-          <input type="checkbox" checked={props.tasks[1].isDone} />{" "}
-          <span>{props.tasks[1].titleTask}</span>
-        </li>
-        <li>
-          <input type="checkbox" checked={props.tasks[2].isDone} />{" "}
-          <span>{props.tasks[2].titleTask}</span>
-        </li>
+        {props.tasks.map((t) => (
+          <li>
+            <input type="checkbox" checked={t.isDone} />{" "}
+            <span>{t.titleTask}</span>{" "}
+            <button
+              onClick={() => {
+                props.removeTask(t.id);
+              }}
+            >
+              x
+            </button>
+          </li>
+        ))}
       </ul>
       <div>
         <button>All</button>
