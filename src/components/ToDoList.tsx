@@ -1,13 +1,14 @@
-type tasksType = {
+export type tasksType = {
   id: number;
   titleTask: string;
   isDone: boolean;
 };
-
+export type filterType = "all" | "active" | "completed";
 type DoToListPropType = {
   title: string;
   tasks: Array<tasksType>;
   removeTask: (id: number) => void;
+  changeFilter: (status: filterType) => void;
 };
 const ToDoList = (props: DoToListPropType): JSX.Element => {
   let styleForDoTolist = "ToDoList1";
@@ -40,9 +41,27 @@ const ToDoList = (props: DoToListPropType): JSX.Element => {
         ))}
       </ul>
       <div>
-        <button>All</button>
-        <button>Active</button>
-        <button>Completed</button>
+        <button
+          onClick={() => {
+            props.changeFilter("all");
+          }}
+        >
+          All
+        </button>
+        <button
+          onClick={() => {
+            props.changeFilter("active");
+          }}
+        >
+          Active
+        </button>
+        <button
+          onClick={() => {
+            props.changeFilter("completed");
+          }}
+        >
+          Completed
+        </button>
       </div>
     </div>
   );

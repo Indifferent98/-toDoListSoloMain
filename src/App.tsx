@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./App.css";
-import { ToDoList } from "./components/ToDoList";
+import { ToDoList, filterType, tasksType } from "./components/ToDoList";
 
 function App(): JSX.Element {
   const [task, setTask] = useState([
@@ -15,9 +15,29 @@ function App(): JSX.Element {
     setTask(task.filter((t) => t.id !== id));
   };
 
+  const [filter, setFilter] = useState<filterType>("all");
+  let filtredTask: Array<tasksType> = [];
+  if (filter === "all") {
+    filtredTask = task;
+  }
+  if (filter === "active") {
+    filtredTask = task.filter((t) => t.isDone === false);
+  }
+  if (filter === "completed") {
+    filtredTask = task.filter((t) => t.isDone === true);
+  }
+  const changeFilter = (status: filterType) => {
+    setFilter(status);
+  };
+
   return (
     <div className="App">
-      <ToDoList removeTask={removeTask} title="What To Buy" tasks={task} />
+      <ToDoList
+        changeFilter={changeFilter}
+        removeTask={removeTask}
+        title="What To Buy"
+        tasks={filtredTask}
+      />
     </div>
   );
 }
