@@ -3,6 +3,7 @@ export type tasksType = {
   titleTask: string;
   isDone: boolean;
 };
+const aaaa: any = 3;
 export type filterType = "all" | "active" | "completed";
 type DoToListPropType = {
   title: string;
