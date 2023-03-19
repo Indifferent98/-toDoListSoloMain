@@ -39,6 +39,22 @@ const ToDoList = (props: DoToListPropType): JSX.Element => {
       setTitle("");
     }
   };
+  const onClickAllHandler = () => {
+    props.changeFilter("all");
+  };
+  const onClickActiveHandler = () => {
+    props.changeFilter("active");
+  };
+  const onClickCompletedHandler = () => {
+    props.changeFilter("completed");
+  };
+  const conditionToWarningMessage =
+    (title.length > 10 && title.length <= 18 && (
+      <div style={{ color: "white" }}>Task Title Shoud be shorter</div>
+    )) ||
+    (title.length > 18 && (
+      <div style={{ color: "red" }}>Task Title Too Long</div>
+    ));
 
   return (
     <div className={styleForDoTolist}>
@@ -51,6 +67,7 @@ const ToDoList = (props: DoToListPropType): JSX.Element => {
         />
         <button onClick={addTaskButtonHandler}>+</button>
       </div>
+      {conditionToWarningMessage}
       <ul>
         {props.tasks.map((t) => {
           const removeButtonHandler = () => {
@@ -66,27 +83,9 @@ const ToDoList = (props: DoToListPropType): JSX.Element => {
         })}
       </ul>
       <div>
-        <button
-          onClick={() => {
-            props.changeFilter("all");
-          }}
-        >
-          All
-        </button>
-        <button
-          onClick={() => {
-            props.changeFilter("active");
-          }}
-        >
-          Active
-        </button>
-        <button
-          onClick={() => {
-            props.changeFilter("completed");
-          }}
-        >
-          Completed
-        </button>
+        <button onClick={onClickAllHandler}>All</button>
+        <button onClick={onClickActiveHandler}>Active</button>
+        <button onClick={onClickCompletedHandler}>Completed</button>
       </div>
     </div>
   );
