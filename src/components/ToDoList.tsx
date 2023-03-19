@@ -1,5 +1,5 @@
 import { ChangeEvent, KeyboardEvent, useState } from "react";
-
+import s from "./ToDoList.module.css";
 export type tasksType = {
   id: string;
   titleTask: string;
@@ -69,6 +69,8 @@ const ToDoList = (props: DoToListPropType): JSX.Element => {
       <h3>{props.title}</h3>
       <div>
         <input
+          className={s.item}
+          placeholder="Input Task Title"
           value={title}
           onKeyDown={onKeyDownInputHandler}
           onChange={inputOnChangeHandler}
@@ -95,7 +97,7 @@ const ToDoList = (props: DoToListPropType): JSX.Element => {
           );
         })}
       </ul>
-      <div>
+      <div className={s.item}>
         <button onClick={onClickAllHandler}>All</button>
         <button onClick={onClickActiveHandler}>Active</button>
         <button onClick={onClickCompletedHandler}>Completed</button>
