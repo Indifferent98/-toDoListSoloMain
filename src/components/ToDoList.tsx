@@ -24,18 +24,22 @@ const ToDoList = (props: DoToListPropType): JSX.Element => {
   });
   const [title, setTitle] = useState("");
   const addTaskButtonHandler = () => {
-    props.addTask(title);
-    setTitle("");
-  };
-  const inputOnChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    setTitle(e.currentTarget.value);
-  };
-  const onKeyDownInputHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.code === "Enter" || e.code === "NumpadEnter") {
+    if (title !== "") {
       props.addTask(title);
       setTitle("");
     }
   };
+  const inputOnChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    setTitle(e.currentTarget.value);
+  };
+
+  const onKeyDownInputHandler = (e: KeyboardEvent<HTMLInputElement>) => {
+    if ((e.code === "Enter" || e.code === "NumpadEnter") && title !== "") {
+      props.addTask(title);
+      setTitle("");
+    }
+  };
+
   return (
     <div className={styleForDoTolist}>
       <h3>{props.title}</h3>
@@ -48,19 +52,18 @@ const ToDoList = (props: DoToListPropType): JSX.Element => {
         <button onClick={addTaskButtonHandler}>+</button>
       </div>
       <ul>
-        {props.tasks.map((t) => (
-          <li key={t.id}>
-            <input type="checkbox" checked={t.isDone} />{" "}
-            <span>{t.titleTask}</span>{" "}
-            <button
-              onClick={() => {
-                props.removeTask(t.id);
-              }}
-            >
-              x
-            </button>
-          </li>
-        ))}
+        {props.tasks.map((t) => {
+          const removeButtonHandler = () => {
+            props.removeTask(t.id);
+          };
+          return (
+            <li key={t.id}>
+              <input type="checkbox" checked={t.isDone} />{" "}
+              <span>{t.titleTask}</span>{" "}
+              <button onClick={removeButtonHandler}>x</button>
+            </li>
+          );
+        })}
       </ul>
       <div>
         <button
