@@ -5,7 +5,7 @@ export type tasksType = {
   titleTask: string;
   isDone: boolean;
 };
-const aaaa: any = 3;
+
 export type filterType = "all" | "active" | "completed";
 type DoToListPropType = {
   title: string;
@@ -22,37 +22,45 @@ const ToDoList = (props: DoToListPropType): JSX.Element => {
       styleForDoTolist = "ToDoList";
     }
   });
-  const [title, setTitle] = useState("");
-  const addTaskButtonHandler = () => {
+  const [title, setTitle] = useState<string>("");
+  const addTaskButtonHandler = (): void => {
     if (title !== "") {
       props.addTask(title);
       setTitle("");
     }
   };
-  const inputOnChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+  const inputOnChangeHandler = (e: ChangeEvent<HTMLInputElement>): void => {
     setTitle(e.currentTarget.value);
   };
 
-  const onKeyDownInputHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-    if ((e.code === "Enter" || e.code === "NumpadEnter") && title !== "") {
+  const onKeyDownInputHandler = (e: KeyboardEvent<HTMLInputElement>): void => {
+    if (
+      (e.code === "Enter" || e.code === "NumpadEnter") &&
+      title !== "" &&
+      !buttonDisbledCondition
+    ) {
       props.addTask(title);
       setTitle("");
     }
   };
-  const onClickAllHandler = () => {
+  const onClickAllHandler = (): void => {
     props.changeFilter("all");
   };
-  const onClickActiveHandler = () => {
+  const onClickActiveHandler = (): void => {
     props.changeFilter("active");
   };
-  const onClickCompletedHandler = () => {
+  const onClickCompletedHandler = (): void => {
     props.changeFilter("completed");
   };
-  const conditionToWarningMessage =
-    (title.length > 10 && title.length <= 18 && (
+
+  const minWarningLength: number = 10;
+  const maxWarningLength: number = 18;
+  const buttonDisbledCondition: boolean = title.length > maxWarningLength;
+  const conditionToWarningMessage: boolean | JSX.Element =
+    (title.length > minWarningLength && title.length <= maxWarningLength && (
       <div style={{ color: "white" }}>Task Title Shoud be shorter</div>
     )) ||
-    (title.length > 18 && (
+    (title.length > maxWarningLength && (
       <div style={{ color: "red" }}>Task Title Too Long</div>
     ));
 
@@ -65,7 +73,12 @@ const ToDoList = (props: DoToListPropType): JSX.Element => {
           onKeyDown={onKeyDownInputHandler}
           onChange={inputOnChangeHandler}
         />
-        <button onClick={addTaskButtonHandler}>+</button>
+        <button
+          disabled={buttonDisbledCondition}
+          onClick={addTaskButtonHandler}
+        >
+          +
+        </button>
       </div>
       {conditionToWarningMessage}
       <ul>
@@ -75,7 +88,7 @@ const ToDoList = (props: DoToListPropType): JSX.Element => {
           };
           return (
             <li key={t.id}>
-              <input type="checkbox" checked={t.isDone} />{" "}
+              <input type="checkbox" checked={t.isDone} />
               <span>{t.titleTask}</span>{" "}
               <button onClick={removeButtonHandler}>x</button>
             </li>
