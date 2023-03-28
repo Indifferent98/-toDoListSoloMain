@@ -48,6 +48,7 @@ function App(): JSX.Element {
         title="What To Buy"
         tasks={filtredTask}
         addTask={addTask}
+        filter={filter}
       />
     </div>
   );

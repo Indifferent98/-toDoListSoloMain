@@ -1,3 +1,8 @@
 .item {
   text-align: center;
 }
+
+.buttonStyleActivity {
+  background-color: gold;
+  border: 1px solid gold;
+}

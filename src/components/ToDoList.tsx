@@ -14,6 +14,7 @@ type DoToListPropType = {
   changeFilter: (status: filterType) => void;
   addTask: (title: string) => void;
   changeCeckboxStatus: (taskId: string, isDone: boolean) => void;
+  filter: filterType;
 };
 
 const ToDoList = (props: DoToListPropType): JSX.Element => {
@@ -29,6 +30,11 @@ const ToDoList = (props: DoToListPropType): JSX.Element => {
       props.addTask(title);
       setTitle("");
     }
+  };
+  const buttonFilterStyle = {
+    marginLeft: "4px",
+    borderRadius: "8px",
+    border: "1px solid white",
   };
   const inputOnChangeHandler = (e: ChangeEvent<HTMLInputElement>): void => {
     setTitle(e.currentTarget.value);
@@ -106,9 +112,27 @@ const ToDoList = (props: DoToListPropType): JSX.Element => {
         })}
       </ul>
       <div className={s.item}>
-        <button onClick={onClickAllHandler}>All</button>
-        <button onClick={onClickActiveHandler}>Active</button>
-        <button onClick={onClickCompletedHandler}>Completed</button>
+        <button
+          style={buttonFilterStyle}
+          className={props.filter === "all" ? s.buttonStyleActivity : ""}
+          onClick={onClickAllHandler}
+        >
+          All
+        </button>
+        <button
+          style={buttonFilterStyle}
+          className={props.filter === "active" ? s.buttonStyleActivity : ""}
+          onClick={onClickActiveHandler}
+        >
+          Active
+        </button>
+        <button
+          style={buttonFilterStyle}
+          className={props.filter === "completed" ? s.buttonStyleActivity : ""}
+          onClick={onClickCompletedHandler}
+        >
+          Completed
+        </button>
       </div>
     </div>
   );
