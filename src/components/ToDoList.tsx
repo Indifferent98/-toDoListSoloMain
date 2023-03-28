@@ -13,6 +13,7 @@ type DoToListPropType = {
   removeTask: (id: string) => void;
   changeFilter: (status: filterType) => void;
   addTask: (title: string) => void;
+  changeCeckboxStatus: (taskId: string, isDone: boolean) => void;
 };
 
 const ToDoList = (props: DoToListPropType): JSX.Element => {
@@ -88,9 +89,16 @@ const ToDoList = (props: DoToListPropType): JSX.Element => {
           const removeButtonHandler = () => {
             props.removeTask(t.id);
           };
+          const changeTaskStatus = (e: ChangeEvent<HTMLInputElement>) => {
+            props.changeCeckboxStatus(t.id, e.currentTarget.checked);
+          };
           return (
             <li key={t.id}>
-              <input type="checkbox" checked={t.isDone} />
+              <input
+                onChange={changeTaskStatus}
+                type="checkbox"
+                checked={t.isDone}
+              />
               <span>{t.titleTask}</span>{" "}
               <button onClick={removeButtonHandler}>x</button>
             </li>

@@ -15,6 +15,11 @@ function App(): JSX.Element {
   const removeTask = (id: string) => {
     setTask(task.filter((t) => t.id !== id));
   };
+  const changeCeckboxStatus = (taskId: string, taskIsDone: boolean) => {
+    setTask(
+      task.map((t) => (t.id === taskId ? { ...t, isDone: taskIsDone } : t))
+    );
+  };
   const addTask = (title: string) => {
     const newTitle = { id: v1(), titleTask: title, isDone: false };
     setTask([newTitle, ...task]);
@@ -37,6 +42,7 @@ function App(): JSX.Element {
   return (
     <div className="App">
       <ToDoList
+        changeCeckboxStatus={changeCeckboxStatus}
         changeFilter={changeFilter}
         removeTask={removeTask}
         title="What To Buy"
