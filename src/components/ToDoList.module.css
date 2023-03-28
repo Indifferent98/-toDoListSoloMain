@@ -6,3 +6,14 @@
   background-color: gold;
   border: 1px solid gold;
 }
+.taskActive {
+  font-weight: 500;
+}
+.taskDone {
+  font-weight: normal;
+  text-decoration: line-through;
+  opacity: 0.7;
+}
+.inputError {
+  border: 2px solid red;
+}

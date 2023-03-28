@@ -24,10 +24,15 @@ const ToDoList = (props: DoToListPropType): JSX.Element => {
       styleForDoTolist = "ToDoList";
     }
   });
+  const [error, setError] = useState<boolean>(false);
   const [title, setTitle] = useState<string>("");
+  const trimmedTask = title.trim();
   const addTaskButtonHandler = (): void => {
-    if (title !== "") {
+    if (trimmedTask) {
       props.addTask(title);
+      setTitle("");
+    } else {
+      setError(true);
       setTitle("");
     }
   };
@@ -38,16 +43,23 @@ const ToDoList = (props: DoToListPropType): JSX.Element => {
   };
   const inputOnChangeHandler = (e: ChangeEvent<HTMLInputElement>): void => {
     setTitle(e.currentTarget.value);
+    setError(false);
   };
-
+  const errorMessage = error && (
+    <div style={{ color: "red" }}> Title is hard requaired </div>
+  );
   const onKeyDownInputHandler = (e: KeyboardEvent<HTMLInputElement>): void => {
     if (
       (e.code === "Enter" || e.code === "NumpadEnter") &&
       title !== "" &&
       !buttonDisbledCondition
     ) {
-      props.addTask(title);
-      setTitle("");
+      if (trimmedTask) {
+        props.addTask(title);
+        setTitle("");
+      } else {
+        setTitle("");
+      }
     }
   };
   const onClickAllHandler = (): void => {
@@ -62,7 +74,8 @@ const ToDoList = (props: DoToListPropType): JSX.Element => {
 
   const minWarningLength: number = 10;
   const maxWarningLength: number = 18;
-  const buttonDisbledCondition: boolean = title.length > maxWarningLength;
+  const buttonDisbledCondition: boolean =
+    title.length > maxWarningLength || !title.length;
   const conditionToWarningMessage: boolean | JSX.Element =
     (title.length > minWarningLength && title.length <= maxWarningLength && (
       <div style={{ color: "white" }}>Task Title Shoud be shorter</div>
@@ -76,7 +89,7 @@ const ToDoList = (props: DoToListPropType): JSX.Element => {
       <h3>{props.title}</h3>
       <div>
         <input
-          className={s.item}
+          className={error ? s.inputError : ""}
           placeholder="Input Task Title"
           value={title}
           onKeyDown={onKeyDownInputHandler}
@@ -89,6 +102,7 @@ const ToDoList = (props: DoToListPropType): JSX.Element => {
           +
         </button>
       </div>
+      {errorMessage}
       {conditionToWarningMessage}
       <ul>
         {props.tasks.map((t) => {
@@ -105,7 +119,9 @@ const ToDoList = (props: DoToListPropType): JSX.Element => {
                 type="checkbox"
                 checked={t.isDone}
               />
-              <span>{t.titleTask}</span>{" "}
+              <span className={t.isDone ? s.taskDone : s.taskActive}>
+                {t.titleTask}
+              </span>
               <button onClick={removeButtonHandler}>x</button>
             </li>
           );
