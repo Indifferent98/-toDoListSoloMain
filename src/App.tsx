@@ -25,16 +25,31 @@ function App(): JSX.Element {
     setTask([newTitle, ...task]);
   };
   const [filter, setFilter] = useState<filterType>("all");
-  let filtredTask: Array<tasksType> = [];
-  if (filter === "all") {
-    filtredTask = task;
-  }
-  if (filter === "active") {
-    filtredTask = task.filter((t) => t.isDone === false);
-  }
-  if (filter === "completed") {
-    filtredTask = task.filter((t) => t.isDone === true);
-  }
+
+  // if (filter === "all") {
+  //   filtredTask = task;
+  // }
+  // if (filter === "active") {
+  //   filtredTask = task.filter((t) => t.isDone === false);
+  // }
+  // if (filter === "completed") {
+  //   filtredTask = task.filter((t) => t.isDone === true);
+  // }
+  const getFiltredTaskForRender = (
+    taskList: tasksType[],
+    filterValue: filterType
+  ) => {
+    switch (filterValue) {
+      case "active":
+        return (filtredTask = taskList.filter((t) => !t.isDone));
+      case "completed":
+        return (filtredTask = taskList.filter((t) => t.isDone));
+
+      default:
+        return taskList;
+    }
+  };
+  let filtredTask: Array<tasksType> = getFiltredTaskForRender(task, filter);
   const changeFilter = (status: filterType) => {
     setFilter(status);
   };

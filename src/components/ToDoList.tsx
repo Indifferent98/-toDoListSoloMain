@@ -43,6 +43,7 @@ const ToDoList = (props: DoToListPropType): JSX.Element => {
   };
   const inputOnChangeHandler = (e: ChangeEvent<HTMLInputElement>): void => {
     setTitle(e.currentTarget.value);
+
     setError(false);
   };
   const errorMessage = error && (
@@ -59,6 +60,7 @@ const ToDoList = (props: DoToListPropType): JSX.Element => {
         setTitle("");
       } else {
         setTitle("");
+        setError(true);
       }
     }
   };
