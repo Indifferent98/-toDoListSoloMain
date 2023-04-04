@@ -116,6 +116,7 @@ function App(): JSX.Element {
     };
     return (
       <ToDoList
+        deleteToDoList={deleteToDoList}
         key={t.id}
         toDoListId={t.id}
         changeCeckboxStatus={changeCeckboxStatus}

@@ -20,6 +20,7 @@ type DoToListPropType = {
     toDoListId: string
   ) => void;
   filter: filterType;
+  deleteToDoList: (toDoListId: string) => void;
 };
 
 const ToDoList = (props: DoToListPropType): JSX.Element => {
@@ -78,6 +79,9 @@ const ToDoList = (props: DoToListPropType): JSX.Element => {
   const onClickCompletedHandler = (): void => {
     props.changeFilter("completed", props.toDoListId);
   };
+  const deleteToDoListHandler = () => {
+    props.deleteToDoList(props.toDoListId);
+  };
 
   const minWarningLength: number = 10;
   const maxWarningLength: number = 18;
@@ -93,7 +97,10 @@ const ToDoList = (props: DoToListPropType): JSX.Element => {
 
   return (
     <div className={styleForDoTolist}>
-      <h3>{props.title}</h3>
+      <h3>
+        {props.title}
+        <button onClick={deleteToDoListHandler}>x</button>{" "}
+      </h3>
       <div>
         <input
           className={error ? s.inputError : ""}
