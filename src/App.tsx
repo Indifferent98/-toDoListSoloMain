@@ -83,6 +83,10 @@ function App(): JSX.Element {
   // if (filter === "completed") {
   //   filtredTask = task.filter((t) => t.isDone === true);
   // }
+  const deleteToDoList = (toDoListId: string) => {
+    setToDoList(toDoList.filter((t) => t.id !== toDoListId));
+    delete task[toDoListId];
+  };
 
   const applicationToDoLists = toDoList.map((t) => {
     const getFiltredTaskForRender = (

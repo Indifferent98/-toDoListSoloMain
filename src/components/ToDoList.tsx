@@ -61,7 +61,7 @@ const ToDoList = (props: DoToListPropType): JSX.Element => {
       !buttonDisbledCondition
     ) {
       if (trimmedTask) {
-        props.addTask(title);
+        props.addTask(title, props.toDoListId);
         setTitle("");
       } else {
         setTitle("");
@@ -70,13 +70,13 @@ const ToDoList = (props: DoToListPropType): JSX.Element => {
     }
   };
   const onClickAllHandler = (): void => {
-    props.changeFilter("all");
+    props.changeFilter("all", props.toDoListId);
   };
   const onClickActiveHandler = (): void => {
-    props.changeFilter("active");
+    props.changeFilter("active", props.toDoListId);
   };
   const onClickCompletedHandler = (): void => {
-    props.changeFilter("completed");
+    props.changeFilter("completed", props.toDoListId);
   };
 
   const minWarningLength: number = 10;
@@ -114,10 +114,14 @@ const ToDoList = (props: DoToListPropType): JSX.Element => {
       <ul>
         {props.tasks.map((t) => {
           const removeButtonHandler = () => {
-            props.removeTask(t.id);
+            props.removeTask(t.id, props.toDoListId);
           };
           const changeTaskStatus = (e: ChangeEvent<HTMLInputElement>) => {
-            props.changeCeckboxStatus(t.id, e.currentTarget.checked);
+            props.changeCeckboxStatus(
+              t.id,
+              e.currentTarget.checked,
+              props.toDoListId
+            );
           };
           return (
             <li key={t.id}>
