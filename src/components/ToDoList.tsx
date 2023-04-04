@@ -2,7 +2,7 @@ import { ChangeEvent, KeyboardEvent, useState } from "react";
 import s from "./ToDoList.module.css";
 export type tasksType = {
   id: string;
-  titleTask: string;
+  title: string;
   isDone: boolean;
 };
 
@@ -122,7 +122,7 @@ const ToDoList = (props: DoToListPropType): JSX.Element => {
                 checked={t.isDone}
               />
               <span className={t.isDone ? s.taskDone : s.taskActive}>
-                {t.titleTask}
+                {t.title}
               </span>
               <button onClick={removeButtonHandler}>x</button>
             </li>
