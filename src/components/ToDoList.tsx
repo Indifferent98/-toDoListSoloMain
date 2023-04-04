@@ -8,12 +8,17 @@ export type tasksType = {
 
 export type filterType = "all" | "active" | "completed";
 type DoToListPropType = {
+  toDoListId: string;
   title: string;
   tasks: Array<tasksType>;
-  removeTask: (id: string) => void;
-  changeFilter: (status: filterType) => void;
-  addTask: (title: string) => void;
-  changeCeckboxStatus: (taskId: string, isDone: boolean) => void;
+  removeTask: (id: string, toDoListId: string) => void;
+  changeFilter: (status: filterType, toDoListId: string) => void;
+  addTask: (title: string, toDoListId: string) => void;
+  changeCeckboxStatus: (
+    taskId: string,
+    isDone: boolean,
+    toDoListId: string
+  ) => void;
   filter: filterType;
 };
 
@@ -29,7 +34,7 @@ const ToDoList = (props: DoToListPropType): JSX.Element => {
   const trimmedTask = title.trim();
   const addTaskButtonHandler = (): void => {
     if (trimmedTask) {
-      props.addTask(title);
+      props.addTask(title, props.toDoListId);
       setTitle("");
     } else {
       setError(true);

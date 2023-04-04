@@ -112,6 +112,8 @@ function App(): JSX.Element {
     };
     return (
       <ToDoList
+        key={t.id}
+        toDoListId={t.id}
         changeCeckboxStatus={changeCeckboxStatus}
         changeFilter={changeFilter}
         removeTask={removeTask}
