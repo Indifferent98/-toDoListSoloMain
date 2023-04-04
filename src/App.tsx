@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./App.css";
 import { ToDoList, filterType, tasksType } from "./components/ToDoList";
 import { v1 } from "uuid";
+import { AddNewList } from "./components/AddNewList/AddNewList";
 
 function App(): JSX.Element {
   const toDoListId_1 = v1();
@@ -87,6 +88,26 @@ function App(): JSX.Element {
     setToDoList(toDoList.filter((t) => t.id !== toDoListId));
     delete task[toDoListId];
   };
+  const addNewToDoList = (title: string) => {
+    const newId = v1();
+    const newToDoList: toDolistType = {
+      filter: "all",
+      title: title,
+      id: newId,
+    };
+    const newTask: useStateToDoListType = {
+      [newId]: [
+        {
+          title: "ss",
+          isDone: false,
+          id: v1(),
+        },
+      ],
+    };
+
+    setToDoList([newToDoList, ...toDoList]);
+    setTask({ ...task, ...newTask });
+  };
 
   const applicationToDoLists = toDoList.map((t) => {
     const getFiltredTaskForRender = (
@@ -114,6 +135,7 @@ function App(): JSX.Element {
         )
       );
     };
+
     return (
       <ToDoList
         deleteToDoList={deleteToDoList}
@@ -130,7 +152,12 @@ function App(): JSX.Element {
     );
   });
 
-  return <div className="App">{applicationToDoLists}</div>;
+  return (
+    <div className="App">
+      <AddNewList addNewToDoList={addNewToDoList} />
+      {applicationToDoLists}
+    </div>
+  );
 }
 
 export default App;
