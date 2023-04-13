@@ -56,11 +56,13 @@ const ToDoList = (props: DoToListPropType): JSX.Element => {
   const deleteToDoListHandler = () => {
     props.deleteToDoList(props.toDoListId);
   };
-
+  const changeHeadderTitle = (title: string) => {
+    props.changeHeadderTitle(title, props.toDoListId);
+  };
   return (
     <div className={styleForDoTolist}>
       <h3>
-        {props.title}
+        <EditableSpan addItem={changeHeadderTitle} title={props.title} />
         <button onClick={deleteToDoListHandler}>x</button>{" "}
       </h3>
       <AddItemForm addItem={addTaskButtonHandler} />
