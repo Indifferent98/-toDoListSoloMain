@@ -7,5 +7,16 @@ type EditableSpanPropsType = {
 
 export const EditableSpan: FC<EditableSpanPropsType> = (props) => {
   const [editMode, setEditMode] = useState<boolean>(false);
-  return editMode ? <input /> : <span>{props.title}</span>;
+
+  const onDoubleClickHandler = () => {
+    setEditMode(true);
+  };
+  const onBlurInputHandler = () => {
+    setEditMode(false);
+  };
+  return editMode ? (
+    <input onDoubleClick={onDoubleClickHandler} />
+  ) : (
+    <span>{props.title}</span>
+  );
 };
