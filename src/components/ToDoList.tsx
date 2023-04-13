@@ -1,5 +1,6 @@
 import { ChangeEvent, KeyboardEvent, useState } from "react";
 import s from "./ToDoList.module.css";
+import { AddItemForm } from "./AddItemForm/AddItemForm";
 export type tasksType = {
   id: string;
   title: string;
@@ -30,46 +31,16 @@ const ToDoList = (props: DoToListPropType): JSX.Element => {
       styleForDoTolist = "ToDoList";
     }
   });
-  const [error, setError] = useState<boolean>(false);
-  const [title, setTitle] = useState<string>("");
-  const trimmedTask = title.trim();
-  const addTaskButtonHandler = (): void => {
-    if (trimmedTask) {
-      props.addTask(title, props.toDoListId);
-      setTitle("");
-    } else {
-      setError(true);
-      setTitle("");
-    }
+
+  const addTaskButtonHandler = (title: string): void => {
+    props.addTask(title, props.toDoListId);
   };
   const buttonFilterStyle = {
     marginLeft: "4px",
     borderRadius: "8px",
     border: "1px solid white",
   };
-  const inputOnChangeHandler = (e: ChangeEvent<HTMLInputElement>): void => {
-    setTitle(e.currentTarget.value);
 
-    setError(false);
-  };
-  const errorMessage = error && (
-    <div style={{ color: "red" }}> Title is hard requaired </div>
-  );
-  const onKeyDownInputHandler = (e: KeyboardEvent<HTMLInputElement>): void => {
-    if (
-      (e.code === "Enter" || e.code === "NumpadEnter") &&
-      title !== "" &&
-      !buttonDisbledCondition
-    ) {
-      if (trimmedTask) {
-        props.addTask(title, props.toDoListId);
-        setTitle("");
-      } else {
-        setTitle("");
-        setError(true);
-      }
-    }
-  };
   const onClickAllHandler = (): void => {
     props.changeFilter("all", props.toDoListId);
   };
@@ -83,41 +54,14 @@ const ToDoList = (props: DoToListPropType): JSX.Element => {
     props.deleteToDoList(props.toDoListId);
   };
 
-  const minWarningLength: number = 10;
-  const maxWarningLength: number = 18;
-  const buttonDisbledCondition: boolean =
-    title.length > maxWarningLength || !title.length;
-  const conditionToWarningMessage: boolean | JSX.Element =
-    (title.length > minWarningLength && title.length <= maxWarningLength && (
-      <div style={{ color: "white" }}>Task Title Shoud be shorter</div>
-    )) ||
-    (title.length > maxWarningLength && (
-      <div style={{ color: "red" }}>Task Title Too Long</div>
-    ));
-
   return (
     <div className={styleForDoTolist}>
       <h3>
         {props.title}
         <button onClick={deleteToDoListHandler}>x</button>{" "}
       </h3>
-      <div>
-        <input
-          className={error ? s.inputError : ""}
-          placeholder="Input Task Title"
-          value={title}
-          onKeyDown={onKeyDownInputHandler}
-          onChange={inputOnChangeHandler}
-        />
-        <button
-          disabled={buttonDisbledCondition}
-          onClick={addTaskButtonHandler}
-        >
-          +
-        </button>
-      </div>
-      {errorMessage}
-      {conditionToWarningMessage}
+      <AddItemForm addItem={addTaskButtonHandler} />
+
       <ul>
         {props.tasks.map((t) => {
           const removeButtonHandler = () => {

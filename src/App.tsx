@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import "./App.css";
 import { ToDoList, filterType, tasksType } from "./components/ToDoList";
 import { v1 } from "uuid";
-import { AddNewList } from "./components/AddNewList/AddNewList";
+
+import { AddItemForm } from "./components/AddItemForm/AddItemForm";
 
 function App(): JSX.Element {
   const toDoListId_1 = v1();
@@ -89,24 +90,15 @@ function App(): JSX.Element {
     delete task[toDoListId];
   };
   const addNewToDoList = (title: string) => {
-    const newId = v1();
+    const newToDoListId = v1();
     const newToDoList: toDolistType = {
+      id: newToDoListId,
       filter: "all",
       title: title,
-      id: newId,
     };
-    const newTask: useStateToDoListType = {
-      [newId]: [
-        {
-          title: "ss",
-          isDone: false,
-          id: v1(),
-        },
-      ],
-    };
+    setToDoList([...toDoList, newToDoList]);
 
-    setToDoList([newToDoList, ...toDoList]);
-    setTask({ ...task, ...newTask });
+    setTask({ ...task, [newToDoListId]: [] });
   };
 
   const applicationToDoLists = toDoList.map((t) => {
@@ -154,7 +146,7 @@ function App(): JSX.Element {
 
   return (
     <div className="App">
-      <AddNewList addNewToDoList={addNewToDoList} />
+      <AddItemForm addItem={addNewToDoList} />
       {applicationToDoLists}
     </div>
   );
