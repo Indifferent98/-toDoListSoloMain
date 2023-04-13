@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./App.css";
-import { ToDoList, filterType, tasksType } from "./components/ToDoList";
+import { ToDoList, filterType } from "./components/ToDoList";
 import { v1 } from "uuid";
 
 import { AddItemForm } from "./components/AddItemForm/AddItemForm";
@@ -100,6 +100,19 @@ function App(): JSX.Element {
 
     setTask({ ...task, [newToDoListId]: [] });
   };
+  const changeTaskTitle = (id: string, title: string, toDoListId: string) => {
+    setTask({
+      ...task,
+      [toDoListId]: task[toDoListId].map((t) =>
+        t.id === id ? { ...t, title: title } : t
+      ),
+    });
+  };
+  const changeHeadderTitle = (title: string, toDoListId: string) => {
+    setToDoList(
+      toDoList.map((t) => (t.id === toDoListId ? { ...t, title: title } : t))
+    );
+  };
 
   const applicationToDoLists = toDoList.map((t) => {
     const getFiltredTaskForRender = (
@@ -140,6 +153,8 @@ function App(): JSX.Element {
         tasks={filtredTask}
         addTask={addTask}
         filter={t.filter}
+        changeTaskTitle={changeTaskTitle}
+        changeHeadderTitle={changeHeadderTitle}
       />
     );
   });

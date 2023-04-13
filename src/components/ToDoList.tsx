@@ -1,6 +1,7 @@
 import { ChangeEvent, KeyboardEvent, useState } from "react";
 import s from "./ToDoList.module.css";
 import { AddItemForm } from "./AddItemForm/AddItemForm";
+import { EditableSpan } from "./EditableSpan/EditableSpan";
 export type tasksType = {
   id: string;
   title: string;
@@ -22,6 +23,8 @@ type DoToListPropType = {
   ) => void;
   filter: filterType;
   deleteToDoList: (toDoListId: string) => void;
+  changeTaskTitle: (id: string, title: string, toDoListId: string) => void;
+  changeHeadderTitle: (title: string, toDoListId: string) => void;
 };
 
 const ToDoList = (props: DoToListPropType): JSX.Element => {
@@ -74,6 +77,10 @@ const ToDoList = (props: DoToListPropType): JSX.Element => {
               props.toDoListId
             );
           };
+          const changeTaskTitle = (title: string) => {
+            props.changeTaskTitle(t.id, title, props.toDoListId);
+          };
+
           return (
             <li key={t.id}>
               <input
@@ -81,9 +88,7 @@ const ToDoList = (props: DoToListPropType): JSX.Element => {
                 type="checkbox"
                 checked={t.isDone}
               />
-              <span className={t.isDone ? s.taskDone : s.taskActive}>
-                {t.title}
-              </span>
+              <EditableSpan title={t.title} addItem={changeTaskTitle} />
               <button onClick={removeButtonHandler}>x</button>
             </li>
           );
