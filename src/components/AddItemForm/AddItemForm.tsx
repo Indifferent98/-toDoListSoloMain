@@ -56,7 +56,9 @@ export const AddItemForm: FC<AddItemFormPropsType> = (props) => {
 
   const conditionToWarningMessage: boolean | JSX.Element =
     (title.length > minWarningLength && title.length <= maxWarningLength && (
-      <div style={{ color: "white" }}>Task Title Shoud be shorter</div>
+      <div style={{ color: "rgb(69, 97, 210)" }}>
+        Task Title Shoud be shorter
+      </div>
     )) ||
     (title.length > maxWarningLength && (
       <div style={{ color: "red" }}>Task Title Too Long</div>
@@ -73,7 +75,7 @@ export const AddItemForm: FC<AddItemFormPropsType> = (props) => {
         label="type"
         variant="outlined"
         size="small"
-        error={error}
+        error={error || title.length > maxWarningLength}
         helperText={errorMessage || conditionToWarningMessage}
       />
       <IconButton

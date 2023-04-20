@@ -11,7 +11,6 @@ import {
   Typography,
 } from "@mui/material";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import { CheckBox } from "@mui/icons-material";
 
 export type tasksType = {
   id: string;
@@ -53,9 +52,6 @@ const ToDoList = (props: DoToListPropType): JSX.Element => {
     marginLeft: "4px",
     borderRadius: "8px",
     border: "1px solid white",
-  };
-  const opacityDivStyle = {
-    opacity: 0.7,
   };
 
   const onClickAllHandler = (): void => {

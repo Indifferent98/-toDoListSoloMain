@@ -1,24 +1,24 @@
-.App {
+/* .App {
   padding: 30px;
   display: flex;
 }
 
 .App > div {
   margin-right: 50px;
-}
+} */
 
 .ToDoList {
   border: 1px solid #a08e8e;
   border-radius: 11px;
   padding: 20px;
-  background-color: rgb(156, 208, 156);
+  /* background-color: rgb(156, 208, 156); */
   height: max-content;
   min-width: 240px;
   width: max-content;
 }
 .ToDoList1 {
   border: 1px solid #a08e8e;
-  background-color: rgb(221, 186, 186);
+  /* background-color: rgb(221, 186, 186); */
   border-radius: 11px;
   padding: 20px;
   height: max-content;

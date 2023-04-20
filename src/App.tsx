@@ -1,11 +1,28 @@
-import React, { useState } from "react";
+import React, { ChangeEvent, useState } from "react";
 import "./App.css";
 import { ToDoList, filterType } from "./components/ToDoList";
 import { v1 } from "uuid";
 
 import { AddItemForm } from "./components/AddItemForm/AddItemForm";
+import {
+  AppBar,
+  Button,
+  Container,
+  CssBaseline,
+  FormControlLabel,
+  FormGroup,
+  Grid,
+  IconButton,
+  Paper,
+  Toolbar,
+  Typography,
+} from "@mui/material";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+import Checkbox from "@mui/material/Checkbox";
+import { Menu } from "@mui/icons-material";
 
 function App(): JSX.Element {
+  const [isDarkMode, setDarkMode] = useState<boolean>(false);
   const toDoListId_1 = v1();
   const toDoListId_2 = v1();
   type toDolistType = {
@@ -52,6 +69,20 @@ function App(): JSX.Element {
       { id: v1(), title: "Sugar", isDone: false },
     ],
   });
+  const themeMode = isDarkMode ? "dark" : "light";
+  const theme = createTheme({
+    palette: {
+      primary: {
+        main: "rgb(10, 115, 144)",
+      },
+      secondary: {
+        main: "rgb(208, 86, 86)",
+      },
+      //mode theme
+      mode: themeMode,
+    },
+  });
+
   const removeTask = (id: string, toDoListId: string) => {
     setTask({
       ...task,
@@ -142,28 +173,71 @@ function App(): JSX.Element {
     };
 
     return (
-      <ToDoList
-        deleteToDoList={deleteToDoList}
-        key={t.id}
-        toDoListId={t.id}
-        changeCeckboxStatus={changeCeckboxStatus}
-        changeFilter={changeFilter}
-        removeTask={removeTask}
-        title={t.title}
-        tasks={filtredTask}
-        addTask={addTask}
-        filter={t.filter}
-        changeTaskTitle={changeTaskTitle}
-        changeHeadderTitle={changeHeadderTitle}
-      />
+      <Grid item>
+        <Paper elevation={5}>
+          <ToDoList
+            deleteToDoList={deleteToDoList}
+            key={t.id}
+            toDoListId={t.id}
+            changeCeckboxStatus={changeCeckboxStatus}
+            changeFilter={changeFilter}
+            removeTask={removeTask}
+            title={t.title}
+            tasks={filtredTask}
+            addTask={addTask}
+            filter={t.filter}
+            changeTaskTitle={changeTaskTitle}
+            changeHeadderTitle={changeHeadderTitle}
+          />
+        </Paper>
+      </Grid>
     );
   });
 
   return (
-    <div className="App">
-      <AddItemForm addItem={addNewToDoList} />
-      {applicationToDoLists}
-    </div>
+    <ThemeProvider theme={theme}>
+      {/* сброс css стилей */}
+      <CssBaseline>
+        <div className="App">
+          <AppBar position="static">
+            <Toolbar>
+              <IconButton
+                size="large"
+                edge="start"
+                color="inherit"
+                aria-label="menu"
+                sx={{ mr: 2 }}
+              >
+                <Menu />
+              </IconButton>
+              <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                ToDoLists
+              </Typography>
+              <FormGroup>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      onChange={(e) => setDarkMode(e.currentTarget.checked)}
+                    />
+                  }
+                  label={isDarkMode ? "Dark mode" : "Light mode"}
+                />
+              </FormGroup>
+              <Button color="inherit">Login</Button>
+            </Toolbar>
+          </AppBar>
+          <Container fixed>
+            <Grid container sx={{ p: "15px 0" }}>
+              <AddItemForm addItem={addNewToDoList} />
+            </Grid>
+
+            <Grid container spacing={4}>
+              {applicationToDoLists}
+            </Grid>
+          </Container>
+        </div>
+      </CssBaseline>
+    </ThemeProvider>
   );
 }
 
