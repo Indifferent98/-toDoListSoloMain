@@ -1,3 +1,4 @@
+import { TextField } from "@mui/material";
 import React, { ChangeEvent, useState } from "react";
 
 type AddNewListPropsType = {
@@ -15,7 +16,14 @@ export const AddNewList: React.FC<AddNewListPropsType> = (props) => {
   return (
     <div>
       <div>input new To Do list title</div>
-      <input value={title} onChange={onChangeInputHandler} type="text" />
+      <TextField
+        value={title}
+        onChange={onChangeInputHandler}
+        type="text"
+        id="standard-basic"
+        label="Standard"
+        variant="standard"
+      />
       <button onClick={buttonClickHandler}>+</button>
     </div>
   );

@@ -1,3 +1,4 @@
+import { TextField, Typography } from "@mui/material";
 import React, { ChangeEvent, FC, useState } from "react";
 
 type EditableSpanPropsType = {
@@ -20,12 +21,19 @@ export const EditableSpan: FC<EditableSpanPropsType> = (props) => {
     setEditMode(false);
   };
   return editMode ? (
-    <input
-      value={value}
-      onChange={onChangeInputHandler}
-      onBlur={onBlurInputHandler}
-      autoFocus
-    />
+    <Typography variant="h5">
+      <TextField
+        sx={{ width: "170px" }}
+        value={value}
+        onChange={onChangeInputHandler}
+        onBlur={onBlurInputHandler}
+        autoFocus
+        id="outlined-basic"
+        label="change task"
+        variant="outlined"
+        size="small"
+      />
+    </Typography>
   ) : (
     <span onDoubleClick={onDoubleClickHandler}>{props.title}</span>
   );

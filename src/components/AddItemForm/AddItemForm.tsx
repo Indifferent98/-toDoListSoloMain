@@ -1,5 +1,9 @@
 import React, { ChangeEvent, FC, useState } from "react";
 import s from "./AddItemForm.module.css";
+import { Button, IconButton, TextField } from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
+
+import AddBoxIcon from "@mui/icons-material/AddBox";
 type AddItemFormPropsType = {
   addItem: (title: string) => void;
 };
@@ -55,16 +59,25 @@ export const AddItemForm: FC<AddItemFormPropsType> = (props) => {
 
   return (
     <div>
-      <input
+      <TextField
         className={error ? s.inputError : ""}
         placeholder="Input Title"
         value={title}
         onKeyDown={onKeyDownInputHandler}
         onChange={inputOnChangeHandler}
+        id="standard-basic"
+        label="type "
+        variant="standard"
+        size="small"
+        error={error ? true : false}
       />
-      <button disabled={buttonDisbledCondition} onClick={addItemButtonHandler}>
-        +
-      </button>
+      <IconButton
+        disabled={buttonDisbledCondition}
+        onClick={addItemButtonHandler}
+      >
+        <AddBoxIcon />
+      </IconButton>
+
       {errorMessage}
       {conditionToWarningMessage}
     </div>
