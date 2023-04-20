@@ -60,16 +60,15 @@ export const AddItemForm: FC<AddItemFormPropsType> = (props) => {
   return (
     <div>
       <TextField
-        className={error ? s.inputError : ""}
         placeholder="Input Title"
         value={title}
         onKeyDown={onKeyDownInputHandler}
         onChange={inputOnChangeHandler}
         id="standard-basic"
-        label="type "
-        variant="standard"
+        label="type"
+        variant="outlined"
         size="small"
-        error={error ? true : false}
+        error={error}
       />
       <IconButton
         disabled={buttonDisbledCondition}
