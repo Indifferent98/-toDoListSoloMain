@@ -26,6 +26,9 @@ export const AddItemForm: FC<AddItemFormPropsType> = (props) => {
   const onKeyDownInputHandler = (
     e: React.KeyboardEvent<HTMLInputElement>
   ): void => {
+    if (title.length > maxWarningLength) {
+      setError(true);
+    }
     if (
       (e.code === "Enter" || e.code === "NumpadEnter") &&
       title !== "" &&
@@ -47,8 +50,10 @@ export const AddItemForm: FC<AddItemFormPropsType> = (props) => {
   };
   const minWarningLength: number = 10;
   const maxWarningLength: number = 18;
+
   const buttonDisbledCondition: boolean =
     title.length > maxWarningLength || !title.length;
+
   const conditionToWarningMessage: boolean | JSX.Element =
     (title.length > minWarningLength && title.length <= maxWarningLength && (
       <div style={{ color: "white" }}>Task Title Shoud be shorter</div>
@@ -69,6 +74,7 @@ export const AddItemForm: FC<AddItemFormPropsType> = (props) => {
         variant="outlined"
         size="small"
         error={error}
+        helperText={errorMessage || conditionToWarningMessage}
       />
       <IconButton
         disabled={buttonDisbledCondition}
@@ -76,9 +82,6 @@ export const AddItemForm: FC<AddItemFormPropsType> = (props) => {
       >
         <AddBoxIcon />
       </IconButton>
-
-      {errorMessage}
-      {conditionToWarningMessage}
     </div>
   );
 };
