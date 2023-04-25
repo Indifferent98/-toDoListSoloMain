@@ -105,17 +105,7 @@ function App(): JSX.Element {
     const newTitle = { id: v1(), title: title, isDone: false };
     setTask({ ...task, [toDoListId]: [newTitle, ...task[toDoListId]] });
   };
-  // const [filter, setFilter] = useState<filterType>("all");
 
-  // if (filter === "all") {
-  //   filtredTask = task;
-  // }
-  // if (filter === "active") {
-  //   filtredTask = task.filter((t) => t.isDone === false);
-  // }
-  // if (filter === "completed") {
-  //   filtredTask = task.filter((t) => t.isDone === true);
-  // }
   const deleteToDoList = (toDoListId: string) => {
     setToDoList(toDoList.filter((t) => t.id !== toDoListId));
     delete task[toDoListId];
