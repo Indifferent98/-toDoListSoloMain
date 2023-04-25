@@ -20,22 +20,22 @@ import {
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import Checkbox from "@mui/material/Checkbox";
 import { Menu } from "@mui/icons-material";
+export type toDolistType = {
+  id: string;
 
+  title: string;
+  filter: filterType;
+};
+type tasksType = {
+  id: string;
+  isDone: boolean;
+  title: string;
+};
 function App(): JSX.Element {
   const [isDarkMode, setDarkMode] = useState<boolean>(false);
   const toDoListId_1 = v1();
   const toDoListId_2 = v1();
-  type toDolistType = {
-    id: string;
 
-    title: string;
-    filter: filterType;
-  };
-  type tasksType = {
-    id: string;
-    isDone: boolean;
-    title: string;
-  };
   type useStateToDoListType = {
     [id: string]: tasksType[];
   };
@@ -230,7 +230,6 @@ function App(): JSX.Element {
             <Grid container sx={{ p: "15px 0" }}>
               <AddItemForm addItem={addNewToDoList} />
             </Grid>
-
             <Grid container spacing={4}>
               {applicationToDoLists}
             </Grid>
