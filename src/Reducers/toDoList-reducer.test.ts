@@ -1,4 +1,18 @@
-import { toDoListReducer } from "./toDoList-reducer";
+import {
+  ADD_NEW_TO_DO_LIST,
+  AddToDoListAC,
+  AddToDoListActionType,
+  CHANGE_FILTER,
+  CHANGE_HEADDER_TITLE,
+  ChangeFilterAC,
+  ChangeHeadderTitleAC,
+  ChangeHeadderTitleActionType,
+  DELETE_TO_DO_LIST,
+  DeleteToDoListAC,
+  DeleteToDoListActionType,
+  changeFilterActionType,
+  toDoListReducer,
+} from "./toDoList-reducer";
 import { v1 } from "uuid";
 import React from "react";
 import { toDolistType } from "../App";
@@ -19,10 +33,7 @@ test("DELETE TO DO LIST TEST", () => {
     },
   ];
 
-  const result = toDoListReducer(state, {
-    type: "DELETE-TO-DO-LIST",
-    toDoListId: toDoListId_2,
-  });
+  const result = toDoListReducer(state, DeleteToDoListAC(toDoListId_2));
 
   expect(result.length).toBe(1);
   expect(state.length).toBe(2);
@@ -44,10 +55,7 @@ test("ADD-NEW-TO-DO-LIST test", () => {
     },
   ];
 
-  const result = toDoListReducer(state, {
-    type: "ADD-NEW-TO-DO-LIST",
-    title: "NEWW TITLE",
-  });
+  const result = toDoListReducer(state, AddToDoListAC("NEWW TITLE"));
 
   expect(result.length).toBe(3);
   expect(state.length).toBe(2);
@@ -57,7 +65,7 @@ test("ADD-NEW-TO-DO-LIST test", () => {
   expect(state).not.toEqual(result);
 });
 
-test("CHANGE-HEADDER-TITLE", () => {
+test(CHANGE_HEADDER_TITLE, () => {
   const toDoListId_1 = v1();
   const toDoListId_2 = v1();
   const state: toDolistType[] = [
@@ -73,11 +81,10 @@ test("CHANGE-HEADDER-TITLE", () => {
     },
   ];
 
-  const result = toDoListReducer(state, {
-    type: "CHANGE-HEADDER-TITLE",
-    title: "qqqq QQQQ",
-    toDoListId: toDoListId_2,
-  });
+  const result = toDoListReducer(
+    state,
+    ChangeHeadderTitleAC("qqqq QQQQ", toDoListId_2)
+  );
 
   expect(result.length).toBe(2);
   expect(state.length).toBe(2);
@@ -89,7 +96,7 @@ test("CHANGE-HEADDER-TITLE", () => {
   expect(state[0].title).toBe("What to buy");
 });
 
-test("CHANGE-FILTER", () => {
+test(CHANGE_FILTER, () => {
   const toDoListId_1 = v1();
   const toDoListId_2 = v1();
   const state: toDolistType[] = [
@@ -104,13 +111,16 @@ test("CHANGE-FILTER", () => {
       title: "What to learn",
     },
   ];
-
-  const result = toDoListReducer(state, {
-    type: "CHANGE-FILTER",
+  const action: changeFilterActionType = {
+    type: CHANGE_FILTER,
 
     toDoListId: toDoListId_2,
     filter: "completed",
-  });
+  };
+  const result = toDoListReducer(
+    state,
+    ChangeFilterAC("completed", toDoListId_2)
+  );
 
   expect(result.length).toBe(2);
   expect(state.length).toBe(2);
