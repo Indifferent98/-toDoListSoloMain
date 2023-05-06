@@ -4,6 +4,7 @@ import { v1 } from "uuid";
 import {
   addTaskActionCreator,
   changeCheckBoxStatusActionCreator,
+  changeTaskTitleActionCreator,
   removeTaskActionCreator,
   taskReducer,
 } from "./task-reducer";
@@ -101,4 +102,33 @@ test("Task  should be added", () => {
   expect(result["toDoListId_1"].length).toBe(6);
   expect(initialTasks["toDoListId_1"].length).toBe(6);
   expect(result["toDoListId_2"][0].title).toBe("new title string");
+});
+
+test("Task title should be changed", () => {
+  const initialTasks: useStateToDoListType = {
+    ["toDoListId_1"]: [
+      { id: "1", title: "CSS", isDone: false },
+      { id: "2", title: "HTML", isDone: true },
+      { id: "3", title: "React", isDone: false },
+      { id: "4", title: "Node", isDone: false },
+      { id: "5", title: "Hooks", isDone: true },
+      { id: "6", title: "State", isDone: false },
+    ],
+    ["toDoListId_2"]: [
+      { id: "1", title: "Milk", isDone: false },
+      { id: "2", title: "Bread", isDone: true },
+      { id: "3", title: "Beer", isDone: false },
+      { id: "4", title: "Cucumber", isDone: false },
+      { id: "5", title: "Salt", isDone: true },
+      { id: "6", title: "Sugar", isDone: false },
+    ],
+  };
+
+  const result = taskReducer(
+    initialTasks,
+    changeTaskTitleActionCreator("4", "hello", "toDoListId_2")
+  );
+
+  expect(result["toDoListId_2"][3].title).toBe("hello");
+  expect(initialTasks["toDoListId_2"][3].title).toBe("Cucumber");
 });

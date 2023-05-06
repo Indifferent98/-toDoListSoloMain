@@ -5,7 +5,8 @@ import { v1 } from "uuid";
 type actionTypes =
   | removeTaskActionCreatorType
   | changeCheckBoxStatusActionCreatorType
-  | addTaskActionCreatorType;
+  | addTaskActionCreatorType
+  | changeTaskTitleActionCreatorType;
 
 export const taskReducer = (
   state: useStateToDoListType,
@@ -34,6 +35,14 @@ export const taskReducer = (
       return {
         ...state,
         [action.toDoListId]: [newTitle, ...state[action.toDoListId]],
+      };
+
+    case "CHANGE-TASK-TITLE":
+      return {
+        ...state,
+        [action.toDoListId]: state[action.toDoListId].map((t) =>
+          t.id === action.id ? { ...t, title: action.title } : t
+        ),
       };
 
     default:
@@ -85,6 +94,24 @@ export const addTaskActionCreator = (
   toDoListId: string
 ): addTaskActionCreatorType => ({
   type: "ADD-TASK",
+  title,
+  toDoListId,
+});
+
+type changeTaskTitleActionCreatorType = {
+  type: "CHANGE-TASK-TITLE";
+  id: string;
+  title: string;
+  toDoListId: string;
+};
+
+export const changeTaskTitleActionCreator = (
+  id: string,
+  title: string,
+  toDoListId: string
+): changeTaskTitleActionCreatorType => ({
+  type: "CHANGE-TASK-TITLE",
+  id,
   title,
   toDoListId,
 });
