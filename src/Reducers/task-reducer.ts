@@ -1,9 +1,11 @@
 import React from "react";
 import { useStateToDoListType } from "../App";
+import { v1 } from "uuid";
 
 type actionTypes =
   | removeTaskActionCreatorType
-  | changeCheckBoxStatusActionCreatorType;
+  | changeCheckBoxStatusActionCreatorType
+  | addTaskActionCreatorType;
 
 export const taskReducer = (
   state: useStateToDoListType,
@@ -24,6 +26,14 @@ export const taskReducer = (
         [action.toDoListId]: state[action.toDoListId].map((t) =>
           t.id === action.taskId ? { ...t, isDone: action.taskIsDone } : t
         ),
+      };
+
+    case "ADD-TASK":
+      const newTitle = { id: v1(), title: action.title, isDone: false };
+
+      return {
+        ...state,
+        [action.toDoListId]: [newTitle, ...state[action.toDoListId]],
       };
 
     default:
@@ -61,5 +71,20 @@ export const changeCheckBoxStatusActionCreator = (
   type: "CHANGE-CHECK-BOX-STATUS",
   taskId,
   taskIsDone,
+  toDoListId,
+});
+
+type addTaskActionCreatorType = {
+  type: "ADD-TASK";
+  title: string;
+  toDoListId: string;
+};
+
+export const addTaskActionCreator = (
+  title: string,
+  toDoListId: string
+): addTaskActionCreatorType => ({
+  type: "ADD-TASK",
+  title,
   toDoListId,
 });
