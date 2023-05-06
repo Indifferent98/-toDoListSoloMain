@@ -26,7 +26,7 @@ type DoToListPropType = {
   removeTask: (id: string, toDoListId: string) => void;
   changeFilter: (status: filterType, toDoListId: string) => void;
   addTask: (title: string, toDoListId: string) => void;
-  changeCeckboxStatus: (
+  changeCheckBoxStatus: (
     taskId: string,
     isDone: boolean,
     toDoListId: string
@@ -97,7 +97,7 @@ const ToDoList = (props: DoToListPropType): JSX.Element => {
             props.removeTask(t.id, props.toDoListId);
           };
           const changeTaskStatus = (e: ChangeEvent<HTMLInputElement>) => {
-            props.changeCeckboxStatus(
+            props.changeCheckBoxStatus(
               t.id,
               e.currentTarget.checked,
               props.toDoListId

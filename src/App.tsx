@@ -31,14 +31,16 @@ type tasksType = {
   isDone: boolean;
   title: string;
 };
+
+export type useStateToDoListType = {
+  [id: string]: tasksType[];
+};
+
 function App(): JSX.Element {
   const [isDarkMode, setDarkMode] = useState<boolean>(false);
   const toDoListId_1 = v1();
   const toDoListId_2 = v1();
 
-  type useStateToDoListType = {
-    [id: string]: tasksType[];
-  };
   const [toDoList, setToDoList] = useState<toDolistType[]>([
     {
       id: toDoListId_1,
@@ -89,7 +91,7 @@ function App(): JSX.Element {
       [toDoListId]: task[toDoListId].filter((t) => t.id !== id),
     });
   };
-  const changeCeckboxStatus = (
+  const changeCheckBoxStatus = (
     taskId: string,
     taskIsDone: boolean,
     toDoListId: string
@@ -169,7 +171,7 @@ function App(): JSX.Element {
             deleteToDoList={deleteToDoList}
             key={t.id}
             toDoListId={t.id}
-            changeCeckboxStatus={changeCeckboxStatus}
+            changeCheckBoxStatus={changeCheckBoxStatus}
             changeFilter={changeFilter}
             removeTask={removeTask}
             title={t.title}
