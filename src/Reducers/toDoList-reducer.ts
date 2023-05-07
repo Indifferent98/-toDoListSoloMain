@@ -18,14 +18,14 @@ export const DeleteToDoListAC = (
   toDoListId: string
 ): DeleteToDoListActionType => ({
   type: DELETE_TO_DO_LIST,
-  toDoListId: toDoListId,
+  toDoListId,
 });
 
-export const AddToDoListAC = (title: string): AddToDoListActionType => {
-  const newToDoListId = v1();
-
-  return { type: ADD_NEW_TO_DO_LIST, title: title, toDoListId: newToDoListId };
-};
+export const AddToDoListAC = (title: string): AddToDoListActionType => ({
+  type: ADD_NEW_TO_DO_LIST,
+  title: title,
+  toDoListId: v1(),
+});
 
 export const ChangeHeadderTitleAC = (
   title: string,
@@ -41,8 +41,8 @@ export const ChangeFilterAC = (
   toDoListId: string
 ): changeFilterActionType => ({
   type: CHANGE_FILTER,
-  filter: filter,
-  toDoListId: toDoListId,
+  filter,
+  toDoListId,
 });
 
 export type DeleteToDoListActionType = {

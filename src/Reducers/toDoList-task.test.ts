@@ -6,7 +6,7 @@ import {
 } from "./toDoList-reducer";
 import { useStateToDoListType, toDolistType } from "../App";
 
-test("To do List and task should be added", () => {
+test("To do List and task should be added and have same id", () => {
   const initialTasks: useStateToDoListType = {
     ["toDoListId_1"]: [
       { id: "1", title: "CSS", isDone: false },
