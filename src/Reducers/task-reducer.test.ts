@@ -102,6 +102,7 @@ test("Task  should be added", () => {
   expect(result["toDoListId_1"].length).toBe(6);
   expect(initialTasks["toDoListId_1"].length).toBe(6);
   expect(result["toDoListId_2"][0].title).toBe("new title string");
+  expect(result["toDoListId_2"][0].id).toBeDefined();
 });
 
 test("Task title should be changed", () => {
