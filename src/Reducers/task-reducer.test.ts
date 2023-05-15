@@ -1,5 +1,5 @@
 import React from "react";
-import { useStateToDoListType } from "../App";
+import { useStateTaskType } from "../App";
 import { v1 } from "uuid";
 import {
   addTaskActionCreator,
@@ -10,7 +10,7 @@ import {
 } from "./task-reducer";
 
 test("Task should be removed", () => {
-  const initialTasks: useStateToDoListType = {
+  const initialTasks: useStateTaskType = {
     ["toDoListId_1"]: [
       { id: "1", title: "CSS", isDone: false },
       { id: "2", title: "HTML", isDone: true },
@@ -42,7 +42,7 @@ test("Task should be removed", () => {
 });
 
 test("CheckBoxStatus should be changed", () => {
-  const initialTasks: useStateToDoListType = {
+  const initialTasks: useStateTaskType = {
     ["toDoListId_1"]: [
       { id: "1", title: "CSS", isDone: false },
       { id: "2", title: "HTML", isDone: true },
@@ -73,7 +73,7 @@ test("CheckBoxStatus should be changed", () => {
 });
 
 test("Task  should be added", () => {
-  const initialTasks: useStateToDoListType = {
+  const initialTasks: useStateTaskType = {
     ["toDoListId_1"]: [
       { id: "1", title: "CSS", isDone: false },
       { id: "2", title: "HTML", isDone: true },
@@ -106,7 +106,7 @@ test("Task  should be added", () => {
 });
 
 test("Task title should be changed", () => {
-  const initialTasks: useStateToDoListType = {
+  const initialTasks: useStateTaskType = {
     ["toDoListId_1"]: [
       { id: "1", title: "CSS", isDone: false },
       { id: "2", title: "HTML", isDone: true },

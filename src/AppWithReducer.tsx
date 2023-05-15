@@ -46,7 +46,7 @@ type tasksType = {
   title: string;
 };
 
-export type useStateToDoListType = {
+export type useStateTaskType = {
   [id: string]: tasksType[];
 };
 

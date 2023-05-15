@@ -4,10 +4,10 @@ import {
   DeleteToDoListAC,
   toDoListReducer,
 } from "./toDoList-reducer";
-import { useStateToDoListType, toDolistType } from "../App";
+import { useStateTaskType, toDolistType } from "../App";
 
 test("To do List and task should be added and have same id", () => {
-  const initialTasks: useStateToDoListType = {
+  const initialTasks: useStateTaskType = {
     ["toDoListId_1"]: [
       { id: "1", title: "CSS", isDone: false },
       { id: "2", title: "HTML", isDone: true },
@@ -58,7 +58,7 @@ test("To do List and task should be added and have same id", () => {
 });
 
 test("To do List and task should be deleted", () => {
-  const initialTasks: useStateToDoListType = {
+  const initialTasks: useStateTaskType = {
     ["toDoListId_1"]: [
       { id: "1", title: "CSS", isDone: false },
       { id: "2", title: "HTML", isDone: true },

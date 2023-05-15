@@ -34,6 +34,8 @@ import {
   removeTaskActionCreator,
   taskReducer,
 } from "./Reducers/task-reducer";
+import { useDispatch, useSelector } from "react-redux";
+import { AppRootStateType } from "./store/Store";
 export type toDolistType = {
   id: string;
 
@@ -46,7 +48,7 @@ type tasksType = {
   title: string;
 };
 
-export type useStateToDoListType = {
+export type useStateTaskType = {
   [id: string]: tasksType[];
 };
 
@@ -55,37 +57,15 @@ function AppWithRedux(): JSX.Element {
   const toDoListId_1 = v1();
   const toDoListId_2 = v1();
 
-  const [toDoList, dispatchToToDoList] = useReducer(toDoListReducer, [
-    {
-      id: toDoListId_1,
-      filter: "all",
-      title: "What to buy",
-    },
-    {
-      filter: "all",
-      id: toDoListId_2,
-      title: "What to learn",
-    },
-  ]);
+  const toDoList = useSelector<AppRootStateType, toDolistType[]>(
+    (state) => state.toDoList
+  );
 
-  const [task, dispatchToTasks] = useReducer(taskReducer, {
-    [toDoListId_1]: [
-      { id: v1(), title: "CSS", isDone: false },
-      { id: v1(), title: "HTML", isDone: true },
-      { id: v1(), title: "React", isDone: false },
-      { id: v1(), title: "Node", isDone: false },
-      { id: v1(), title: "Hooks", isDone: true },
-      { id: v1(), title: "State", isDone: false },
-    ],
-    [toDoListId_2]: [
-      { id: v1(), title: "Milk", isDone: false },
-      { id: v1(), title: "Bread", isDone: true },
-      { id: v1(), title: "Beer", isDone: false },
-      { id: v1(), title: "Cucumber", isDone: false },
-      { id: v1(), title: "Salt", isDone: true },
-      { id: v1(), title: "Sugar", isDone: false },
-    ],
-  });
+  const dispatch = useDispatch();
+
+  const task = useSelector<AppRootStateType, useStateTaskType>(
+    (state) => state.task
+  );
 
   const themeMode = isDarkMode ? "dark" : "light";
 
@@ -103,7 +83,7 @@ function AppWithRedux(): JSX.Element {
   });
 
   const removeTask = (id: string, toDoListId: string) => {
-    dispatchToTasks(removeTaskActionCreator(id, toDoListId));
+    dispatch(removeTaskActionCreator(id, toDoListId));
   };
 
   const changeCheckBoxStatus = (
@@ -111,30 +91,24 @@ function AppWithRedux(): JSX.Element {
     taskIsDone: boolean,
     toDoListId: string
   ) => {
-    dispatchToTasks(
-      changeCheckBoxStatusActionCreator(taskId, taskIsDone, toDoListId)
-    );
+    dispatch(changeCheckBoxStatusActionCreator(taskId, taskIsDone, toDoListId));
   };
 
   const addTask = (title: string, toDoListId: string) => {
-    dispatchToTasks(addTaskActionCreator(title, toDoListId));
+    dispatch(addTaskActionCreator(title, toDoListId));
   };
 
   const deleteToDoList = (toDoListId: string) => {
-    const action = DeleteToDoListAC(toDoListId);
-    dispatchToTasks(action);
-    dispatchToToDoList(action);
+    dispatch(DeleteToDoListAC(toDoListId));
   };
   const addNewToDoList = (title: string) => {
-    const action = AddToDoListAC(title);
-    dispatchToToDoList(action);
-    dispatchToTasks(action);
+    dispatch(AddToDoListAC(title));
   };
   const changeTaskTitle = (id: string, title: string, toDoListId: string) => {
-    dispatchToTasks(changeTaskTitleActionCreator(id, title, toDoListId));
+    dispatch(changeTaskTitleActionCreator(id, title, toDoListId));
   };
   const changeHeadderTitle = (title: string, toDoListId: string) => {
-    dispatchToToDoList(ChangeHeadderTitleAC(title, toDoListId));
+    dispatch(ChangeHeadderTitleAC(title, toDoListId));
   };
 
   const applicationToDoLists = toDoList.map((t) => {
@@ -157,7 +131,7 @@ function AppWithRedux(): JSX.Element {
       t.filter
     );
     const changeFilter = (status: filterType, toDoListId: string) => {
-      dispatchToToDoList(ChangeFilterAC(status, toDoListId));
+      dispatch(ChangeFilterAC(status, toDoListId));
     };
 
     return (

@@ -32,7 +32,7 @@ type tasksType = {
   title: string;
 };
 
-export type useStateToDoListType = {
+export type useStateTaskType = {
   [id: string]: tasksType[];
 };
 
@@ -53,7 +53,7 @@ function App(): JSX.Element {
       title: "What to learn",
     },
   ]);
-  const [task, setTask] = useState<useStateToDoListType>({
+  const [task, setTask] = useState<useStateTaskType>({
     [toDoListId_1]: [
       { id: v1(), title: "CSS", isDone: false },
       { id: v1(), title: "HTML", isDone: true },
