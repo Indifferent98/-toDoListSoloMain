@@ -25,17 +25,17 @@ import {
   ChangeFilterAC,
   ChangeHeadderTitleAC,
   DeleteToDoListAC,
-  toDoListReducer,
 } from "./Reducers/toDoList-reducer";
 import {
   addTaskActionCreator,
   changeCheckBoxStatusActionCreator,
   changeTaskTitleActionCreator,
   removeTaskActionCreator,
-  taskReducer,
 } from "./Reducers/task-reducer";
 import { useDispatch, useSelector } from "react-redux";
 import { AppRootStateType } from "./store/Store";
+import { ToDoListWithRedux } from "./components/ToDoListWithReduxMain";
+
 export type toDolistType = {
   id: string;
 
@@ -54,8 +54,6 @@ export type useStateTaskType = {
 
 function AppWithRedux(): JSX.Element {
   const [isDarkMode, setDarkMode] = useState<boolean>(false);
-  const toDoListId_1 = v1();
-  const toDoListId_2 = v1();
 
   const toDoList = useSelector<AppRootStateType, toDolistType[]>(
     (state) => state.toDoList
@@ -111,7 +109,7 @@ function AppWithRedux(): JSX.Element {
     dispatch(ChangeHeadderTitleAC(title, toDoListId));
   };
 
-  const applicationToDoLists = toDoList.map((t) => {
+  const applicationToDoLists = toDoList.map((t, i) => {
     const getFiltredTaskForRender = (
       taskList: tasksType[],
       filterValue: filterType
@@ -135,9 +133,9 @@ function AppWithRedux(): JSX.Element {
     };
 
     return (
-      <Grid item>
+      <Grid key={t.id} item>
         <Paper elevation={5}>
-          <ToDoList
+          {/* <ToDoList
             deleteToDoList={deleteToDoList}
             key={t.id}
             toDoListId={t.id}
@@ -150,7 +148,9 @@ function AppWithRedux(): JSX.Element {
             filter={t.filter}
             changeTaskTitle={changeTaskTitle}
             changeHeadderTitle={changeHeadderTitle}
-          />
+          /> */}
+
+          <ToDoListWithRedux toDoList={toDoList[i]} />
         </Paper>
       </Grid>
     );
