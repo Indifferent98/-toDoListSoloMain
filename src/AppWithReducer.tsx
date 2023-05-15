@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useReducer, useState } from "react";
 import "./App.css";
 import { ToDoList, filterType } from "./components/ToDoList";
 import { v1 } from "uuid";
@@ -20,6 +20,20 @@ import {
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import Checkbox from "@mui/material/Checkbox";
 import { Menu } from "@mui/icons-material";
+import {
+  AddToDoListAC,
+  ChangeFilterAC,
+  ChangeHeadderTitleAC,
+  DeleteToDoListAC,
+  toDoListReducer,
+} from "./Reducers/toDoList-reducer";
+import {
+  addTaskActionCreator,
+  changeCheckBoxStatusActionCreator,
+  changeTaskTitleActionCreator,
+  removeTaskActionCreator,
+  taskReducer,
+} from "./Reducers/task-reducer";
 export type toDolistType = {
   id: string;
 
@@ -36,12 +50,12 @@ export type useStateToDoListType = {
   [id: string]: tasksType[];
 };
 
-function App(): JSX.Element {
+function AppWithReducer(): JSX.Element {
   const [isDarkMode, setDarkMode] = useState<boolean>(false);
   const toDoListId_1 = v1();
   const toDoListId_2 = v1();
 
-  const [toDoList, setToDoList] = useState<toDolistType[]>([
+  const [toDoList, dispatchToToDoList] = useReducer(toDoListReducer, [
     {
       id: toDoListId_1,
       filter: "all",
@@ -53,7 +67,8 @@ function App(): JSX.Element {
       title: "What to learn",
     },
   ]);
-  const [task, setTask] = useState<useStateToDoListType>({
+
+  const [task, dispatchToTasks] = useReducer(taskReducer, {
     [toDoListId_1]: [
       { id: v1(), title: "CSS", isDone: false },
       { id: v1(), title: "HTML", isDone: true },
@@ -71,6 +86,7 @@ function App(): JSX.Element {
       { id: v1(), title: "Sugar", isDone: false },
     ],
   });
+
   const themeMode = isDarkMode ? "dark" : "light";
 
   const theme = createTheme({
@@ -87,55 +103,38 @@ function App(): JSX.Element {
   });
 
   const removeTask = (id: string, toDoListId: string) => {
-    setTask({
-      ...task,
-      [toDoListId]: task[toDoListId].filter((t) => t.id !== id),
-    });
+    dispatchToTasks(removeTaskActionCreator(id, toDoListId));
   };
+
   const changeCheckBoxStatus = (
     taskId: string,
     taskIsDone: boolean,
     toDoListId: string
   ) => {
-    setTask({
-      ...task,
-      [toDoListId]: task[toDoListId].map((t) =>
-        t.id === taskId ? { ...t, isDone: taskIsDone } : t
-      ),
-    });
+    dispatchToTasks(
+      changeCheckBoxStatusActionCreator(taskId, taskIsDone, toDoListId)
+    );
   };
+
   const addTask = (title: string, toDoListId: string) => {
-    const newTitle = { id: v1(), title: title, isDone: false };
-    setTask({ ...task, [toDoListId]: [newTitle, ...task[toDoListId]] });
+    dispatchToTasks(addTaskActionCreator(title, toDoListId));
   };
 
   const deleteToDoList = (toDoListId: string) => {
-    setToDoList(toDoList.filter((t) => t.id !== toDoListId));
-    delete task[toDoListId];
+    const action = DeleteToDoListAC(toDoListId);
+    dispatchToTasks(action);
+    dispatchToToDoList(action);
   };
   const addNewToDoList = (title: string) => {
-    const newToDoListId = v1();
-    const newToDoList: toDolistType = {
-      id: newToDoListId,
-      filter: "all",
-      title: title,
-    };
-    setToDoList([...toDoList, newToDoList]);
-
-    setTask({ ...task, [newToDoListId]: [] });
+    const action = AddToDoListAC(title);
+    dispatchToToDoList(action);
+    dispatchToTasks(action);
   };
   const changeTaskTitle = (id: string, title: string, toDoListId: string) => {
-    setTask({
-      ...task,
-      [toDoListId]: task[toDoListId].map((t) =>
-        t.id === id ? { ...t, title: title } : t
-      ),
-    });
+    dispatchToTasks(changeTaskTitleActionCreator(id, title, toDoListId));
   };
   const changeHeadderTitle = (title: string, toDoListId: string) => {
-    setToDoList(
-      toDoList.map((t) => (t.id === toDoListId ? { ...t, title: title } : t))
-    );
+    dispatchToToDoList(ChangeHeadderTitleAC(title, toDoListId));
   };
 
   const applicationToDoLists = toDoList.map((t) => {
@@ -158,11 +157,7 @@ function App(): JSX.Element {
       t.filter
     );
     const changeFilter = (status: filterType, toDoListId: string) => {
-      setToDoList(
-        toDoList.map((t) =>
-          t.id === toDoListId ? { ...t, filter: status } : t
-        )
-      );
+      dispatchToToDoList(ChangeFilterAC(status, toDoListId));
     };
 
     return (
@@ -233,4 +228,4 @@ function App(): JSX.Element {
   );
 }
 
-export default App;
+export default AppWithReducer;
