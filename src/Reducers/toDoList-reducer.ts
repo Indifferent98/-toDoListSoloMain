@@ -68,8 +68,10 @@ export type changeFilterActionType = {
   type: "CHANGE-FILTER";
 };
 
+const intialToDoList: toDolistType[] = [];
+
 export const toDoListReducer = (
-  state: toDolistType[],
+  state: toDolistType[] = intialToDoList,
   action: ActionsType
 ): toDolistType[] => {
   switch (action.type) {
@@ -95,6 +97,6 @@ export const toDoListReducer = (
       );
 
     default:
-      throw new Error("Bad action type");
+      return state;
   }
 };

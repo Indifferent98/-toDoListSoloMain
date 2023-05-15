@@ -4,12 +4,18 @@ import "./index.css";
 import App from "./App";
 import AppWithReducer from "./AppWithReducer";
 
+import { store } from "./store/Store";
+import { Provider } from "react-redux";
+import AppWithRedux from "./AppWithRedux";
+
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <AppWithReducer />
+    <Provider store={store}>
+      <AppWithRedux />
+    </Provider>
   </React.StrictMode>
 );
 

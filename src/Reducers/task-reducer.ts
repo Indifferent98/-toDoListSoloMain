@@ -5,8 +5,9 @@ import {
   DeleteToDoListActionType,
 } from "./toDoList-reducer";
 import React from "react";
-import { useStateToDoListType } from "../App";
+
 import { v1 } from "uuid";
+import { useStateToDoListType } from "../AppWithRedux";
 
 type removeTaskActionCreatorType = {
   type: "REMOVE-TASK";
@@ -44,8 +45,10 @@ export const CHANGE_CHECK_BOX_STATUS = "CHANGE-CHECK-BOX-STATUS";
 export const ADD_TASK = "ADD-TASK";
 export const CHANGE_TASK_TITLE = "CHANGE-TASK-TITLE";
 
+const intialTask: useStateToDoListType = {};
+
 export const taskReducer = (
-  state: useStateToDoListType,
+  state: useStateToDoListType = intialTask,
   action: actionTypes
 ): useStateToDoListType => {
   switch (action.type) {
