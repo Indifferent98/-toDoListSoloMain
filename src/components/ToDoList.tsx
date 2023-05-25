@@ -1,4 +1,4 @@
-import { ChangeEvent, KeyboardEvent, useState } from "react";
+import { ChangeEvent, KeyboardEvent, memo, useCallback, useState } from "react";
 import s from "./ToDoList.module.css";
 import { AddItemForm } from "./AddItemForm/AddItemForm";
 import { EditableSpan } from "./EditableSpan/EditableSpan";
@@ -11,6 +11,7 @@ import {
   Typography,
 } from "@mui/material";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import React from "react";
 
 export type tasksType = {
   id: string;
@@ -37,17 +38,23 @@ type DoToListPropType = {
   changeHeadderTitle: (title: string, toDoListId: string) => void;
 };
 
-const ToDoList = (props: DoToListPropType): JSX.Element => {
+const ToDoList = React.memo((props: DoToListPropType): JSX.Element => {
+  console.log("todolist is called");
   let styleForDoTolist = "ToDoList1";
-  props.tasks.forEach((t) => {
-    if (t.isDone === true) {
-      styleForDoTolist = "ToDoList";
-    }
-  });
+  let tasks = props.tasks;
+  if (props.filter === "active") {
+    tasks = props.tasks.filter((t) => !t.isDone);
+  }
+  if (props.filter === "completed") {
+    tasks = props.tasks.filter((t) => t.isDone);
+  }
 
-  const addTaskButtonHandler = (title: string): void => {
-    props.addTask(title, props.toDoListId);
-  };
+  const addTaskButtonHandler = useCallback(
+    (title: string): void => {
+      props.addTask(title, props.toDoListId);
+    },
+    [props.addTask, props.toDoListId]
+  );
   const buttonFilterStyle = {
     marginLeft: "4px",
     borderRadius: "8px",
@@ -92,7 +99,7 @@ const ToDoList = (props: DoToListPropType): JSX.Element => {
       <AddItemForm addItem={addTaskButtonHandler} />
 
       <List>
-        {props.tasks.map((t) => {
+        {tasks.map((t) => {
           const removeButtonHandler = () => {
             props.removeTask(t.id, props.toDoListId);
           };
@@ -169,5 +176,5 @@ const ToDoList = (props: DoToListPropType): JSX.Element => {
       </div>
     </div>
   );
-};
+});
 export { ToDoList };
