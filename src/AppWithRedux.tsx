@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useReducer, useState } from "react";
+import React, { ChangeEvent, useCallback, useReducer, useState } from "react";
 import "./App.css";
 import { ToDoList, filterType } from "./components/ToDoList";
 import { v1 } from "uuid";
@@ -61,9 +61,9 @@ function AppWithRedux(): JSX.Element {
 
   const dispatch = useDispatch();
 
-  const task = useSelector<AppRootStateType, useStateTaskType>(
-    (state) => state.task
-  );
+  // const task = useSelector<AppRootStateType, useStateTaskType>(
+  //   (state) => state.task
+  // );
 
   const themeMode = isDarkMode ? "dark" : "light";
 
@@ -99,9 +99,12 @@ function AppWithRedux(): JSX.Element {
   const deleteToDoList = (toDoListId: string) => {
     dispatch(DeleteToDoListAC(toDoListId));
   };
-  const addNewToDoList = (title: string) => {
-    dispatch(AddToDoListAC(title));
-  };
+  const addNewToDoList = useCallback(
+    (title: string) => {
+      dispatch(AddToDoListAC(title));
+    },
+    [dispatch]
+  );
   const changeTaskTitle = (id: string, title: string, toDoListId: string) => {
     dispatch(changeTaskTitleActionCreator(id, title, toDoListId));
   };
@@ -124,10 +127,10 @@ function AppWithRedux(): JSX.Element {
           return taskList;
       }
     };
-    let filtredTask: Array<tasksType> = getFiltredTaskForRender(
-      task[t.id],
-      t.filter
-    );
+    // let filtredTask: Array<tasksType> = getFiltredTaskForRender(
+    //   task[t.id],
+    //   t.filter
+    // );
     const changeFilter = (status: filterType, toDoListId: string) => {
       dispatch(ChangeFilterAC(status, toDoListId));
     };
@@ -172,7 +175,7 @@ function AppWithRedux(): JSX.Element {
               >
                 <Menu />
               </IconButton>
-              <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+              <Typography variant="h6" component="span" sx={{ flexGrow: 1 }}>
                 ToDoLists
               </Typography>
               <FormGroup>

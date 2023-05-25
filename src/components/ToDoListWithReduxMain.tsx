@@ -1,4 +1,4 @@
-import { ChangeEvent, KeyboardEvent, useState } from "react";
+import { ChangeEvent, KeyboardEvent, useCallback, useState } from "react";
 import s from "./ToDoList.module.css";
 import { AddItemForm } from "./AddItemForm/AddItemForm";
 import { EditableSpan } from "./EditableSpan/EditableSpan";
@@ -52,9 +52,12 @@ export const ToDoListWithRedux: React.FC<DoToListPropType> = ({ toDoList }) => {
     }
   });
 
-  const addTaskButtonHandler = (title: string): void => {
-    dispatch(addTaskActionCreator(title, id));
-  };
+  const addTaskButtonHandler = useCallback(
+    (title: string): void => {
+      dispatch(addTaskActionCreator(title, id));
+    },
+    [dispatch]
+  );
   const buttonFilterStyle = {
     marginLeft: "4px",
     borderRadius: "8px",
@@ -127,6 +130,7 @@ export const ToDoListWithRedux: React.FC<DoToListPropType> = ({ toDoList }) => {
             <div
               style={t.isDone ? { opacity: 0.6 } : { opacity: 1 }}
               className={s.flexStyle}
+              key={t.id}
             >
               <ListItem
                 disablePadding

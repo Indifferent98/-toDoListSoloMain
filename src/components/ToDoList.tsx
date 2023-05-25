@@ -111,6 +111,7 @@ const ToDoList = (props: DoToListPropType): JSX.Element => {
             <div
               style={t.isDone ? { opacity: 0.6 } : { opacity: 1 }}
               className={s.flexStyle}
+              key={t.id}
             >
               <ListItem
                 disablePadding

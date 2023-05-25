@@ -9,26 +9,26 @@ import {
   taskReducer,
 } from "./task-reducer";
 
-test("Task should be removed", () => {
-  const initialTasks: useStateTaskType = {
-    ["toDoListId_1"]: [
-      { id: "1", title: "CSS", isDone: false },
-      { id: "2", title: "HTML", isDone: true },
-      { id: "3", title: "React", isDone: false },
-      { id: "4", title: "Node", isDone: false },
-      { id: "5", title: "Hooks", isDone: true },
-      { id: "6", title: "State", isDone: false },
-    ],
-    ["toDoListId_2"]: [
-      { id: "1", title: "Milk", isDone: false },
-      { id: "2", title: "Bread", isDone: true },
-      { id: "3", title: "Beer", isDone: false },
-      { id: "4", title: "Cucumber", isDone: false },
-      { id: "5", title: "Salt", isDone: true },
-      { id: "6", title: "Sugar", isDone: false },
-    ],
-  };
+const initialTasks: useStateTaskType = {
+  ["toDoListId_1"]: [
+    { id: "1", title: "CSS", isDone: false },
+    { id: "2", title: "HTML", isDone: true },
+    { id: "3", title: "React", isDone: false },
+    { id: "4", title: "Node", isDone: false },
+    { id: "5", title: "Hooks", isDone: true },
+    { id: "6", title: "State", isDone: false },
+  ],
+  ["toDoListId_2"]: [
+    { id: "1", title: "Milk", isDone: false },
+    { id: "2", title: "Bread", isDone: true },
+    { id: "3", title: "Beer", isDone: false },
+    { id: "4", title: "Cucumber", isDone: false },
+    { id: "5", title: "Salt", isDone: true },
+    { id: "6", title: "Sugar", isDone: false },
+  ],
+};
 
+test("Task should be removed", () => {
   const result = taskReducer(
     initialTasks,
     removeTaskActionCreator("4", "toDoListId_2")
@@ -42,25 +42,6 @@ test("Task should be removed", () => {
 });
 
 test("CheckBoxStatus should be changed", () => {
-  const initialTasks: useStateTaskType = {
-    ["toDoListId_1"]: [
-      { id: "1", title: "CSS", isDone: false },
-      { id: "2", title: "HTML", isDone: true },
-      { id: "3", title: "React", isDone: false },
-      { id: "4", title: "Node", isDone: false },
-      { id: "5", title: "Hooks", isDone: true },
-      { id: "6", title: "State", isDone: false },
-    ],
-    ["toDoListId_2"]: [
-      { id: "1", title: "Milk", isDone: false },
-      { id: "2", title: "Bread", isDone: true },
-      { id: "3", title: "Beer", isDone: false },
-      { id: "4", title: "Cucumber", isDone: false },
-      { id: "5", title: "Salt", isDone: true },
-      { id: "6", title: "Sugar", isDone: false },
-    ],
-  };
-
   const result = taskReducer(
     initialTasks,
     changeCheckBoxStatusActionCreator("2", false, "toDoListId_2")
@@ -73,25 +54,6 @@ test("CheckBoxStatus should be changed", () => {
 });
 
 test("Task  should be added", () => {
-  const initialTasks: useStateTaskType = {
-    ["toDoListId_1"]: [
-      { id: "1", title: "CSS", isDone: false },
-      { id: "2", title: "HTML", isDone: true },
-      { id: "3", title: "React", isDone: false },
-      { id: "4", title: "Node", isDone: false },
-      { id: "5", title: "Hooks", isDone: true },
-      { id: "6", title: "State", isDone: false },
-    ],
-    ["toDoListId_2"]: [
-      { id: "1", title: "Milk", isDone: false },
-      { id: "2", title: "Bread", isDone: true },
-      { id: "3", title: "Beer", isDone: false },
-      { id: "4", title: "Cucumber", isDone: false },
-      { id: "5", title: "Salt", isDone: true },
-      { id: "6", title: "Sugar", isDone: false },
-    ],
-  };
-
   const result = taskReducer(
     initialTasks,
     addTaskActionCreator("new title string", "toDoListId_2")
@@ -106,25 +68,6 @@ test("Task  should be added", () => {
 });
 
 test("Task title should be changed", () => {
-  const initialTasks: useStateTaskType = {
-    ["toDoListId_1"]: [
-      { id: "1", title: "CSS", isDone: false },
-      { id: "2", title: "HTML", isDone: true },
-      { id: "3", title: "React", isDone: false },
-      { id: "4", title: "Node", isDone: false },
-      { id: "5", title: "Hooks", isDone: true },
-      { id: "6", title: "State", isDone: false },
-    ],
-    ["toDoListId_2"]: [
-      { id: "1", title: "Milk", isDone: false },
-      { id: "2", title: "Bread", isDone: true },
-      { id: "3", title: "Beer", isDone: false },
-      { id: "4", title: "Cucumber", isDone: false },
-      { id: "5", title: "Salt", isDone: true },
-      { id: "6", title: "Sugar", isDone: false },
-    ],
-  };
-
   const result = taskReducer(
     initialTasks,
     changeTaskTitleActionCreator("4", "hello", "toDoListId_2")

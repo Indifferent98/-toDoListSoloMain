@@ -7,10 +7,12 @@ import AddBoxIcon from "@mui/icons-material/AddBox";
 type AddItemFormPropsType = {
   addItem: (title: string) => void;
 };
-export const AddItemForm: FC<AddItemFormPropsType> = (props) => {
+export const AddItemForm: FC<AddItemFormPropsType> = React.memo((props) => {
+  console.log("AddItemForm is called");
   const [error, setError] = useState<boolean>(false);
   const [title, setTitle] = useState<string>("");
   const trimmedTask = title.trim();
+
   const addItemButtonHandler = (): void => {
     if (trimmedTask) {
       props.addItem(title);
@@ -45,8 +47,9 @@ export const AddItemForm: FC<AddItemFormPropsType> = (props) => {
   };
   const inputOnChangeHandler = (e: ChangeEvent<HTMLInputElement>): void => {
     setTitle(e.currentTarget.value);
-
-    setError(false);
+    if (error === true) {
+      setError(false);
+    }
   };
   const minWarningLength: number = 10;
   const maxWarningLength: number = 18;
@@ -86,4 +89,4 @@ export const AddItemForm: FC<AddItemFormPropsType> = (props) => {
       </IconButton>
     </div>
   );
-};
+});
