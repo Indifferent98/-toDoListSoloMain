@@ -82,6 +82,12 @@ function AppWithRedux(): JSX.Element {
     [dispatch]
   );
 
+  const changeTaskTitle = useCallback(
+    (id: string, title: string, toDoListId: string) => {
+      dispatch(changeTaskTitleActionCreator(id, title, toDoListId));
+    },
+    [dispatch]
+  );
   const changeCheckBoxStatus = useCallback(
     (taskId: string, taskIsDone: boolean, toDoListId: string) => {
       dispatch(
@@ -107,12 +113,6 @@ function AppWithRedux(): JSX.Element {
   const addNewToDoList = useCallback(
     (title: string) => {
       dispatch(AddToDoListAC(title));
-    },
-    [dispatch]
-  );
-  const changeTaskTitle = useCallback(
-    (id: string, title: string, toDoListId: string) => {
-      dispatch(changeTaskTitleActionCreator(id, title, toDoListId));
     },
     [dispatch]
   );

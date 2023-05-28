@@ -9,42 +9,49 @@ import React, { ChangeEvent, useCallback } from "react";
 import { EditableSpan } from "../EditableSpan/EditableSpan";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import { tasksType } from "../ToDoList";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { AppRootStateType } from "../../store/Store";
+import {
+  removeTaskActionCreator,
+  changeTaskTitleActionCreator,
+  changeCheckBoxStatusActionCreator,
+} from "../../Reducers/task-reducer";
 
 type TaskPropsType = {
-  removeButtonHandler: (id: string) => void;
-
-  changeCheckBoxStatus: (id: string, checked: boolean) => void;
-  changeTaskTitle: (title: string, id: string) => void;
-
   toDoListId: string;
   id: string;
 };
 
 export const TaskWithRedux = React.memo((props: TaskPropsType) => {
+  const dispatch = useDispatch();
   const task = useSelector<AppRootStateType, tasksType>(
     (state) => state.task[props.toDoListId].filter((t) => t.id === props.id)[0]
   );
-
-  console.log("TaskWithRedux is Called");
-  const removeButtonHandler = useCallback(() => {
-    props.removeButtonHandler(task.id);
-  }, [task.id]);
-
-  const changeTaskStatus = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) => {
-      props.changeCheckBoxStatus(task.id, e.currentTarget.checked);
-    },
-    [task.id]
-  );
+  const removeTask = useCallback(() => {
+    dispatch(removeTaskActionCreator(props.id, props.toDoListId));
+  }, [dispatch, props.id, props.toDoListId]);
 
   const changeTaskTitle = useCallback(
     (title: string) => {
-      props.changeTaskTitle(title, task.id);
+      dispatch(changeTaskTitleActionCreator(props.id, title, props.toDoListId));
     },
-    [props.changeTaskTitle, task.id]
+    [dispatch, props.id, props.toDoListId]
   );
+
+  const changeCheckBoxStatus = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      dispatch(
+        changeCheckBoxStatusActionCreator(
+          props.id,
+          e.currentTarget.checked,
+          props.toDoListId
+        )
+      );
+    },
+    [dispatch, props.id, props.toDoListId]
+  );
+
+  console.log("TaskWithRedux is Called");
 
   return (
     <div
@@ -56,13 +63,13 @@ export const TaskWithRedux = React.memo((props: TaskPropsType) => {
         disablePadding
         key={task.id}
         secondaryAction={
-          <IconButton size="small" onClick={removeButtonHandler}>
+          <IconButton size="small" onClick={removeTask}>
             <DeleteForeverIcon />
           </IconButton>
         }
       >
         <Checkbox
-          onChange={changeTaskStatus}
+          onChange={changeCheckBoxStatus}
           size="small"
           checked={task.isDone}
         />
