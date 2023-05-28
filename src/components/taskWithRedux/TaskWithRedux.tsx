@@ -27,9 +27,9 @@ export const TaskWithRedux = React.memo((props: TaskPropsType) => {
   const task = useSelector<AppRootStateType, tasksType>(
     (state) => state.task[props.toDoListId].filter((t) => t.id === props.id)[0]
   );
-  const removeTask = useCallback(() => {
+  const removeTask = () => {
     dispatch(removeTaskActionCreator(props.id, props.toDoListId));
-  }, [dispatch, props.id, props.toDoListId]);
+  };
 
   const changeTaskTitle = useCallback(
     (title: string) => {
@@ -38,18 +38,15 @@ export const TaskWithRedux = React.memo((props: TaskPropsType) => {
     [dispatch, props.id, props.toDoListId]
   );
 
-  const changeCheckBoxStatus = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) => {
-      dispatch(
-        changeCheckBoxStatusActionCreator(
-          props.id,
-          e.currentTarget.checked,
-          props.toDoListId
-        )
-      );
-    },
-    [dispatch, props.id, props.toDoListId]
-  );
+  const changeCheckBoxStatus = (e: ChangeEvent<HTMLInputElement>) => {
+    dispatch(
+      changeCheckBoxStatusActionCreator(
+        props.id,
+        e.currentTarget.checked,
+        props.toDoListId
+      )
+    );
+  };
 
   console.log("TaskWithRedux is Called");
 
@@ -61,7 +58,6 @@ export const TaskWithRedux = React.memo((props: TaskPropsType) => {
     >
       <ListItem
         disablePadding
-        key={task.id}
         secondaryAction={
           <IconButton size="small" onClick={removeTask}>
             <DeleteForeverIcon />
