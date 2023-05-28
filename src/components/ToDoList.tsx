@@ -56,24 +56,23 @@ const ToDoList = React.memo((props: DoToListPropType): JSX.Element => {
     },
     [props.addTask, props.toDoListId]
   );
-  const buttonFilterStyle = {
-    marginLeft: "4px",
-    borderRadius: "8px",
-    border: "1px solid white",
-  };
 
-  const onClickAllHandler = (): void => {
+  const onClickAllHandler = useCallback((): void => {
     props.changeFilter("all", props.toDoListId);
-  };
-  const onClickActiveHandler = (): void => {
+  }, []);
+
+  const onClickActiveHandler = useCallback((): void => {
     props.changeFilter("active", props.toDoListId);
-  };
-  const onClickCompletedHandler = (): void => {
+  }, []);
+
+  const onClickCompletedHandler = useCallback((): void => {
     props.changeFilter("completed", props.toDoListId);
-  };
-  const deleteToDoListHandler = () => {
+  }, []);
+
+  const deleteToDoListHandler = useCallback(() => {
     props.deleteToDoList(props.toDoListId);
-  };
+  }, [props.toDoListId, props.changeFilter]);
+
   const changeHeadderTitle = useCallback(
     (title: string) => {
       props.changeHeadderTitle(title, props.toDoListId);
@@ -112,6 +111,7 @@ const ToDoList = React.memo((props: DoToListPropType): JSX.Element => {
       >
         <div style={{ display: "flex", marginLeft: "10px" }}>
           <EditableSpan addItem={changeHeadderTitle} title={props.title} />
+
           <Button
             variant="contained"
             size="small"
@@ -140,7 +140,12 @@ const ToDoList = React.memo((props: DoToListPropType): JSX.Element => {
         })}
       </List>
       <div className={s.item}>
-        <Button
+        <ButtonWithMemo
+          color={props.filter === "all" ? "secondary" : "primary"}
+          title={"All"}
+          onClick={onClickAllHandler}
+        />
+        {/* <Button
           disableElevation
           variant="contained"
           size="small"
@@ -149,8 +154,9 @@ const ToDoList = React.memo((props: DoToListPropType): JSX.Element => {
           onClick={onClickAllHandler}
         >
           All
-        </Button>
-        <Button
+        </Button> */}
+
+        {/* <Button
           size="small"
           disableElevation
           style={buttonFilterStyle}
@@ -160,8 +166,13 @@ const ToDoList = React.memo((props: DoToListPropType): JSX.Element => {
           variant="contained"
         >
           Active
-        </Button>
-        <Button
+        </Button> */}
+        <ButtonWithMemo
+          color={props.filter === "active" ? "secondary" : "primary"}
+          title={"Active"}
+          onClick={onClickActiveHandler}
+        />
+        {/* <Button
           variant="contained"
           size="small"
           disableElevation
@@ -170,9 +181,46 @@ const ToDoList = React.memo((props: DoToListPropType): JSX.Element => {
           onClick={onClickCompletedHandler}
         >
           Completed
-        </Button>
+        </Button> */}
+        <ButtonWithMemo
+          color={props.filter === "completed" ? "secondary" : "primary"}
+          title={"Completed"}
+          onClick={onClickCompletedHandler}
+        />
       </div>
     </div>
   );
 });
 export { ToDoList };
+
+type ButtonWithMemoPropsType = {
+  title: string;
+
+  onClick: () => void;
+  color:
+    | "inherit"
+    | "primary"
+    | "secondary"
+    | "success"
+    | "error"
+    | "info"
+    | "warning";
+};
+const ButtonWithMemo = React.memo((props: ButtonWithMemoPropsType) => {
+  console.log(props.title, " is render");
+  const onclickHandler = useCallback(() => {
+    props.onClick();
+  }, []);
+
+  return (
+    <Button
+      disableElevation
+      variant="contained"
+      size="small"
+      color={props.color}
+      onClick={onclickHandler}
+    >
+      {props.title}
+    </Button>
+  );
+});
