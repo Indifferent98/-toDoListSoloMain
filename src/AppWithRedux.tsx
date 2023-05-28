@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useCallback, useReducer, useState } from "react";
 import "./App.css";
-import { ToDoList, filterType } from "./components/ToDoList";
+import { ToDoList, filterType, tasksType } from "./components/ToDoList";
 import { v1 } from "uuid";
 
 import { AddItemForm } from "./components/AddItemForm/AddItemForm";
@@ -41,11 +41,6 @@ export type toDolistType = {
 
   title: string;
   filter: filterType;
-};
-type tasksType = {
-  id: string;
-  isDone: boolean;
-  title: string;
 };
 
 export type useStateTaskType = {

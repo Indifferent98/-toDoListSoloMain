@@ -20,6 +20,7 @@ import {
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import React from "react";
 import { Task } from "./task/Task";
+import { TaskWithRedux } from "./taskWithRedux/TaskWithRedux";
 
 export type tasksType = {
   id: string;
@@ -135,15 +136,23 @@ const ToDoList = React.memo((props: DoToListPropType): JSX.Element => {
       <List>
         {tasks.map((t) => {
           return (
-            <Task
-              key={t.id}
-              id={t.id}
-              isDone={t.isDone}
-              removeButtonHandler={removeButtonHandler}
+            <TaskWithRedux
               changeCheckBoxStatus={changeCheckBoxStatus}
               changeTaskTitle={changeTaskTitle}
-              title={t.title}
+              id={t.id}
+              toDoListId={props.toDoListId}
+              removeButtonHandler={removeButtonHandler}
             />
+
+            // <Task
+            //   key={t.id}
+            //   id={t.id}
+            //   isDone={t.isDone}
+            //   removeButtonHandler={removeButtonHandler}
+            //   changeCheckBoxStatus={changeCheckBoxStatus}
+            //   changeTaskTitle={changeTaskTitle}
+            //   title={t.title}
+            // />
           );
         })}
       </List>
