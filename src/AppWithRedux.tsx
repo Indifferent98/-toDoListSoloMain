@@ -134,7 +134,7 @@ function AppWithRedux(): JSX.Element {
     },
     [dispatch]
   );
-  const applicationToDoLists = toDoList.map((t, i) => {
+  const applicationToDoLists = toDoList.map((t) => {
     // const getFiltredTaskForRender = (
     //   taskList: tasksType[],
     //   filterValue: filterType

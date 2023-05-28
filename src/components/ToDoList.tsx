@@ -12,6 +12,7 @@ import {
 } from "@mui/material";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import React from "react";
+import { Task } from "./task/Task";
 
 export type tasksType = {
   id: string;
@@ -73,9 +74,34 @@ const ToDoList = React.memo((props: DoToListPropType): JSX.Element => {
   const deleteToDoListHandler = () => {
     props.deleteToDoList(props.toDoListId);
   };
-  const changeHeadderTitle = (title: string) => {
-    props.changeHeadderTitle(title, props.toDoListId);
-  };
+  const changeHeadderTitle = useCallback(
+    (title: string) => {
+      props.changeHeadderTitle(title, props.toDoListId);
+    },
+    [props.toDoListId, props.changeHeadderTitle]
+  );
+
+  const changeTaskTitle = useCallback(
+    (title: string, id: string) => {
+      props.changeTaskTitle(id, title, props.toDoListId);
+    },
+    [props.toDoListId]
+  );
+
+  const removeButtonHandler = useCallback(
+    (id: string) => {
+      props.removeTask(id, props.toDoListId);
+    },
+    [props.removeTask, props.toDoListId]
+  );
+
+  const changeCheckBoxStatus = useCallback(
+    (id: string, checked: boolean) => {
+      props.changeCheckBoxStatus(id, checked, props.toDoListId);
+    },
+    [props.changeCheckBoxStatus, props.toDoListId]
+  );
+
   return (
     <div className={styleForDoTolist}>
       <Typography
@@ -100,44 +126,16 @@ const ToDoList = React.memo((props: DoToListPropType): JSX.Element => {
 
       <List>
         {tasks.map((t) => {
-          const removeButtonHandler = () => {
-            props.removeTask(t.id, props.toDoListId);
-          };
-          const changeTaskStatus = (e: ChangeEvent<HTMLInputElement>) => {
-            props.changeCheckBoxStatus(
-              t.id,
-              e.currentTarget.checked,
-              props.toDoListId
-            );
-          };
-          const changeTaskTitle = (title: string) => {
-            props.changeTaskTitle(t.id, title, props.toDoListId);
-          };
-
           return (
-            <div
-              style={t.isDone ? { opacity: 0.6 } : { opacity: 1 }}
-              className={s.flexStyle}
+            <Task
               key={t.id}
-            >
-              <ListItem
-                disablePadding
-                key={t.id}
-                secondaryAction={
-                  <IconButton size="small" onClick={removeButtonHandler}>
-                    <DeleteForeverIcon />
-                  </IconButton>
-                }
-              >
-                <Checkbox
-                  onChange={changeTaskStatus}
-                  size="small"
-                  checked={t.isDone}
-                />
-
-                <EditableSpan title={t.title} addItem={changeTaskTitle} />
-              </ListItem>
-            </div>
+              id={t.id}
+              isDone={t.isDone}
+              removeButtonHandler={removeButtonHandler}
+              changeCheckBoxStatus={changeCheckBoxStatus}
+              changeTaskTitle={changeTaskTitle}
+              title={t.title}
+            />
           );
         })}
       </List>
