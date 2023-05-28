@@ -1,4 +1,11 @@
-import { ChangeEvent, KeyboardEvent, memo, useCallback, useState } from "react";
+import {
+  ChangeEvent,
+  KeyboardEvent,
+  memo,
+  useCallback,
+  useMemo,
+  useState,
+} from "react";
 import s from "./ToDoList.module.css";
 import { AddItemForm } from "./AddItemForm/AddItemForm";
 import { EditableSpan } from "./EditableSpan/EditableSpan";
@@ -43,6 +50,7 @@ const ToDoList = React.memo((props: DoToListPropType): JSX.Element => {
   console.log("todolist is called");
   let styleForDoTolist = "ToDoList1";
   let tasks = props.tasks;
+
   if (props.filter === "active") {
     tasks = props.tasks.filter((t) => !t.isDone);
   }
@@ -59,15 +67,15 @@ const ToDoList = React.memo((props: DoToListPropType): JSX.Element => {
 
   const onClickAllHandler = useCallback((): void => {
     props.changeFilter("all", props.toDoListId);
-  }, []);
+  }, [props.changeFilter, props.toDoListId]);
 
   const onClickActiveHandler = useCallback((): void => {
     props.changeFilter("active", props.toDoListId);
-  }, []);
+  }, [props.changeFilter, props.toDoListId]);
 
   const onClickCompletedHandler = useCallback((): void => {
     props.changeFilter("completed", props.toDoListId);
-  }, []);
+  }, [props.changeFilter, props.toDoListId]);
 
   const deleteToDoListHandler = useCallback(() => {
     props.deleteToDoList(props.toDoListId);
