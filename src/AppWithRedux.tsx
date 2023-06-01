@@ -57,7 +57,8 @@ function AppWithRedux(): JSX.Element {
   const dispatch = useDispatch();
 
   const task = useSelector<AppRootStateType, useStateTaskType>(
-    (state) => state.task
+    (state) => state.task,
+    (prev, next) => prev === next
   );
 
   const themeMode = isDarkMode ? "dark" : "light";
