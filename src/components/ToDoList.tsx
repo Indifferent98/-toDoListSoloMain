@@ -136,17 +136,15 @@ const ToDoList = React.memo((props: DoToListPropType): JSX.Element => {
       <List>
         {tasks.map((t) => {
           return (
-            <TaskWithRedux key={t.id} id={t.id} toDoListId={props.toDoListId} />
+            // <TaskWithRedux key={t.id} id={t.id} toDoListId={props.toDoListId} />
 
-            // <Task
-            //   key={t.id}
-            //   id={t.id}
-            //   isDone={t.isDone}
-            //   removeButtonHandler={removeButtonHandler}
-            //   changeCheckBoxStatus={changeCheckBoxStatus}
-            //   changeTaskTitle={changeTaskTitle}
-            //   title={t.title}
-            // />
+            <Task
+              key={t.id}
+              task={t}
+              removeButtonHandler={removeButtonHandler}
+              changeCheckBoxStatus={changeCheckBoxStatus}
+              changeTaskTitle={changeTaskTitle}
+            />
           );
         })}
       </List>

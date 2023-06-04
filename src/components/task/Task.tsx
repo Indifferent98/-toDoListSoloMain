@@ -8,44 +8,49 @@ import {
 import React, { ChangeEvent, useCallback } from "react";
 import { EditableSpan } from "../EditableSpan/EditableSpan";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-type TaskPropsType = {
+type taskType = {
   id: string;
-  removeButtonHandler: (id: string) => void;
   isDone: boolean;
+  title: string;
+};
+type TaskPropsType = {
+  removeButtonHandler: (id: string) => void;
+
   changeCheckBoxStatus: (id: string, checked: boolean) => void;
   changeTaskTitle: (title: string, id: string) => void;
-  title: string;
+
+  task: taskType;
 };
 
 export const Task = React.memo((props: TaskPropsType) => {
   console.log("task is Called");
   const removeButtonHandler = useCallback(() => {
-    props.removeButtonHandler(props.id);
-  }, [props.id]);
+    props.removeButtonHandler(props.task.id);
+  }, [props.task.id]);
 
   const changeTaskStatus = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
-      props.changeCheckBoxStatus(props.id, e.currentTarget.checked);
+      props.changeCheckBoxStatus(props.task.id, e.currentTarget.checked);
     },
-    [props.id]
+    [props.task.id]
   );
 
   const changeTaskTitle = useCallback(
     (title: string) => {
-      props.changeTaskTitle(title, props.id);
+      props.changeTaskTitle(title, props.task.id);
     },
-    [props.changeTaskTitle, props.id]
+    [props.changeTaskTitle, props.task.id]
   );
 
   return (
     <div
-      style={props.isDone ? { opacity: 0.6 } : { opacity: 1 }}
+      style={props.task.isDone ? { opacity: 0.6 } : { opacity: 1 }}
       // className={s.flexStyle}
-      key={props.id}
+      key={props.task.id}
     >
       <ListItem
         disablePadding
-        key={props.id}
+        key={props.task.id}
         secondaryAction={
           <IconButton size="small" onClick={removeButtonHandler}>
             <DeleteForeverIcon />
@@ -55,10 +60,10 @@ export const Task = React.memo((props: TaskPropsType) => {
         <Checkbox
           onChange={changeTaskStatus}
           size="small"
-          checked={props.isDone}
+          checked={props.task.isDone}
         />
 
-        <EditableSpan title={props.title} addItem={changeTaskTitle} />
+        <EditableSpan title={props.task.title} addItem={changeTaskTitle} />
       </ListItem>
     </div>
   );
