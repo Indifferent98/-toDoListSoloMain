@@ -5,16 +5,9 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import { TaskWithRedux } from "./TaskWithRedux";
 import { TaskWithReduxProviderDecorator } from "../../store/TaskWithReduxStoreProviderDecorator";
 import { ListItem, IconButton, Checkbox } from "@mui/material";
-import { useCallback, ChangeEvent } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  removeTaskActionCreator,
-  changeTaskTitleActionCreator,
-  changeCheckBoxStatusActionCreator,
-} from "../../Reducers/task-reducer";
-import { AppRootStateType } from "../../store/Store";
+
 import { EditableSpan } from "../EditableSpan/EditableSpan";
-import { tasksType } from "../ToDoListWithReduxMain";
+
 // More on how to set up stories at: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 const meta: Meta<typeof TaskWithRedux> = {
   title: "Todolists/Task",
