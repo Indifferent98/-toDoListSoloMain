@@ -131,25 +131,6 @@ function AppWithRedux(): JSX.Element {
     [dispatch]
   );
   const applicationToDoLists = toDoList.map((t) => {
-    // const getFiltredTaskForRender = (
-    //   taskList: tasksType[],
-    //   filterValue: filterType
-    // ) => {
-    //   switch (filterValue) {
-    //     case "active":
-    //       return taskList.filter((t) => !t.isDone);
-    //     case "completed":
-    //       return taskList.filter((t) => t.isDone);
-
-    //     default:
-    //       return taskList;
-    //   }
-    // };
-    // let filtredTask: Array<tasksType> = getFiltredTaskForRender(
-    //   task[t.id],
-    //   t.filter
-    // );
-
     return (
       <Grid key={t.id} item>
         <Paper elevation={5}>
