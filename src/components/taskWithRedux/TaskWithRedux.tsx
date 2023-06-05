@@ -51,11 +51,7 @@ export const TaskWithRedux = React.memo((props: TaskPropsType) => {
   console.log("TaskWithRedux is Called");
 
   return (
-    <div
-      style={task.isDone ? { opacity: 0.6 } : { opacity: 1 }}
-      // className={s.flexStyle}
-      key={task.id}
-    >
+    <div style={task.isDone ? { opacity: 0.6 } : { opacity: 1 }} key={task.id}>
       <ListItem
         disablePadding
         secondaryAction={

@@ -2,8 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 
 import { action } from "@storybook/addon-actions";
 import { Menu } from "@mui/icons-material";
-import { Provider } from "react-redux";
-import { store } from "./store/Store";
+
 import AppWithRedux, { toDolistType, useStateTaskType } from "./AppWithRedux";
 import { ReduxStoreProviderDecorator } from "./store/ReduxStoreProviderDecorator";
 import { ThemeProvider } from "@emotion/react";
@@ -72,23 +71,24 @@ export const AppWithReduxDarkModeStory: Story = {
         { title: "Water", id: "ergdf", isDone: false },
       ],
     };
+
     const applicationToDoLists = toDoLists.map((t) => {
       return (
         <Grid key={t.id} item>
           <Paper elevation={5}>
             <ToDoList
-              deleteToDoList={() => {}}
+              deleteToDoList={action("toDoList has been deleted")}
               key={t.id}
               toDoListId={t.id}
-              changeCheckBoxStatus={() => {}}
-              changeFilter={() => {}}
-              removeTask={() => {}}
+              changeCheckBoxStatus={action("checkboxstatus has been changed")}
+              changeFilter={action("filter has been deleted")}
+              removeTask={action("task has been removed")}
               title={t.title}
               tasks={task[t.id]}
-              addTask={() => {}}
+              addTask={action("task has been added")}
               filter={t.filter}
-              changeTaskTitle={() => {}}
-              changeHeadderTitle={() => {}}
+              changeTaskTitle={action("task title has been changed")}
+              changeHeadderTitle={action("headder title has been changed")}
             />
           </Paper>
         </Grid>
@@ -115,7 +115,12 @@ export const AppWithReduxDarkModeStory: Story = {
                 </Typography>
                 <FormGroup>
                   <FormControlLabel
-                    control={<Checkbox checked={true} />}
+                    control={
+                      <Checkbox
+                        onClick={action("theme is changed")}
+                        checked={true}
+                      />
+                    }
                     label={"Dark mode" ? "Dark mode" : "Light mode"}
                   />
                 </FormGroup>

@@ -13,9 +13,10 @@ const meta: Meta<typeof Task> = {
   args: {
     changeCheckBoxStatus: action("changeCheckBoxStatus"),
     changeTaskTitle: action("changeTaskTitle"),
-    task: { id: "taskId", isDone: true, title: "Redux" },
     removeButtonHandler: action("removeButtonHandler"),
+    task: { id: "taskId", isDone: true, title: "Redux" },
   },
+  decorators: [(fn) => <div style={{ width: "150px" }}>{fn()}</div>],
 };
 
 export default meta;
