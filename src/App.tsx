@@ -92,6 +92,7 @@ function App(): JSX.Element {
       [toDoListId]: task[toDoListId].filter((t) => t.id !== id),
     });
   };
+
   const changeCheckBoxStatus = (
     taskId: string,
     taskIsDone: boolean,

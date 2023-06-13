@@ -3,7 +3,10 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
 import { Menu } from "@mui/icons-material";
 
-import AppWithRedux, { toDolistType, useStateTaskType } from "./AppWithRedux";
+import AppWithRedux, {
+  toDolistType,
+  useStateTaskType,
+} from "./AppWithRedux/AppWithRedux";
 import { ReduxStoreProviderDecorator } from "./store/ReduxStoreProviderDecorator";
 import { ThemeProvider } from "@emotion/react";
 import {

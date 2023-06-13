@@ -1,7 +1,7 @@
 import React from "react";
 import { Provider } from "react-redux";
 import { AppRootStateType, store } from "./Store";
-import { toDolistType, useStateTaskType } from "../AppWithRedux";
+import { toDolistType, useStateTaskType } from "../AppWithRedux/AppWithRedux";
 import { combineReducers, legacy_createStore } from "redux";
 import { taskReducer } from "../Reducers/task-reducer";
 import { toDoListReducer } from "../Reducers/toDoList-reducer";

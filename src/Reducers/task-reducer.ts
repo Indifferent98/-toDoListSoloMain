@@ -7,7 +7,7 @@ import {
 import React from "react";
 
 import { v1 } from "uuid";
-import { useStateTaskType } from "../AppWithRedux";
+import { useStateTaskType } from "../AppWithRedux/AppWithRedux";
 
 type removeTaskActionCreatorType = {
   type: "REMOVE-TASK";
