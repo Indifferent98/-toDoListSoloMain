@@ -120,7 +120,6 @@ const ToDoList = React.memo((props: DoToListPropType): JSX.Element => {
       >
         <div style={{ display: "flex", marginLeft: "10px" }}>
           <EditableSpan addItem={changeHeadderTitle} title={props.title} />
-
           <Button
             variant="contained"
             size="small"
@@ -154,43 +153,13 @@ const ToDoList = React.memo((props: DoToListPropType): JSX.Element => {
           title={"All"}
           onClick={onClickAllHandler}
         />
-        {/* <Button
-          disableElevation
-          variant="contained"
-          size="small"
-          style={buttonFilterStyle}
-          color={props.filter === "all" ? "secondary" : "primary"}
-          onClick={onClickAllHandler}
-        >
-          All
-        </Button> */}
 
-        {/* <Button
-          size="small"
-          disableElevation
-          style={buttonFilterStyle}
-          color={props.filter === "active" ? "secondary" : "primary"}
-          // className={props.filter === "active" ? s.buttonStyleActivity : ""}
-          onClick={onClickActiveHandler}
-          variant="contained"
-        >
-          Active
-        </Button> */}
         <ButtonWithMemo
           color={props.filter === "active" ? "secondary" : "primary"}
           title={"Active"}
           onClick={onClickActiveHandler}
         />
-        {/* <Button
-          variant="contained"
-          size="small"
-          disableElevation
-          style={buttonFilterStyle}
-          color={props.filter === "completed" ? "secondary" : "primary"}
-          onClick={onClickCompletedHandler}
-        >
-          Completed
-        </Button> */}
+
         <ButtonWithMemo
           color={props.filter === "completed" ? "secondary" : "primary"}
           title={"Completed"}
