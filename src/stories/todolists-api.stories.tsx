@@ -1,6 +1,7 @@
 import { dividerClasses } from "@mui/material";
 import axios from "axios";
 import React, { ChangeEvent, useEffect, useState } from "react";
+import { TodolistApi } from "../api/todolist-api";
 
 export default {
   title: "API",
@@ -19,8 +20,7 @@ export const GetToDoLists = () => {
   const [state, setState] = useState<any>(null);
 
   useEffect(() => {
-    axios.get(apiBaseUrl + "todo-lists", settings).then((res) => {
-      debugger;
+    TodolistApi.getToDoLists().then((res) => {
       setState(res.data);
     });
   }, []);
@@ -48,15 +48,7 @@ export const CreateToDoList = () => {
   // }, []);
 
   const createToDo = () => {
-    axios
-      .post(
-        apiBaseUrl + "todo-lists",
-        {
-          title: todoListTitle,
-        },
-        settings
-      )
-      .then((res) => setState(res.data));
+    TodolistApi.createToDoList(todoListTitle).then((res) => setState(res.data));
     setToDoListTitle("");
   };
   const [todoListTitle, setToDoListTitle] = useState("");
@@ -87,13 +79,9 @@ export const UpdateToDoListTitle = () => {
   const [todolistid, setTodolistid] = useState("");
   const [newTodolistTitle, setNewTodolistTitle] = useState("");
   const updToDoListTitle = () => {
-    axios
-      .put(
-        apiBaseUrl + "todo-lists/" + todolistid,
-        { title: newTodolistTitle },
-        settings
-      )
-      .then((res) => setState(res));
+    TodolistApi.updateToDoListTitle(todolistid, newTodolistTitle).then((res) =>
+      setState(res)
+    );
   };
 
   const onchangehandler1 = (e: ChangeEvent<HTMLInputElement>) => {
@@ -130,10 +118,7 @@ export const DeleteToDoList = () => {
 
   // useEffect(() => {}, []);
   const delList = () => {
-    axios
-      .delete(apiBaseUrl + "todo-lists/" + todolistid, settings)
-      .then((res) => setState(res));
-
+    TodolistApi.deleteToDoList(todolistid).then((res) => setState(res));
     setTodolistid("");
   };
   const onchangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -149,7 +134,7 @@ export const DeleteToDoList = () => {
           type="text"
           placeholder="todolistid"
           value={todolistid}
-        />{" "}
+        />
         <button onClick={delList}>+</button>
       </div>
       {JSON.stringify(state)}
