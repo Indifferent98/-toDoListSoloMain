@@ -7,15 +7,6 @@ export default {
   title: "API",
 };
 
-const settings = {
-  withCredentials: true,
-  headers: {
-    "API-KEY": "2ca10f7e-8d65-43a0-a381-2411fab70789",
-  },
-};
-
-const apiBaseUrl = "https://social-network.samuraijs.com/api/1.1/";
-
 export const GetToDoLists = () => {
   const [state, setState] = useState<any>(null);
 
