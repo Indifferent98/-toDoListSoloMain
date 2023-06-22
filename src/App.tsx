@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useState } from "react";
-import "./App.css";
+
 import { ToDoList, filterType } from "./components/ToDoList";
 import { v1 } from "uuid";
 
@@ -240,24 +240,24 @@ function App(): JSX.Element {
   };
 
   const applicationToDoLists = toDoList.map((t) => {
-    const getFiltredTaskForRender = (
-      taskList: taskType[],
-      filterValue: filterType
-    ) => {
-      switch (filterValue) {
-        case "active":
-          return taskList.filter((t) => t.status === TaskStatuses.New);
-        case "completed":
-          return taskList.filter((t) => t.status === TaskStatuses.Completed);
+    // const getFiltredTaskForRender = (
+    //   taskList: taskType[],
+    //   filterValue: filterType
+    // ) => {
+    //   switch (filterValue) {
+    //     case "active":
+    //       return taskList.filter((t) => t.status === TaskStatuses.New);
+    //     case "completed":
+    //       return taskList.filter((t) => t.status === TaskStatuses.Completed);
 
-        default:
-          return taskList;
-      }
-    };
-    let filtredTask: Array<taskType> = getFiltredTaskForRender(
-      task[t.id],
-      t.filter
-    );
+    //     default:
+    //       return taskList;
+    //   }
+    // };
+    // let filtredTask: Array<taskType> = getFiltredTaskForRender(
+    //   task[t.id],
+    //   t.filter
+    // );
     const changeFilter = (status: filterType, toDoListId: string) => {
       setToDoList(
         toDoList.map((t) =>
@@ -277,7 +277,7 @@ function App(): JSX.Element {
             changeFilter={changeFilter}
             removeTask={removeTask}
             title={t.title}
-            tasks={filtredTask}
+            tasks={task[t.id]}
             addTask={addTask}
             filter={t.filter}
             changeTaskTitle={changeTaskTitle}

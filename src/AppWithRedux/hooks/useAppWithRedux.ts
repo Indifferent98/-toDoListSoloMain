@@ -1,5 +1,6 @@
+import { TodolistApi } from "./../../api/todolist-api";
 import { createTheme } from "@mui/material";
-import { useState, useCallback, ChangeEvent } from "react";
+import { useState, useCallback, ChangeEvent, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   removeTaskActionCreator,
@@ -14,6 +15,7 @@ import {
   ChangeHeadderTitleAC,
   ChangeFilterAC,
   todoListDomainType,
+  setTodoListAC,
 } from "../../Reducers/toDoList-reducer";
 import { filterType } from "../../components/ToDoListWithReduxMain";
 import { AppRootStateType } from "../../store/Store";
@@ -33,6 +35,12 @@ export const useAppWithRedux = () => {
     (state) => state.task,
     (prev, next) => prev === next
   );
+  useEffect(() => {
+    TodolistApi.getToDoLists().then((res) => {
+      debugger;
+      dispatch(setTodoListAC(res.data));
+    });
+  }, []);
 
   const themeMode = isDarkMode ? "dark" : "light";
 

@@ -8,13 +8,14 @@ type ActionsType =
   | DeleteToDoListActionType
   | AddToDoListActionType
   | ChangeHeadderTitleActionType
-  | changeFilterActionType;
+  | changeFilterActionType
+  | setTodoListACType;
 
 export const DELETE_TO_DO_LIST = "DELETE-TO-DO-LIST";
 export const ADD_NEW_TO_DO_LIST = "ADD-NEW-TO-DO-LIST";
 export const CHANGE_HEADDER_TITLE = "CHANGE-HEADDER-TITLE";
 export const CHANGE_FILTER = "CHANGE-FILTER";
-
+export const SET_TODOLIST = "SET-TODOLIST";
 export const DeleteToDoListAC = (
   toDoListId: string
 ): DeleteToDoListActionType => ({
@@ -68,6 +69,16 @@ export type changeFilterActionType = {
   toDoListId: string;
   type: "CHANGE-FILTER";
 };
+
+export type setTodoListACType = {
+  type: "SET-TODOLIST";
+  todoList: toDoListType[];
+};
+export const setTodoListAC = (todoList: toDoListType[]): setTodoListACType => ({
+  type: SET_TODOLIST,
+  todoList,
+});
+
 export type todoListDomainType = toDoListType & { filter: filterType };
 const intialToDoList: todoListDomainType[] = [];
 
@@ -98,6 +109,14 @@ export const toDoListReducer = (
       return state.map((t) =>
         t.id === action.toDoListId ? { ...t, filter: action.filter } : t
       );
+
+    case SET_TODOLIST:
+      debugger;
+
+      const newLists: todoListDomainType[] = [
+        ...action.todoList.map((t) => ({ ...t, filter: "all" as filterType })),
+      ];
+      return newLists;
 
     default:
       return state;

@@ -3,6 +3,8 @@ import {
   AddToDoListActionType,
   DELETE_TO_DO_LIST,
   DeleteToDoListActionType,
+  SET_TODOLIST,
+  setTodoListACType,
 } from "./toDoList-reducer";
 import React from "react";
 
@@ -39,7 +41,8 @@ type actionTypes =
   | addTaskActionCreatorType
   | changeTaskTitleActionCreatorType
   | AddToDoListActionType
-  | DeleteToDoListActionType;
+  | DeleteToDoListActionType
+  | setTodoListACType;
 
 export const REMOVE_TASK = "REMOVE-TASK";
 export const CHANGE_CHECK_BOX_STATUS = "CHANGE-CHECK-BOX-STATUS";
@@ -110,6 +113,10 @@ export const taskReducer = (
 
     case DELETE_TO_DO_LIST:
       delete state[action.toDoListId];
+      return state;
+
+    case SET_TODOLIST:
+      action.todoList.forEach((t) => (state[t.id] = []));
       return state;
 
     default:
