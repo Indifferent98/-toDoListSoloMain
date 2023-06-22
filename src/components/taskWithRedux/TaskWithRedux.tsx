@@ -8,7 +8,7 @@ import {
 import React, { ChangeEvent, useCallback } from "react";
 import { EditableSpan } from "../EditableSpan/EditableSpan";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import { tasksType } from "../ToDoList";
+
 import { useDispatch, useSelector } from "react-redux";
 import { AppRootStateType } from "../../store/Store";
 import {
@@ -16,6 +16,7 @@ import {
   changeTaskTitleActionCreator,
   changeCheckBoxStatusActionCreator,
 } from "../../Reducers/task-reducer";
+import { TaskStatuses, taskType } from "../../api/todolist-api";
 
 type TaskPropsType = {
   toDoListId: string;
@@ -24,7 +25,7 @@ type TaskPropsType = {
 
 export const TaskWithRedux = React.memo((props: TaskPropsType) => {
   const dispatch = useDispatch();
-  const task = useSelector<AppRootStateType, tasksType>(
+  const task = useSelector<AppRootStateType, taskType>(
     (state) => state.task[props.toDoListId].filter((t) => t.id === props.id)[0]
   );
   const removeTask = () => {
@@ -51,7 +52,14 @@ export const TaskWithRedux = React.memo((props: TaskPropsType) => {
   console.log("TaskWithRedux is Called");
 
   return (
-    <div style={task.isDone ? { opacity: 0.6 } : { opacity: 1 }} key={task.id}>
+    <div
+      style={
+        task.status === TaskStatuses.Completed
+          ? { opacity: 0.6 }
+          : { opacity: 1 }
+      }
+      key={task.id}
+    >
       <ListItem
         disablePadding
         secondaryAction={
@@ -63,7 +71,7 @@ export const TaskWithRedux = React.memo((props: TaskPropsType) => {
         <Checkbox
           onChange={changeCheckBoxStatus}
           size="small"
-          checked={task.isDone}
+          checked={task.status === TaskStatuses.Completed ? true : false}
         />
 
         <EditableSpan title={task.title} addItem={changeTaskTitle} />

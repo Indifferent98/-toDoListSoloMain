@@ -7,6 +7,8 @@ import { TaskWithReduxProviderDecorator } from "../../store/TaskWithReduxStorePr
 import { ListItem, IconButton, Checkbox } from "@mui/material";
 
 import { EditableSpan } from "../EditableSpan/EditableSpan";
+import { useStateTaskType } from "../../App";
+import { TaskPriorities, TaskStatuses } from "../../api/todolist-api";
 
 // More on how to set up stories at: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 const meta: Meta<typeof TaskWithRedux> = {
@@ -27,15 +29,41 @@ type Story = StoryObj<typeof TaskWithRedux>;
 
 export const TaskWithReduxIsNotDoneStory: Story = {
   render: () => {
-    const task = {
+    const task: useStateTaskType = {
       "123": [
-        { id: "4444", title: "React", isDone: true },
-        { id: "666", title: "Redux", isDone: false },
+        {
+          id: "4444",
+          title: "React",
+          status: TaskStatuses.Completed,
+          addedDate: "",
+          deadline: "",
+          description: "",
+          order: 0,
+          priority: TaskPriorities.Low,
+          startDate: "",
+          todoListId: "123",
+        },
+        {
+          id: "666",
+          title: "Redux",
+          status: TaskStatuses.New,
+          addedDate: "",
+          deadline: "",
+          description: "",
+          order: 0,
+          priority: TaskPriorities.Low,
+          startDate: "",
+          todoListId: "123",
+        },
       ],
     };
     return (
       <div
-        style={task["123"][1].isDone ? { opacity: 0.6 } : { opacity: 1 }}
+        style={
+          task["123"][1].status === TaskStatuses.Completed
+            ? { opacity: 0.6 }
+            : { opacity: 1 }
+        }
         key={task["123"][1].id}
       >
         <ListItem
@@ -49,7 +77,9 @@ export const TaskWithReduxIsNotDoneStory: Story = {
           <Checkbox
             onChange={action("checkbox status has been changed")}
             size="small"
-            checked={task["123"][1].isDone}
+            checked={
+              task["123"][1].status === TaskStatuses.Completed ? true : false
+            }
           />
 
           <EditableSpan
@@ -66,13 +96,39 @@ export const TaskWithReduxIsDoneStory: Story = {
   render: () => {
     const task = {
       "123": [
-        { id: "4444", title: "React", isDone: true },
-        { id: "666", title: "Redux", isDone: false },
+        {
+          id: "4444",
+          title: "React",
+          status: TaskStatuses.Completed,
+          addedDate: "",
+          deadline: "",
+          description: "",
+          order: 0,
+          priority: TaskPriorities.Low,
+          startDate: "",
+          todoListId: "123",
+        },
+        {
+          id: "666",
+          title: "Redux",
+          status: TaskStatuses.New,
+          addedDate: "",
+          deadline: "",
+          description: "",
+          order: 0,
+          priority: TaskPriorities.Low,
+          startDate: "",
+          todoListId: "123",
+        },
       ],
     };
     return (
       <div
-        style={task["123"][0].isDone ? { opacity: 0.6 } : { opacity: 1 }}
+        style={
+          task["123"][0].status === TaskStatuses.Completed
+            ? { opacity: 0.6 }
+            : { opacity: 1 }
+        }
         key={task["123"][0].id}
       >
         <ListItem
@@ -86,7 +142,9 @@ export const TaskWithReduxIsDoneStory: Story = {
           <Checkbox
             onChange={action("checkbox status has been changed")}
             size="small"
-            checked={task["123"][0].isDone}
+            checked={
+              task["123"][0].status === TaskStatuses.Completed ? true : false
+            }
           />
 
           <EditableSpan

@@ -1,5 +1,5 @@
 import { dividerClasses } from "@mui/material";
-import axios from "axios";
+
 import React, { ChangeEvent, useEffect, useState } from "react";
 import { TodolistApi } from "../api/todolist-api";
 
@@ -25,18 +25,6 @@ export const GetToDoLists = () => {
 
 export const CreateToDoList = () => {
   const [state, setState] = useState<any>(null);
-
-  // useEffect(() => {
-  //   axios
-  //     .post(
-  //       apiBaseUrl + "todo-lists",
-  //       {
-  //         title: "hello",
-  //       },
-  //       settings
-  //     )
-  //     .then((res) => setState(res.data));
-  // }, []);
 
   const createToDo = () => {
     TodolistApi.createToDoList(todoListTitle).then((res) => setState(res.data));

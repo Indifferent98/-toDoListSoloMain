@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useCallback, useReducer, useState } from "react";
 import "./App.css";
-import { ToDoList, filterType, tasksType } from "../components/ToDoList";
+import { ToDoList, filterType } from "../components/ToDoList";
 
 import { AddItemForm } from "../components/AddItemForm/AddItemForm";
 import {
@@ -21,17 +21,7 @@ import Checkbox from "@mui/material/Checkbox";
 import { Menu } from "@mui/icons-material";
 
 import { useAppWithRedux } from "./hooks/useAppWithRedux";
-
-export type toDolistType = {
-  id: string;
-
-  title: string;
-  filter: filterType;
-};
-
-export type useStateTaskType = {
-  [id: string]: tasksType[];
-};
+import { taskType } from "../api/todolist-api";
 
 function AppWithRedux(): JSX.Element {
   const {

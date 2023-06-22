@@ -1,30 +1,163 @@
 import React from "react";
-import { useStateTaskType } from "../App";
-import { v1 } from "uuid";
+
 import {
   addTaskActionCreator,
   changeCheckBoxStatusActionCreator,
   changeTaskTitleActionCreator,
   removeTaskActionCreator,
   taskReducer,
+  useStateTaskType,
 } from "./task-reducer";
+import { TaskPriorities } from "../api/todolist-api";
 
 const initialTasks: useStateTaskType = {
   ["toDoListId_1"]: [
-    { id: "1", title: "CSS", isDone: false },
-    { id: "2", title: "HTML", isDone: true },
-    { id: "3", title: "React", isDone: false },
-    { id: "4", title: "Node", isDone: false },
-    { id: "5", title: "Hooks", isDone: true },
-    { id: "6", title: "State", isDone: false },
+    {
+      id: "1",
+      title: "CSS",
+      status: 0,
+      addedDate: "",
+      deadline: "",
+      description: "",
+      order: 0,
+      priority: TaskPriorities.Low,
+      startDate: "",
+      todoListId: "toDoListId_1",
+    },
+    {
+      id: "2",
+      title: "HTML",
+      status: 2,
+      addedDate: "",
+      deadline: "",
+      description: "",
+      order: 0,
+      priority: TaskPriorities.Low,
+      startDate: "",
+      todoListId: "toDoListId_1",
+    },
+    {
+      id: "3",
+      title: "React",
+      status: 0,
+      addedDate: "",
+      deadline: "",
+      description: "",
+      order: 0,
+      priority: TaskPriorities.Low,
+      startDate: "",
+      todoListId: "toDoListId_1",
+    },
+    {
+      id: "4",
+      title: "Node",
+      status: 2,
+      addedDate: "",
+      deadline: "",
+      description: "",
+      order: 0,
+      priority: TaskPriorities.Low,
+      startDate: "",
+      todoListId: "toDoListId_1",
+    },
+    {
+      id: "5",
+      title: "Hooks",
+      status: 2,
+      addedDate: "",
+      deadline: "",
+      description: "",
+      order: 0,
+      priority: TaskPriorities.Low,
+      startDate: "",
+      todoListId: "toDoListId_1",
+    },
+    {
+      id: "6",
+      title: "State",
+      status: 0,
+      addedDate: "",
+      deadline: "",
+      description: "",
+      order: 0,
+      priority: TaskPriorities.Low,
+      startDate: "",
+      todoListId: "toDoListId_1",
+    },
   ],
   ["toDoListId_2"]: [
-    { id: "1", title: "Milk", isDone: false },
-    { id: "2", title: "Bread", isDone: true },
-    { id: "3", title: "Beer", isDone: false },
-    { id: "4", title: "Cucumber", isDone: false },
-    { id: "5", title: "Salt", isDone: true },
-    { id: "6", title: "Sugar", isDone: false },
+    {
+      id: "1",
+      title: "Milk",
+      status: 0,
+      addedDate: "",
+      deadline: "",
+      description: "",
+      order: 0,
+      priority: TaskPriorities.Low,
+      startDate: "",
+      todoListId: "toDoListId_2",
+    },
+    {
+      id: "2",
+      title: "Bread",
+      status: 2,
+      addedDate: "",
+      deadline: "",
+      description: "",
+      order: 0,
+      priority: TaskPriorities.Low,
+      startDate: "",
+      todoListId: "toDoListId_2",
+    },
+    {
+      id: "3",
+      title: "Beer",
+      status: 0,
+      addedDate: "",
+      deadline: "",
+      description: "",
+      order: 0,
+      priority: TaskPriorities.Low,
+      startDate: "",
+      todoListId: "toDoListId_2",
+    },
+    {
+      id: "4",
+      title: "Cucumber",
+      status: 0,
+      addedDate: "",
+      deadline: "",
+      description: "",
+      order: 0,
+      priority: TaskPriorities.Low,
+      startDate: "",
+      todoListId: "toDoListId_2",
+    },
+    {
+      id: "5",
+      title: "Salt",
+      status: 2,
+      addedDate: "",
+      deadline: "",
+      description: "",
+      order: 0,
+      priority: TaskPriorities.Low,
+      startDate: "",
+      todoListId: "toDoListId_2",
+    },
+    {
+      id: "6",
+      title: "Sugar",
+      status: 0,
+      addedDate: "",
+      deadline: "",
+      description: "",
+      order: 0,
+      priority: TaskPriorities.Low,
+      startDate: "",
+      todoListId: "toDoListId_2",
+    },
   ],
 };
 
@@ -47,8 +180,8 @@ test("CheckBoxStatus should be changed", () => {
     changeCheckBoxStatusActionCreator("2", false, "toDoListId_2")
   );
 
-  expect(result["toDoListId_2"][1].isDone).toBe(false);
-  expect(initialTasks["toDoListId_2"][1].isDone).toBe(true);
+  expect(result["toDoListId_2"][1].status).toBe(0);
+  expect(initialTasks["toDoListId_2"][1].status).toBe(2);
   expect(result["toDoListId_2"].length).toBe(6);
   expect(initialTasks["toDoListId_2"].length).toBe(6);
 });

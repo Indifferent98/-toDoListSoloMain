@@ -11,8 +11,7 @@ import {
   Typography,
 } from "@mui/material";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import { toDolistType, useStateTaskType } from "../App";
-import { idText } from "typescript";
+
 import { useDispatch, useSelector } from "react-redux";
 import { AppRootStateType } from "../store/Store";
 import {
@@ -25,29 +24,25 @@ import {
   ChangeFilterAC,
   ChangeHeadderTitleAC,
   DeleteToDoListAC,
+  todoListDomainType,
 } from "../Reducers/toDoList-reducer";
-
-export type tasksType = {
-  id: string;
-  title: string;
-  isDone: boolean;
-};
+import { TaskStatuses, taskType } from "../api/todolist-api";
 
 export type filterType = "all" | "active" | "completed";
 type DoToListPropType = {
-  toDoList: toDolistType;
+  toDoList: todoListDomainType;
 };
 
 export const ToDoListWithRedux: React.FC<DoToListPropType> = ({ toDoList }) => {
   const { id, title, filter } = toDoList;
   const dispatch = useDispatch();
-  const tasks = useSelector<AppRootStateType, tasksType[]>(
+  const tasks = useSelector<AppRootStateType, taskType[]>(
     (state) => state.task[id]
   );
 
   let styleForDoTolist = "ToDoList1";
   tasks.forEach((t) => {
-    if (t.isDone === true) {
+    if (t.status === TaskStatuses.Completed) {
       styleForDoTolist = "ToDoList";
     }
   });
@@ -81,9 +76,9 @@ export const ToDoListWithRedux: React.FC<DoToListPropType> = ({ toDoList }) => {
   };
   let taskForRender = tasks;
   if (filter === "active") {
-    taskForRender = tasks.filter((t) => !t.isDone);
+    taskForRender = tasks.filter((t) => t.status === TaskStatuses.New);
   } else if (filter === "completed") {
-    taskForRender = tasks.filter((t) => t.isDone);
+    taskForRender = tasks.filter((t) => t.status === TaskStatuses.Completed);
   }
 
   return (
@@ -128,7 +123,11 @@ export const ToDoListWithRedux: React.FC<DoToListPropType> = ({ toDoList }) => {
 
           return (
             <div
-              style={t.isDone ? { opacity: 0.6 } : { opacity: 1 }}
+              style={
+                t.status === TaskStatuses.Completed
+                  ? { opacity: 0.6 }
+                  : { opacity: 1 }
+              }
               className={s.flexStyle}
               key={t.id}
             >
@@ -144,7 +143,7 @@ export const ToDoListWithRedux: React.FC<DoToListPropType> = ({ toDoList }) => {
                 <Checkbox
                   onChange={changeTaskStatus}
                   size="small"
-                  checked={t.isDone}
+                  checked={t.status === TaskStatuses.Completed ? true : false}
                 />
 
                 <EditableSpan title={t.title} addItem={changeTaskTitle} />

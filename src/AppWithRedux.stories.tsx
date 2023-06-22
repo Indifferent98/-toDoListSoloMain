@@ -3,10 +3,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
 import { Menu } from "@mui/icons-material";
 
-import AppWithRedux, {
-  toDolistType,
-  useStateTaskType,
-} from "./AppWithRedux/AppWithRedux";
+import AppWithRedux from "./AppWithRedux/AppWithRedux";
 import { ReduxStoreProviderDecorator } from "./store/ReduxStoreProviderDecorator";
 import { ThemeProvider } from "@emotion/react";
 import {
@@ -27,6 +24,9 @@ import {
 import { AddItemForm } from "./components/AddItemForm/AddItemForm";
 import { ToDoList } from "./components/ToDoList";
 import { filterType } from "./components/ToDoListWithReduxMain";
+import { todoListDomainType } from "./Reducers/toDoList-reducer";
+import { useStateTaskType } from "./Reducers/task-reducer";
+import { TaskPriorities, TaskStatuses } from "./api/todolist-api";
 // More on how to set up stories at: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 const meta: Meta<typeof AppWithRedux> = {
   title: "Todolists/AppWithRedux",
@@ -60,18 +60,74 @@ export const AppWithReduxDarkModeStory: Story = {
         mode: themeMode,
       },
     });
-    const toDoLists: toDolistType[] = [
-      { id: "123", filter: "all", title: "what to buy" },
-      { id: "333", filter: "all", title: "what to learn" },
+    const toDoLists: todoListDomainType[] = [
+      {
+        id: "123",
+        filter: "all",
+        title: "what to buy",
+        addedDate: "",
+        order: 0,
+      },
+      {
+        id: "333",
+        filter: "all",
+        title: "what to learn",
+        addedDate: "",
+        order: 0,
+      },
     ];
     const task: useStateTaskType = {
       "123": [
-        { id: "4444", title: "React", isDone: true },
-        { id: "666", title: "Redux", isDone: false },
+        {
+          id: "4444",
+          title: "React",
+          status: TaskStatuses.Completed,
+          addedDate: "",
+          deadline: "",
+          description: "",
+          order: 0,
+          priority: TaskPriorities.Low,
+          startDate: "",
+          todoListId: "123",
+        },
+        {
+          id: "666",
+          title: "Redux",
+          status: TaskStatuses.New,
+          addedDate: "",
+          deadline: "",
+          description: "",
+          order: 0,
+          priority: TaskPriorities.Low,
+          startDate: "",
+          todoListId: "123",
+        },
       ],
       "333": [
-        { title: "Salt", id: "32423", isDone: true },
-        { title: "Water", id: "ergdf", isDone: false },
+        {
+          title: "Salt",
+          id: "32423",
+          status: TaskStatuses.Completed,
+          addedDate: "",
+          deadline: "",
+          description: "",
+          order: 0,
+          priority: TaskPriorities.Low,
+          startDate: "",
+          todoListId: "333",
+        },
+        {
+          title: "Water",
+          id: "ergdf",
+          status: TaskStatuses.New,
+          addedDate: "",
+          deadline: "",
+          description: "",
+          order: 0,
+          priority: TaskPriorities.Low,
+          startDate: "",
+          todoListId: "333",
+        },
       ],
     };
 

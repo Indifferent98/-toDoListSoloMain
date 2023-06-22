@@ -7,7 +7,8 @@ import {
 import React from "react";
 
 import { v1 } from "uuid";
-import { useStateTaskType } from "../AppWithRedux/AppWithRedux";
+
+import { TaskPriorities, TaskStatuses, taskType } from "../api/todolist-api";
 
 type removeTaskActionCreatorType = {
   type: "REMOVE-TASK";
@@ -44,7 +45,9 @@ export const REMOVE_TASK = "REMOVE-TASK";
 export const CHANGE_CHECK_BOX_STATUS = "CHANGE-CHECK-BOX-STATUS";
 export const ADD_TASK = "ADD-TASK";
 export const CHANGE_TASK_TITLE = "CHANGE-TASK-TITLE";
-
+export type useStateTaskType = {
+  [id: string]: taskType[];
+};
 const intialTask: useStateTaskType = {};
 
 export const taskReducer = (
@@ -64,12 +67,30 @@ export const taskReducer = (
       return {
         ...state,
         [action.toDoListId]: state[action.toDoListId].map((t) =>
-          t.id === action.taskId ? { ...t, isDone: action.taskIsDone } : t
+          t.id === action.taskId
+            ? {
+                ...t,
+                status: action.taskIsDone
+                  ? TaskStatuses.Completed
+                  : TaskStatuses.New,
+              }
+            : t
         ),
       };
 
     case ADD_TASK:
-      const newTitle = { id: v1(), title: action.title, isDone: false };
+      const newTitle: taskType = {
+        id: v1(),
+        title: action.title,
+        status: TaskStatuses.New,
+        addedDate: "",
+        deadline: "",
+        description: "",
+        order: 0,
+        priority: TaskPriorities.Low,
+        startDate: "",
+        todoListId: action.toDoListId,
+      };
 
       return {
         ...state,

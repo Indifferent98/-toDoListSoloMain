@@ -8,11 +8,8 @@ import {
 import React, { ChangeEvent, useCallback } from "react";
 import { EditableSpan } from "../EditableSpan/EditableSpan";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-type taskType = {
-  id: string;
-  isDone: boolean;
-  title: string;
-};
+import { TaskStatuses, taskType } from "../../api/todolist-api";
+
 type TaskPropsType = {
   removeButtonHandler: (id: string) => void;
 
@@ -44,7 +41,11 @@ export const Task = React.memo((props: TaskPropsType) => {
 
   return (
     <div
-      style={props.task.isDone ? { opacity: 0.6 } : { opacity: 1 }}
+      style={
+        props.task.status === TaskStatuses.Completed
+          ? { opacity: 0.6 }
+          : { opacity: 1 }
+      }
       // className={s.flexStyle}
       key={props.task.id}
     >
@@ -60,7 +61,7 @@ export const Task = React.memo((props: TaskPropsType) => {
         <Checkbox
           onChange={changeTaskStatus}
           size="small"
-          checked={props.task.isDone}
+          checked={props.task.status === TaskStatuses.Completed ? true : false}
         />
 
         <EditableSpan title={props.task.title} addItem={changeTaskTitle} />

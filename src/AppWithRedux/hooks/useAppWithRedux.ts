@@ -6,21 +6,24 @@ import {
   changeTaskTitleActionCreator,
   changeCheckBoxStatusActionCreator,
   addTaskActionCreator,
+  useStateTaskType,
 } from "../../Reducers/task-reducer";
 import {
   DeleteToDoListAC,
   AddToDoListAC,
   ChangeHeadderTitleAC,
   ChangeFilterAC,
+  todoListDomainType,
 } from "../../Reducers/toDoList-reducer";
 import { filterType } from "../../components/ToDoListWithReduxMain";
 import { AppRootStateType } from "../../store/Store";
-import { toDolistType, useStateTaskType } from "../AppWithRedux";
+
+import { toDoListType } from "../../api/todolist-api";
 
 export const useAppWithRedux = () => {
   const [isDarkMode, setDarkMode] = useState<boolean>(false);
 
-  const toDoList = useSelector<AppRootStateType, toDolistType[]>(
+  const toDoList = useSelector<AppRootStateType, todoListDomainType[]>(
     (state) => state.toDoList
   );
 

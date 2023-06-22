@@ -20,20 +20,11 @@ import {
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import Checkbox from "@mui/material/Checkbox";
 import { Menu } from "@mui/icons-material";
-export type toDolistType = {
-  id: string;
-
-  title: string;
-  filter: filterType;
-};
-type tasksType = {
-  id: string;
-  isDone: boolean;
-  title: string;
-};
+import { TaskPriorities, TaskStatuses, taskType } from "./api/todolist-api";
+import { todoListDomainType } from "./Reducers/toDoList-reducer";
 
 export type useStateTaskType = {
-  [id: string]: tasksType[];
+  [id: string]: taskType[];
 };
 
 function App(): JSX.Element {
@@ -41,36 +32,126 @@ function App(): JSX.Element {
   const toDoListId_1 = v1();
   const toDoListId_2 = v1();
 
-  const [toDoList, setToDoList] = useState<toDolistType[]>([
+  const [toDoList, setToDoList] = useState<todoListDomainType[]>([
     {
       id: toDoListId_1,
       filter: "all",
       title: "What to buy",
+      addedDate: "",
+      order: 0,
     },
     {
       filter: "all",
       id: toDoListId_2,
       title: "What to learn",
+      addedDate: "",
+      order: 0,
     },
   ]);
   const [task, setTask] = useState<useStateTaskType>({
     [toDoListId_1]: [
-      { id: v1(), title: "CSS", isDone: false },
-      { id: v1(), title: "HTML", isDone: true },
-      { id: v1(), title: "React", isDone: false },
-      { id: v1(), title: "Node", isDone: false },
-      { id: v1(), title: "Hooks", isDone: true },
-      { id: v1(), title: "State", isDone: false },
+      {
+        id: v1(),
+        title: "CSS",
+        status: TaskStatuses.New,
+        addedDate: "",
+        deadline: "",
+        order: 0,
+        priority: TaskPriorities.Low,
+        description: "",
+        startDate: "",
+        todoListId: toDoListId_1,
+      },
+      {
+        id: v1(),
+        title: "HTML",
+        status: TaskStatuses.New,
+        addedDate: "",
+        deadline: "",
+        order: 0,
+        priority: TaskPriorities.Low,
+        description: "",
+        startDate: "",
+        todoListId: toDoListId_1,
+      },
+      {
+        id: v1(),
+        title: "React",
+        status: TaskStatuses.New,
+        addedDate: "",
+        deadline: "",
+        order: 0,
+        priority: TaskPriorities.Low,
+        description: "",
+        startDate: "",
+        todoListId: toDoListId_1,
+      },
+
+      {
+        id: v1(),
+        title: "Hooks",
+        status: TaskStatuses.Completed,
+        addedDate: "",
+        deadline: "",
+        order: 0,
+        priority: TaskPriorities.Low,
+        description: "",
+        startDate: "",
+        todoListId: toDoListId_1,
+      },
     ],
     [toDoListId_2]: [
-      { id: v1(), title: "Milk", isDone: false },
-      { id: v1(), title: "Bread", isDone: true },
-      { id: v1(), title: "Beer", isDone: false },
-      { id: v1(), title: "Cucumber", isDone: false },
-      { id: v1(), title: "Salt", isDone: true },
-      { id: v1(), title: "Sugar", isDone: false },
+      {
+        id: v1(),
+        title: "Milk",
+        status: TaskStatuses.Completed,
+        addedDate: "",
+        deadline: "",
+        order: 0,
+        priority: TaskPriorities.Low,
+        description: "",
+        startDate: "",
+        todoListId: toDoListId_2,
+      },
+      {
+        id: v1(),
+        title: "Bread",
+        status: TaskStatuses.Completed,
+        addedDate: "",
+        deadline: "",
+        order: 0,
+        priority: TaskPriorities.Low,
+        description: "",
+        startDate: "",
+        todoListId: toDoListId_2,
+      },
+      {
+        id: v1(),
+        title: "Beer",
+        status: TaskStatuses.Completed,
+        addedDate: "",
+        deadline: "",
+        order: 0,
+        priority: TaskPriorities.Low,
+        description: "",
+        startDate: "",
+        todoListId: toDoListId_2,
+      },
+      {
+        id: v1(),
+        title: "Cucumber",
+        status: TaskStatuses.New,
+        addedDate: "",
+        deadline: "",
+        order: 0,
+        priority: TaskPriorities.Low,
+        description: "",
+        startDate: "",
+        todoListId: toDoListId_2,
+      },
     ],
   });
+
   const themeMode = isDarkMode ? "dark" : "light";
 
   const theme = createTheme({
@@ -101,12 +182,28 @@ function App(): JSX.Element {
     setTask({
       ...task,
       [toDoListId]: task[toDoListId].map((t) =>
-        t.id === taskId ? { ...t, isDone: taskIsDone } : t
+        t.id === taskId
+          ? {
+              ...t,
+              status: taskIsDone ? TaskStatuses.Completed : TaskStatuses.New,
+            }
+          : t
       ),
     });
   };
   const addTask = (title: string, toDoListId: string) => {
-    const newTitle = { id: v1(), title: title, isDone: false };
+    const newTitle: taskType = {
+      id: v1(),
+      title: title,
+      status: TaskStatuses.New,
+      addedDate: "",
+      deadline: "",
+      order: 0,
+      priority: TaskPriorities.Low,
+      description: "",
+      startDate: "",
+      todoListId: toDoListId,
+    };
     setTask({ ...task, [toDoListId]: [newTitle, ...task[toDoListId]] });
   };
 
@@ -114,12 +211,15 @@ function App(): JSX.Element {
     setToDoList(toDoList.filter((t) => t.id !== toDoListId));
     delete task[toDoListId];
   };
+
   const addNewToDoList = (title: string) => {
     const newToDoListId = v1();
-    const newToDoList: toDolistType = {
+    const newToDoList: todoListDomainType = {
       id: newToDoListId,
       filter: "all",
       title: title,
+      addedDate: "",
+      order: 0,
     };
     setToDoList([...toDoList, newToDoList]);
 
@@ -141,20 +241,20 @@ function App(): JSX.Element {
 
   const applicationToDoLists = toDoList.map((t) => {
     const getFiltredTaskForRender = (
-      taskList: tasksType[],
+      taskList: taskType[],
       filterValue: filterType
     ) => {
       switch (filterValue) {
         case "active":
-          return taskList.filter((t) => !t.isDone);
+          return taskList.filter((t) => t.status === TaskStatuses.New);
         case "completed":
-          return taskList.filter((t) => t.isDone);
+          return taskList.filter((t) => t.status === TaskStatuses.Completed);
 
         default:
           return taskList;
       }
     };
-    let filtredTask: Array<tasksType> = getFiltredTaskForRender(
+    let filtredTask: Array<taskType> = getFiltredTaskForRender(
       task[t.id],
       t.filter
     );

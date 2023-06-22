@@ -12,24 +12,28 @@ import {
   DeleteToDoListActionType,
   changeFilterActionType,
   toDoListReducer,
+  todoListDomainType,
 } from "./toDoList-reducer";
 import { v1 } from "uuid";
 import React from "react";
-import { toDolistType } from "../App";
 
 test("DELETE TO DO LIST TEST", () => {
   const toDoListId_1 = v1();
   const toDoListId_2 = v1();
-  const state: toDolistType[] = [
+  const state: todoListDomainType[] = [
     {
       id: toDoListId_1,
       filter: "all",
       title: "What to buy",
+      addedDate: "",
+      order: 0,
     },
     {
       filter: "all",
       id: toDoListId_2,
       title: "What to learn",
+      addedDate: "",
+      order: 0,
     },
   ];
 
@@ -42,16 +46,20 @@ test("DELETE TO DO LIST TEST", () => {
 test("ADD-NEW-TO-DO-LIST test", () => {
   const toDoListId_1 = v1();
   const toDoListId_2 = v1();
-  const state: toDolistType[] = [
+  const state: todoListDomainType[] = [
     {
       id: toDoListId_1,
       filter: "all",
       title: "What to buy",
+      addedDate: "",
+      order: 0,
     },
     {
       filter: "all",
       id: toDoListId_2,
       title: "What to learn",
+      addedDate: "",
+      order: 0,
     },
   ];
 
@@ -68,16 +76,20 @@ test("ADD-NEW-TO-DO-LIST test", () => {
 test(CHANGE_HEADDER_TITLE, () => {
   const toDoListId_1 = v1();
   const toDoListId_2 = v1();
-  const state: toDolistType[] = [
+  const state: todoListDomainType[] = [
     {
       id: toDoListId_1,
       filter: "all",
       title: "What to buy",
+      addedDate: "",
+      order: 0,
     },
     {
       filter: "all",
       id: toDoListId_2,
       title: "What to learn",
+      addedDate: "",
+      order: 0,
     },
   ];
 
@@ -99,16 +111,20 @@ test(CHANGE_HEADDER_TITLE, () => {
 test(CHANGE_FILTER, () => {
   const toDoListId_1 = v1();
   const toDoListId_2 = v1();
-  const state: toDolistType[] = [
+  const state: todoListDomainType[] = [
     {
       id: toDoListId_1,
       filter: "all",
       title: "What to buy",
+      addedDate: "",
+      order: 0,
     },
     {
       filter: "all",
       id: toDoListId_2,
       title: "What to learn",
+      addedDate: "",
+      order: 0,
     },
   ];
   const action: changeFilterActionType = {

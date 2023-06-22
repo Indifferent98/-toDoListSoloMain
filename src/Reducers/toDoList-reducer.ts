@@ -1,7 +1,8 @@
 import { filterType } from "./../components/ToDoList";
 import React from "react";
-import { toDolistType } from "../App";
+
 import { v1 } from "uuid";
+import { toDoListType } from "../api/todolist-api";
 
 type ActionsType =
   | DeleteToDoListActionType
@@ -67,22 +68,24 @@ export type changeFilterActionType = {
   toDoListId: string;
   type: "CHANGE-FILTER";
 };
-
-const intialToDoList: toDolistType[] = [];
+export type todoListDomainType = toDoListType & { filter: filterType };
+const intialToDoList: todoListDomainType[] = [];
 
 export const toDoListReducer = (
-  state: toDolistType[] = intialToDoList,
+  state: todoListDomainType[] = intialToDoList,
   action: ActionsType
-): toDolistType[] => {
+): todoListDomainType[] => {
   switch (action.type) {
     case DELETE_TO_DO_LIST:
       return state.filter((t) => t.id !== action.toDoListId);
 
     case ADD_NEW_TO_DO_LIST:
-      const newToDoList: toDolistType = {
+      const newToDoList: todoListDomainType = {
         id: action.toDoListId,
         filter: "all",
         title: action.title,
+        addedDate: "",
+        order: 0,
       };
       return [...state, newToDoList];
 

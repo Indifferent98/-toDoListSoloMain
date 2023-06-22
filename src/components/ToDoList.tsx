@@ -20,19 +20,14 @@ import {
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import React from "react";
 import { Task } from "./task/Task";
-import { TaskWithRedux } from "./taskWithRedux/TaskWithRedux";
 
-export type tasksType = {
-  id: string;
-  title: string;
-  isDone: boolean;
-};
+import { TaskStatuses, taskType } from "../api/todolist-api";
 
 export type filterType = "all" | "active" | "completed";
 type DoToListPropType = {
   toDoListId: string;
   title: string;
-  tasks: Array<tasksType>;
+  tasks: Array<taskType>;
   removeTask: (id: string, toDoListId: string) => void;
   changeFilter: (status: filterType, toDoListId: string) => void;
   addTask: (title: string, toDoListId: string) => void;
@@ -53,10 +48,10 @@ const ToDoList = React.memo((props: DoToListPropType): JSX.Element => {
   let tasks = props.tasks;
 
   if (props.filter === "active") {
-    tasks = props.tasks.filter((t) => !t.isDone);
+    tasks = props.tasks.filter((t) => t.status === TaskStatuses.New);
   }
   if (props.filter === "completed") {
-    tasks = props.tasks.filter((t) => t.isDone);
+    tasks = props.tasks.filter((t) => t.status === TaskStatuses.Completed);
   }
 
   const addTaskButtonHandler = useCallback(
