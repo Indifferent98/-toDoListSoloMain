@@ -3,6 +3,7 @@ import {
   KeyboardEvent,
   memo,
   useCallback,
+  useEffect,
   useMemo,
   useState,
 } from "react";
@@ -21,7 +22,9 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import React from "react";
 import { Task } from "./task/Task";
 
-import { TaskStatuses, taskType } from "../api/todolist-api";
+import { TaskStatuses, TodolistApi, taskType } from "../api/todolist-api";
+import { useDispatch } from "react-redux";
+import { setTasksAC } from "../Reducers/task-reducer";
 
 export type filterType = "all" | "active" | "completed";
 type DoToListPropType = {
@@ -46,7 +49,12 @@ const ToDoList = React.memo((props: DoToListPropType): JSX.Element => {
   console.log("todolist is called");
   let styleForDoTolist = "ToDoList1";
   let tasks = props.tasks;
-
+  const dispatch = useDispatch();
+  useEffect(() => {
+    TodolistApi.getTasks(props.toDoListId).then((res) => {
+      dispatch(setTasksAC(res.data.items, props.toDoListId));
+    });
+  }, []);
   if (props.filter === "active") {
     tasks = props.tasks.filter((t) => t.status === TaskStatuses.New);
   }

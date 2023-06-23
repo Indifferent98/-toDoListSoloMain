@@ -1,3 +1,4 @@
+import { taskType } from "./../api/todolist-api";
 import {
   ADD_NEW_TO_DO_LIST,
   AddToDoListActionType,
@@ -10,7 +11,7 @@ import React, { Dispatch } from "react";
 
 import { v1 } from "uuid";
 
-import { TaskPriorities, TaskStatuses, taskType } from "../api/todolist-api";
+import { TaskPriorities, TaskStatuses } from "../api/todolist-api";
 
 type removeTaskActionCreatorType = {
   type: "REMOVE-TASK";
@@ -42,12 +43,14 @@ type actionTypes =
   | changeTaskTitleActionCreatorType
   | AddToDoListActionType
   | DeleteToDoListActionType
-  | setTodoListACType;
+  | setTodoListACType
+  | setTasksACType;
 
 export const REMOVE_TASK = "REMOVE-TASK";
 export const CHANGE_CHECK_BOX_STATUS = "CHANGE-CHECK-BOX-STATUS";
 export const ADD_TASK = "ADD-TASK";
 export const CHANGE_TASK_TITLE = "CHANGE-TASK-TITLE";
+export const SET_TASKS = "SET-TASKS";
 export type useStateTaskType = {
   [id: string]: taskType[];
 };
@@ -120,6 +123,9 @@ export const taskReducer = (
       action.todoList.forEach((t) => (stateCopy[t.id] = []));
       return stateCopy;
 
+    case SET_TASKS:
+      return { ...state, [action.toDoListId]: action.tasks };
+
     default:
       return state;
   }
@@ -162,5 +168,20 @@ export const changeTaskTitleActionCreator = (
   type: CHANGE_TASK_TITLE,
   id,
   title,
+  toDoListId,
+});
+
+type setTasksACType = {
+  type: "SET-TASKS";
+  tasks: taskType[];
+  toDoListId: string;
+};
+
+export const setTasksAC = (
+  tasks: taskType[],
+  toDoListId: string
+): setTasksACType => ({
+  type: SET_TASKS,
+  tasks,
   toDoListId,
 });

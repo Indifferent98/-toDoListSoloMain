@@ -35,6 +35,7 @@ export const useAppWithRedux = () => {
     (state) => state.task,
     (prev, next) => prev === next
   );
+
   useEffect(() => {
     TodolistApi.getToDoLists().then((res) => {
       dispatch(setTodoListAC(res.data));
