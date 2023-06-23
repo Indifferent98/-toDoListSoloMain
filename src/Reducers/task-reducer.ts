@@ -6,7 +6,7 @@ import {
   SET_TODOLIST,
   setTodoListACType,
 } from "./toDoList-reducer";
-import React from "react";
+import React, { Dispatch } from "react";
 
 import { v1 } from "uuid";
 
@@ -116,8 +116,9 @@ export const taskReducer = (
       return state;
 
     case SET_TODOLIST:
-      action.todoList.forEach((t) => (state[t.id] = []));
-      return state;
+      const stateCopy = { ...state };
+      action.todoList.forEach((t) => (stateCopy[t.id] = []));
+      return stateCopy;
 
     default:
       return state;

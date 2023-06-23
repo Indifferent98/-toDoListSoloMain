@@ -37,7 +37,6 @@ export const useAppWithRedux = () => {
   );
   useEffect(() => {
     TodolistApi.getToDoLists().then((res) => {
-      debugger;
       dispatch(setTodoListAC(res.data));
     });
   }, []);

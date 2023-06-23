@@ -111,12 +111,10 @@ export const toDoListReducer = (
       );
 
     case SET_TODOLIST:
-      debugger;
-
-      const newLists: todoListDomainType[] = [
-        ...action.todoList.map((t) => ({ ...t, filter: "all" as filterType })),
-      ];
-      return newLists;
+      return action.todoList.map((t) => ({
+        ...t,
+        filter: "all" as filterType,
+      }));
 
     default:
       return state;

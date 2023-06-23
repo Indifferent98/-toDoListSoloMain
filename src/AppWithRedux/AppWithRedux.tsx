@@ -1,6 +1,6 @@
-import React, { ChangeEvent, useCallback, useReducer, useState } from "react";
+import React from "react";
 import "./App.css";
-import { ToDoList, filterType } from "../components/ToDoList";
+import { ToDoList } from "../components/ToDoList";
 
 import { AddItemForm } from "../components/AddItemForm/AddItemForm";
 import {
@@ -16,12 +16,11 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
-import { ThemeProvider, createTheme } from "@mui/material/styles";
+import { ThemeProvider } from "@mui/material/styles";
 import Checkbox from "@mui/material/Checkbox";
 import { Menu } from "@mui/icons-material";
 
 import { useAppWithRedux } from "./hooks/useAppWithRedux";
-import { taskType } from "../api/todolist-api";
 
 function AppWithRedux(): JSX.Element {
   const {
