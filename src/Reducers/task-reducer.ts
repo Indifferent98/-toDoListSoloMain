@@ -1,4 +1,5 @@
-import { taskType } from "./../api/todolist-api";
+import { useDispatch } from "react-redux";
+import { TodolistApi, taskType } from "./../api/todolist-api";
 import {
   ADD_NEW_TO_DO_LIST,
   AddToDoListActionType,
@@ -7,11 +8,12 @@ import {
   SET_TODOLIST,
   setTodoListACType,
 } from "./toDoList-reducer";
-import React, { Dispatch } from "react";
+import React from "react";
 
 import { v1 } from "uuid";
 
 import { TaskPriorities, TaskStatuses } from "../api/todolist-api";
+import { Dispatch } from "redux";
 
 type removeTaskActionCreatorType = {
   type: "REMOVE-TASK";
@@ -28,6 +30,7 @@ type addTaskActionCreatorType = {
   type: "ADD-TASK";
   title: string;
   toDoListId: string;
+  item: taskType;
 };
 type changeTaskTitleActionCreatorType = {
   type: "CHANGE-TASK-TITLE";
@@ -85,23 +88,27 @@ export const taskReducer = (
       };
 
     case ADD_TASK:
-      const newTitle: taskType = {
-        id: v1(),
-        title: action.title,
-        status: TaskStatuses.New,
-        addedDate: "",
-        deadline: "",
-        description: "",
-        order: 0,
-        priority: TaskPriorities.Low,
-        startDate: "",
-        todoListId: action.toDoListId,
-      };
-
       return {
         ...state,
-        [action.toDoListId]: [newTitle, ...state[action.toDoListId]],
+        [action.toDoListId]: [action.item, ...state[action.item.todoListId]],
       };
+    // const newTitle: taskType = {
+    //   id: v1(),
+    //   title: action.title,
+    //   status: TaskStatuses.New,
+    //   addedDate: "",
+    //   deadline: "",
+    //   description: "",
+    //   order: 0,
+    //   priority: TaskPriorities.Low,
+    //   startDate: "",
+    //   todoListId: action.toDoListId,
+    // };
+
+    // return {
+    //   ...state,
+    //   [action.toDoListId]: [newTitle, ...state[action.toDoListId]],
+    // };
 
     case CHANGE_TASK_TITLE:
       return {
@@ -139,6 +146,12 @@ export const removeTaskActionCreator = (
   taskId,
   toDoListId,
 });
+export const removeTaskTC =
+  (toDoListId: string, taskId: string) => (dispatch: Dispatch) => {
+    TodolistApi.deleteTask(toDoListId, taskId).then(() => {
+      dispatch(removeTaskActionCreator(taskId, toDoListId));
+    });
+  };
 
 export const changeCheckBoxStatusActionCreator = (
   taskId: string,
@@ -151,14 +164,37 @@ export const changeCheckBoxStatusActionCreator = (
   toDoListId,
 });
 
+export const changeCheckBoxStatusTC =
+  (taskId: string, taskIsDone: boolean, toDoListId: string, title: string) =>
+  (dispatch: Dispatch) => {
+    const status = taskIsDone ? TaskStatuses.Completed : TaskStatuses.New;
+    debugger;
+    TodolistApi.changeCheckBoxStatus(toDoListId, taskId, status, title).then(
+      () => {
+        dispatch(
+          changeCheckBoxStatusActionCreator(taskId, taskIsDone, toDoListId)
+        );
+      }
+    );
+  };
+
 export const addTaskActionCreator = (
   title: string,
-  toDoListId: string
+  toDoListId: string,
+  item: taskType
 ): addTaskActionCreatorType => ({
   type: ADD_TASK,
   title,
   toDoListId,
+  item,
 });
+
+export const addTaskTC =
+  (title: string, toDoListId: string) => (disptach: Dispatch) => {
+    TodolistApi.createTask(toDoListId, title).then((res) => {
+      disptach(addTaskActionCreator(title, toDoListId, res.data.data.item));
+    });
+  };
 
 export const changeTaskTitleActionCreator = (
   id: string,
@@ -170,6 +206,14 @@ export const changeTaskTitleActionCreator = (
   title,
   toDoListId,
 });
+
+export const changeTaskTitleTC =
+  (taskId: string, title: string, toDoListId: string) =>
+  (dispatch: Dispatch) => {
+    TodolistApi.changeTaskTitle(toDoListId, taskId, title).then(() => {
+      dispatch(changeTaskTitleActionCreator(taskId, title, toDoListId));
+    });
+  };
 
 type setTasksACType = {
   type: "SET-TASKS";
@@ -185,3 +229,9 @@ export const setTasksAC = (
   tasks,
   toDoListId,
 });
+
+export const setTasksTC = (todoListId: string) => (dispatch: Dispatch) => {
+  TodolistApi.getTasks(todoListId).then((res) => {
+    dispatch(setTasksAC(res.data.items, todoListId));
+  });
+};

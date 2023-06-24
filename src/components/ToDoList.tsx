@@ -24,7 +24,10 @@ import { Task } from "./task/Task";
 
 import { TaskStatuses, TodolistApi, taskType } from "../api/todolist-api";
 import { useDispatch } from "react-redux";
-import { setTasksAC } from "../Reducers/task-reducer";
+import { setTasksAC, setTasksTC } from "../Reducers/task-reducer";
+
+import { AnyAction, Dispatch } from "redux";
+import { AppDispatchType } from "../store/Store";
 
 export type filterType = "all" | "active" | "completed";
 type DoToListPropType = {
@@ -37,7 +40,8 @@ type DoToListPropType = {
   changeCheckBoxStatus: (
     taskId: string,
     isDone: boolean,
-    toDoListId: string
+    toDoListId: string,
+    title: string
   ) => void;
   filter: filterType;
   deleteToDoList: (toDoListId: string) => void;
@@ -49,12 +53,11 @@ const ToDoList = React.memo((props: DoToListPropType): JSX.Element => {
   console.log("todolist is called");
   let styleForDoTolist = "ToDoList1";
   let tasks = props.tasks;
-  const dispatch = useDispatch();
+  const dispatch: AppDispatchType = useDispatch();
   useEffect(() => {
-    TodolistApi.getTasks(props.toDoListId).then((res) => {
-      dispatch(setTasksAC(res.data.items, props.toDoListId));
-    });
+    dispatch(setTasksTC(props.toDoListId));
   }, []);
+
   if (props.filter === "active") {
     tasks = props.tasks.filter((t) => t.status === TaskStatuses.New);
   }
@@ -107,8 +110,9 @@ const ToDoList = React.memo((props: DoToListPropType): JSX.Element => {
   );
 
   const changeCheckBoxStatus = useCallback(
-    (id: string, checked: boolean) => {
-      props.changeCheckBoxStatus(id, checked, props.toDoListId);
+    (id: string, checked: boolean, title: string) => {
+      props.changeCheckBoxStatus(id, checked, props.toDoListId, title);
+      debugger;
     },
     [props.changeCheckBoxStatus, props.toDoListId]
   );

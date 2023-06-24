@@ -15,7 +15,6 @@ export const EditableSpan: FC<EditableSpanPropsType> = React.memo((props) => {
   };
   const onDoubleClickHandler = () => {
     setEditMode(true);
-    props.addItem(value);
   };
   const onBlurInputHandler = () => {
     props.addItem(value.trim());

@@ -189,7 +189,18 @@ test("CheckBoxStatus should be changed", () => {
 test("Task  should be added", () => {
   const result = taskReducer(
     initialTasks,
-    addTaskActionCreator("new title string", "toDoListId_2")
+    addTaskActionCreator("new title string", "toDoListId_2", {
+      id: "toDoListId_2",
+      title: "new title string",
+      status: 0,
+      addedDate: "",
+      deadline: "",
+      description: "",
+      order: 0,
+      priority: TaskPriorities.Low,
+      startDate: "",
+      todoListId: "toDoListId_2",
+    })
   );
 
   expect(result["toDoListId_2"].length).toBe(7);

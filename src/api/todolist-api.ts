@@ -82,8 +82,8 @@ export const TodolistApi = {
   },
   createTask(toDoListId: string, title: string) {
     return instance.post<
-      responseType,
-      AxiosResponse<responseType>,
+      responseType<{ item: taskType }>,
+      AxiosResponse<responseType<{ item: taskType }>>,
       { title: string }
     >(`/${toDoListId}/tasks`, {
       title,
@@ -102,6 +102,24 @@ export const TodolistApi = {
       title,
     });
   },
+
+  changeCheckBoxStatus(
+    toDoListId: string,
+    taskId: string,
+    status: number,
+    title: string
+  ) {
+    debugger;
+    return instance.put<
+      responseType,
+      AxiosResponse<responseType>,
+      { status: number; title: string }
+    >(`/${toDoListId}/tasks/${taskId}`, {
+      status,
+      title,
+    });
+  },
+
   deleteTask(toDoListId: string, taskId: string) {
     return instance.delete<responseType>(`/${toDoListId}/tasks/${taskId}`);
   },

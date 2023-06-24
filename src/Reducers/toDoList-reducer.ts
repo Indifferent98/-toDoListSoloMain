@@ -1,8 +1,10 @@
+import { GetToDoLists } from "./../stories/todolists-api.stories";
 import { filterType } from "./../components/ToDoList";
 import React from "react";
 
 import { v1 } from "uuid";
-import { toDoListType } from "../api/todolist-api";
+import { TodolistApi, toDoListType } from "../api/todolist-api";
+import { Dispatch } from "redux";
 
 type ActionsType =
   | DeleteToDoListActionType
@@ -29,6 +31,12 @@ export const AddToDoListAC = (title: string): AddToDoListActionType => ({
   toDoListId: v1(),
 });
 
+export const addToDoListTC = (title: string) => (dispatch: Dispatch) => {
+  TodolistApi.createToDoList(title).then(() => {
+    dispatch(AddToDoListAC(title));
+  });
+};
+
 export const ChangeHeadderTitleAC = (
   title: string,
   toDoListId: string
@@ -37,6 +45,13 @@ export const ChangeHeadderTitleAC = (
   title: title,
   toDoListId: toDoListId,
 });
+
+export const changeHeadderTitleTC =
+  (title: string, toDoListId: string) => (dispatch: Dispatch) => {
+    TodolistApi.updateToDoListTitle(toDoListId, title).then(() => {
+      dispatch(ChangeHeadderTitleAC(title, toDoListId));
+    });
+  };
 
 export const ChangeFilterAC = (
   filter: filterType,
@@ -78,6 +93,19 @@ export const setTodoListAC = (todoList: toDoListType[]): setTodoListACType => ({
   type: SET_TODOLIST,
   todoList,
 });
+
+export const setTodoListTC = () => (dispatch: Dispatch) => {
+  TodolistApi.getToDoLists().then((res) => {
+    dispatch(setTodoListAC(res.data));
+  });
+};
+
+export const deleteTodolistTC =
+  (toDoListId: string) => (dispatch: Dispatch) => {
+    TodolistApi.deleteToDoList(toDoListId).then(() => {
+      dispatch(DeleteToDoListAC(toDoListId));
+    });
+  };
 
 export type todoListDomainType = toDoListType & { filter: filterType };
 const intialToDoList: todoListDomainType[] = [];

@@ -244,7 +244,20 @@ function AppWithReducer(): JSX.Element {
   };
 
   const addTask = (title: string, toDoListId: string) => {
-    dispatchToTasks(addTaskActionCreator(title, toDoListId));
+    dispatchToTasks(
+      addTaskActionCreator(title, toDoListId, {
+        id: v1(),
+        title: title,
+        status: 0,
+        addedDate: "",
+        deadline: "",
+        description: "",
+        order: 0,
+        priority: TaskPriorities.Low,
+        startDate: "",
+        todoListId: toDoListId,
+      })
+    );
   };
 
   const deleteToDoList = (toDoListId: string) => {
