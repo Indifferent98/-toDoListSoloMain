@@ -1,3 +1,4 @@
+import { v1 } from "uuid";
 import { taskReducer } from "./task-reducer";
 import {
   AddToDoListAC,
@@ -177,7 +178,7 @@ test("To do List and task should be added and have same id", () => {
     },
   ];
 
-  const action = AddToDoListAC("What To Buy");
+  const action = AddToDoListAC("What To Buy", v1());
 
   const result1 = toDoListReducer(initialToDoLists, action);
   const result2 = taskReducer(initialTasks, action);

@@ -63,7 +63,7 @@ test("ADD-NEW-TO-DO-LIST test", () => {
     },
   ];
 
-  const result = toDoListReducer(state, AddToDoListAC("NEWW TITLE"));
+  const result = toDoListReducer(state, AddToDoListAC("NEWW TITLE", v1()));
 
   expect(result.length).toBe(3);
   expect(state.length).toBe(2);

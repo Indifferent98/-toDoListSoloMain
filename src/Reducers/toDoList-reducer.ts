@@ -25,15 +25,18 @@ export const DeleteToDoListAC = (
   toDoListId,
 });
 
-export const AddToDoListAC = (title: string): AddToDoListActionType => ({
+export const AddToDoListAC = (
+  title: string,
+  toDoListId: string
+): AddToDoListActionType => ({
   type: ADD_NEW_TO_DO_LIST,
   title: title,
-  toDoListId: v1(),
+  toDoListId,
 });
 
 export const addToDoListTC = (title: string) => (dispatch: Dispatch) => {
-  TodolistApi.createToDoList(title).then(() => {
-    dispatch(AddToDoListAC(title));
+  TodolistApi.createToDoList(title).then((res) => {
+    dispatch(AddToDoListAC(title, res.data.data.item.id));
   });
 };
 

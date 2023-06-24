@@ -266,7 +266,7 @@ function AppWithReducer(): JSX.Element {
     dispatchToToDoList(action);
   };
   const addNewToDoList = (title: string) => {
-    const action = AddToDoListAC(title);
+    const action = AddToDoListAC(title, v1());
     dispatchToToDoList(action);
     dispatchToTasks(action);
   };
