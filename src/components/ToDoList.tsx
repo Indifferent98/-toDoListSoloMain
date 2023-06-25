@@ -112,7 +112,6 @@ const ToDoList = React.memo((props: DoToListPropType): JSX.Element => {
   const changeCheckBoxStatus = useCallback(
     (id: string, checked: boolean, title: string) => {
       props.changeCheckBoxStatus(id, checked, props.toDoListId, title);
-      debugger;
     },
     [props.changeCheckBoxStatus, props.toDoListId]
   );

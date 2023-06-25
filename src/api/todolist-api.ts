@@ -53,6 +53,25 @@ export type taskType = {
   addedDate: string;
 };
 
+type requairedTaskType = {
+  title: string;
+  description: string | null;
+  status: TaskStatuses;
+  priority: TaskPriorities;
+  startDate: string | null;
+  deadline: string | null;
+};
+
+export type ModelTaskUpdateType = {
+  title?: string;
+  description?: string | null;
+
+  status?: TaskStatuses;
+  priority?: TaskPriorities;
+  startDate?: string | null;
+  deadline?: string | null;
+};
+
 type responseTaskType = {
   items: taskType[];
   totalCount: number;
@@ -109,7 +128,6 @@ export const TodolistApi = {
     status: number,
     title: string
   ) {
-    debugger;
     return instance.put<
       responseType,
       AxiosResponse<responseType>,
@@ -122,5 +140,20 @@ export const TodolistApi = {
 
   deleteTask(toDoListId: string, taskId: string) {
     return instance.delete<responseType>(`/${toDoListId}/tasks/${taskId}`);
+  },
+
+  changeTaskState(
+    toDoListId: string,
+    taskId: string,
+    model: requairedTaskType
+  ) {
+    return instance.put<
+      responseType,
+      AxiosResponse<responseType>,
+      requairedTaskType
+      //  model:requairedTaskType
+    >(`/${toDoListId}/tasks/${taskId}`, {
+      ...model,
+    });
   },
 };

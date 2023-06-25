@@ -1,4 +1,4 @@
-import { TodolistApi } from "./../../api/todolist-api";
+import { TaskStatuses, TodolistApi } from "./../../api/todolist-api";
 import { createTheme } from "@mui/material";
 import { useState, useCallback, ChangeEvent, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
@@ -12,6 +12,7 @@ import {
   changeTaskTitleTC,
   changeCheckBoxStatusTC,
   addTaskTC,
+  updateTaskStatusTC,
 } from "../../Reducers/task-reducer";
 import {
   DeleteToDoListAC,
@@ -82,8 +83,8 @@ export const useAppWithRedux = () => {
       toDoListId: string,
       title: string
     ) => {
-      dispatch(changeCheckBoxStatusTC(taskId, taskIsDone, toDoListId, title));
-      debugger;
+      const newStatus = taskIsDone ? TaskStatuses.Completed : TaskStatuses.New;
+      dispatch(updateTaskStatusTC(toDoListId, taskId, { status: newStatus }));
     },
     [dispatch]
   );
