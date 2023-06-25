@@ -13,7 +13,7 @@ import { TaskStatuses, taskType } from "../../api/todolist-api";
 type TaskPropsType = {
   removeButtonHandler: (id: string) => void;
 
-  changeCheckBoxStatus: (id: string, checked: boolean, title: string) => void;
+  changeCheckBoxStatus: (id: string, checked: boolean) => void;
   changeTaskTitle: (title: string, id: string) => void;
 
   task: taskType;
@@ -27,11 +27,7 @@ export const Task = React.memo((props: TaskPropsType) => {
 
   const changeTaskStatus = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
-      props.changeCheckBoxStatus(
-        props.task.id,
-        e.currentTarget.checked,
-        props.task.title
-      );
+      props.changeCheckBoxStatus(props.task.id, e.currentTarget.checked);
     },
     [props.task.id]
   );

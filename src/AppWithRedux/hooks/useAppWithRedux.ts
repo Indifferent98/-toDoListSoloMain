@@ -71,18 +71,13 @@ export const useAppWithRedux = () => {
   );
 
   const changeTaskTitle = useCallback(
-    (id: string, title: string, toDoListId: string) => {
-      dispatch(changeTaskTitleTC(id, title, toDoListId));
+    (taskId: string, title: string, toDoListId: string) => {
+      dispatch(updateTaskStatusTC(toDoListId, taskId, { title }));
     },
     [dispatch]
   );
   const changeCheckBoxStatus = useCallback(
-    (
-      taskId: string,
-      taskIsDone: boolean,
-      toDoListId: string,
-      title: string
-    ) => {
+    (taskId: string, taskIsDone: boolean, toDoListId: string) => {
       const newStatus = taskIsDone ? TaskStatuses.Completed : TaskStatuses.New;
       dispatch(updateTaskStatusTC(toDoListId, taskId, { status: newStatus }));
     },

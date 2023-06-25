@@ -40,8 +40,7 @@ type DoToListPropType = {
   changeCheckBoxStatus: (
     taskId: string,
     isDone: boolean,
-    toDoListId: string,
-    title: string
+    toDoListId: string
   ) => void;
   filter: filterType;
   deleteToDoList: (toDoListId: string) => void;
@@ -110,8 +109,8 @@ const ToDoList = React.memo((props: DoToListPropType): JSX.Element => {
   );
 
   const changeCheckBoxStatus = useCallback(
-    (id: string, checked: boolean, title: string) => {
-      props.changeCheckBoxStatus(id, checked, props.toDoListId, title);
+    (id: string, checked: boolean) => {
+      props.changeCheckBoxStatus(id, checked, props.toDoListId);
     },
     [props.changeCheckBoxStatus, props.toDoListId]
   );
