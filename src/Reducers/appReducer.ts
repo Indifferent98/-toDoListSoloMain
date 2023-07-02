@@ -9,7 +9,7 @@ type initialStateType = {
 
 const initialState: initialStateType = {
   status: "loading",
-  error: "Some error",
+  error: null,
 };
 
 export type setLoadingStatusACType = ReturnType<typeof setLoadingStatusAC>;
@@ -21,7 +21,7 @@ export const setLoadingStatusAC = (status: RequestStatusType) =>
     status,
   } as const);
 
-type setAppErrorStatusACType = ReturnType<typeof setAppErrorStatusAC>;
+export type setAppErrorStatusACType = ReturnType<typeof setAppErrorStatusAC>;
 
 export const setAppErrorStatusAC = (errorStatus: null | string) =>
   ({

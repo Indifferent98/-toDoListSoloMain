@@ -39,6 +39,3 @@ export const CustomizedSnackbars = () => {
     </>
   );
 };
-function setAppErrorStatus(arg0: null) {
-  throw new Error("Function not implemented.");
-}

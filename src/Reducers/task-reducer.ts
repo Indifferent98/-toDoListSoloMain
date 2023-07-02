@@ -1,4 +1,9 @@
-import { setLoadingStatusAC, setLoadingStatusACType } from "./appReducer";
+import {
+  setAppErrorStatusAC,
+  setAppErrorStatusACType,
+  setLoadingStatusAC,
+  setLoadingStatusACType,
+} from "./appReducer";
 import { useDispatch } from "react-redux";
 import {
   ModelTaskUpdateType,
@@ -10,6 +15,7 @@ import {
   AddToDoListActionType,
   DELETE_TO_DO_LIST,
   DeleteToDoListActionType,
+  ResultCode,
   SET_TODOLIST,
   setTodoListACType,
 } from "./toDoList-reducer";
@@ -55,7 +61,8 @@ type TaskActionTypes =
   | setTodoListACType
   | setTasksACType
   | updateTaskStatusACType
-  | setLoadingStatusACType;
+  | setLoadingStatusACType
+  | setAppErrorStatusACType;
 
 export const REMOVE_TASK = "REMOVE-TASK";
 export const CHANGE_CHECK_BOX_STATUS = "CHANGE-CHECK-BOX-STATUS";
@@ -219,9 +226,18 @@ export const changeTaskTitleTC =
   (taskId: string, title: string, toDoListId: string) =>
   (dispatch: Dispatch<TaskActionTypes>) => {
     dispatch(setLoadingStatusAC("loading"));
-    TodolistApi.changeTaskTitle(toDoListId, taskId, title).then(() => {
-      dispatch(changeTaskTitleActionCreator(taskId, title, toDoListId));
-      dispatch(setLoadingStatusAC("succeeded"));
+    TodolistApi.changeTaskTitle(toDoListId, taskId, title).then((res) => {
+      if (res.data.resultCode === ResultCode.SUCCESS) {
+        dispatch(changeTaskTitleActionCreator(taskId, title, toDoListId));
+        dispatch(setLoadingStatusAC("succeeded"));
+      } else {
+        if (res.data.messages[0].length) {
+          dispatch(setAppErrorStatusAC(res.data.messages[0]));
+        } else {
+          dispatch(setAppErrorStatusAC("Some error occured"));
+        }
+        dispatch(setLoadingStatusAC("failed"));
+      }
     });
   };
 
@@ -280,9 +296,20 @@ export const updateTaskStatusTC =
         startDate: task.startDate,
         ...data,
       };
-      TodolistApi.changeTaskState(todoListId, taskId, model).then(() => {
-        dispatch(updateTaskStatusAC(todoListId, taskId, { ...task, ...data }));
-        dispatch(setLoadingStatusAC("succeeded"));
+      TodolistApi.changeTaskState(todoListId, taskId, model).then((res) => {
+        if (res.data.resultCode === ResultCode.SUCCESS) {
+          dispatch(
+            updateTaskStatusAC(todoListId, taskId, { ...task, ...data })
+          );
+          dispatch(setLoadingStatusAC("succeeded"));
+        } else {
+          if (res.data.messages[0].length) {
+            dispatch(setAppErrorStatusAC(res.data.messages[0]));
+          } else {
+            dispatch(setAppErrorStatusAC("Some error occured"));
+          }
+          dispatch(setLoadingStatusAC("failed"));
+        }
       });
     }
   };

@@ -1,4 +1,9 @@
-import { setLoadingStatusAC, setLoadingStatusACType } from "./appReducer";
+import {
+  setAppErrorStatusAC,
+  setAppErrorStatusACType,
+  setLoadingStatusAC,
+  setLoadingStatusACType,
+} from "./appReducer";
 import { GetToDoLists } from "./../stories/todolists-api.stories";
 import { filterType } from "./../components/ToDoList";
 import React from "react";
@@ -13,7 +18,8 @@ type ToDoListActionsType =
   | ChangeHeadderTitleActionType
   | changeFilterActionType
   | setTodoListACType
-  | setLoadingStatusACType;
+  | setLoadingStatusACType
+  | setAppErrorStatusACType;
 
 export const DELETE_TO_DO_LIST = "DELETE-TO-DO-LIST";
 export const ADD_NEW_TO_DO_LIST = "ADD-NEW-TO-DO-LIST";
@@ -58,9 +64,18 @@ export const changeHeadderTitleTC =
   (title: string, toDoListId: string) =>
   (dispatch: Dispatch<ToDoListActionsType>) => {
     dispatch(setLoadingStatusAC("loading"));
-    TodolistApi.updateToDoListTitle(toDoListId, title).then(() => {
-      dispatch(ChangeHeadderTitleAC(title, toDoListId));
-      dispatch(setLoadingStatusAC("succeeded"));
+    TodolistApi.updateToDoListTitle(toDoListId, title).then((res) => {
+      if (res.data.resultCode === ResultCode.SUCCESS) {
+        dispatch(ChangeHeadderTitleAC(title, toDoListId));
+        dispatch(setLoadingStatusAC("succeeded"));
+      } else {
+        if (res.data.messages[0].length) {
+          dispatch(setAppErrorStatusAC(res.data.messages[0]));
+        } else {
+          dispatch(setAppErrorStatusAC("Some error occured"));
+        }
+        dispatch(setLoadingStatusAC("failed"));
+      }
     });
   };
 
@@ -104,6 +119,12 @@ export const setTodoListAC = (todoList: toDoListType[]): setTodoListACType => ({
   type: SET_TODOLIST,
   todoList,
 });
+
+export enum ResultCode {
+  SUCCESS = 0,
+  ERROR = 1,
+  ERROR_CAPTHCA = 10,
+}
 
 export const setTodoListTC =
   () => (dispatch: Dispatch<ToDoListActionsType>) => {
