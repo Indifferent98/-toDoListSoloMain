@@ -80,6 +80,7 @@ export const TaskWithReduxProviderDecorator = (
     ],
     app: {
       status: "idle",
+      error: null,
     },
   };
 

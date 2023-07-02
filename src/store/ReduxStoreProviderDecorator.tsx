@@ -85,6 +85,7 @@ export const ReduxStoreProviderDecorator = (storyFn: () => React.ReactNode) => {
     ],
     app: {
       status: "idle",
+      error: null,
     },
   };
 

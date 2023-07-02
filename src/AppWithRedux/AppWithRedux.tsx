@@ -24,6 +24,7 @@ import Container from "@mui/material/Container";
 import { useSelector } from "react-redux";
 import { AppRootStateType } from "../store/Store";
 import { RequestStatusType } from "../Reducers/appReducer";
+import { CustomizedSnackbars } from "../components/ErrorSnackBar/ErrorSnackBar";
 
 function AppWithRedux(): JSX.Element {
   const {
@@ -108,6 +109,7 @@ function AppWithRedux(): JSX.Element {
           </Container>
         </div>
       </CssBaseline>
+      <CustomizedSnackbars />
     </ThemeProvider>
   );
 }
