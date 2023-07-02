@@ -1,4 +1,5 @@
 import {
+  RequestStatusType,
   setAppErrorStatusAC,
   setAppErrorStatusACType,
   setLoadingStatusAC,
@@ -143,7 +144,10 @@ export const deleteTodolistTC =
     });
   };
 
-export type todoListDomainType = toDoListType & { filter: filterType };
+export type todoListDomainType = toDoListType & {
+  filter: filterType;
+  entityStatus: RequestStatusType;
+};
 const intialToDoList: todoListDomainType[] = [];
 
 export const toDoListReducer = (
@@ -161,6 +165,7 @@ export const toDoListReducer = (
         title: action.title,
         addedDate: "",
         order: 0,
+        entityStatus: "idle",
       };
       return [...state, newToDoList];
 
@@ -178,6 +183,7 @@ export const toDoListReducer = (
       return action.todoList.map((t) => ({
         ...t,
         filter: "all" as filterType,
+        entityStatus: "idle" as RequestStatusType,
       }));
 
     default:

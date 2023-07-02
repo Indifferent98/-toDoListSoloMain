@@ -168,6 +168,7 @@ test("To do List and task should be added and have same id", () => {
       title: "What to buy",
       addedDate: "",
       order: 0,
+      entityStatus: "idle",
     },
     {
       filter: "all",
@@ -175,6 +176,7 @@ test("To do List and task should be added and have same id", () => {
       title: "What to learn",
       addedDate: "",
       order: 0,
+      entityStatus: "idle",
     },
   ];
 
@@ -355,6 +357,7 @@ test("To do List and task should be deleted", () => {
       title: "What to buy",
       addedDate: "",
       order: 0,
+      entityStatus: "idle",
     },
     {
       filter: "all",
@@ -362,6 +365,7 @@ test("To do List and task should be deleted", () => {
       title: "What to learn",
       addedDate: "",
       order: 0,
+      entityStatus: "idle",
     },
   ];
 

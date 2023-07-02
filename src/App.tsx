@@ -39,6 +39,7 @@ function App(): JSX.Element {
       title: "What to buy",
       addedDate: "",
       order: 0,
+      entityStatus: "idle",
     },
     {
       filter: "all",
@@ -46,6 +47,7 @@ function App(): JSX.Element {
       title: "What to learn",
       addedDate: "",
       order: 0,
+      entityStatus: "idle",
     },
   ]);
   const [task, setTask] = useState<useStateTaskType>({
@@ -220,6 +222,7 @@ function App(): JSX.Element {
       title: title,
       addedDate: "",
       order: 0,
+      entityStatus: "idle",
     };
     setToDoList([...toDoList, newToDoList]);
 

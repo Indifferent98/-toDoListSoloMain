@@ -81,6 +81,7 @@ export const ReduxStoreProviderDecorator = (storyFn: () => React.ReactNode) => {
         title: "what to learn",
         addedDate: "",
         order: 0,
+        entityStatus: "idle",
       },
     ],
     app: {

@@ -76,6 +76,7 @@ export const TaskWithReduxProviderDecorator = (
         title: "what to buy",
         addedDate: "",
         order: 0,
+        entityStatus: "idle",
       },
     ],
     app: {
