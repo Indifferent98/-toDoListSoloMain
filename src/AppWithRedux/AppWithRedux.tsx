@@ -3,24 +3,24 @@ import "./App.css";
 import { ToDoList } from "../components/ToDoList";
 
 import { AddItemForm } from "../components/AddItemForm/AddItemForm";
-import {
-  AppBar,
-  Button,
-  Container,
-  CssBaseline,
-  FormControlLabel,
-  FormGroup,
-  Grid,
-  IconButton,
-  Paper,
-  Toolbar,
-  Typography,
-} from "@mui/material";
-import { ThemeProvider } from "@mui/material/styles";
-import Checkbox from "@mui/material/Checkbox";
-import { Menu } from "@mui/icons-material";
 
+import { ThemeProvider } from "@mui/material/styles";
+
+import { Menu } from "@mui/icons-material";
 import { useAppWithRedux } from "./hooks/useAppWithRedux";
+import Checkbox from "@mui/material/Checkbox";
+import Grid from "@mui/material/Grid";
+import Paper from "@mui/material/Paper";
+import CssBaseline from "@mui/material/CssBaseline";
+import AppBar from "@mui/material/AppBar";
+import Toolbar from "@mui/material/Toolbar";
+import IconButton from "@mui/material/IconButton";
+import Typography from "@mui/material/Typography";
+import FormGroup from "@mui/material/FormGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Button from "@mui/material/Button";
+import LinearProgress from "@mui/material/LinearProgress";
+import Container from "@mui/material/Container";
 
 function AppWithRedux(): JSX.Element {
   const {
@@ -89,6 +89,7 @@ function AppWithRedux(): JSX.Element {
               </FormGroup>
               <Button color="inherit">Login</Button>
             </Toolbar>
+            <LinearProgress />
           </AppBar>
           <Container fixed>
             <Grid container sx={{ p: "15px 0" }}>
