@@ -21,6 +21,9 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Button from "@mui/material/Button";
 import LinearProgress from "@mui/material/LinearProgress";
 import Container from "@mui/material/Container";
+import { useSelector } from "react-redux";
+import { AppRootStateType } from "../store/Store";
+import { RequestStatusType } from "../Reducers/appReducer";
 
 function AppWithRedux(): JSX.Element {
   const {
@@ -38,6 +41,10 @@ function AppWithRedux(): JSX.Element {
     addNewToDoList,
     changeTheme,
   } = useAppWithRedux();
+
+  const status = useSelector<AppRootStateType, RequestStatusType>(
+    (state) => state.app.status
+  );
 
   const applicationToDoLists = toDoList.map((t) => {
     return (
@@ -89,7 +96,7 @@ function AppWithRedux(): JSX.Element {
               </FormGroup>
               <Button color="inherit">Login</Button>
             </Toolbar>
-            <LinearProgress />
+            {status === "loading" && <LinearProgress />}
           </AppBar>
           <Container fixed>
             <Grid container sx={{ p: "15px 0" }}>

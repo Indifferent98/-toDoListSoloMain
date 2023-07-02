@@ -7,15 +7,15 @@ type initialStateType = {
 };
 
 const initialState: initialStateType = {
-  status: "idle",
+  status: "loading",
 };
 
-type setLoadingStatusACType = ReturnType<typeof setLoadingStatusAC>;
+export type setLoadingStatusACType = ReturnType<typeof setLoadingStatusAC>;
 
 type appActionTypes = setLoadingStatusACType;
 export const setLoadingStatusAC = (status: RequestStatusType) =>
   ({
-    type: "SET-LOADING-STATUS",
+    type: "APP/SET-STATUS",
     status,
   } as const);
 
@@ -24,7 +24,7 @@ export const appReducer = (
   action: appActionTypes
 ) => {
   switch (action.type) {
-    case "SET-LOADING-STATUS":
+    case "APP/SET-STATUS":
       return { ...state, status: action.status };
 
     default:

@@ -1,3 +1,4 @@
+import { setLoadingStatusAC, setLoadingStatusACType } from "./appReducer";
 import { GetToDoLists } from "./../stories/todolists-api.stories";
 import { filterType } from "./../components/ToDoList";
 import React from "react";
@@ -6,12 +7,13 @@ import { v1 } from "uuid";
 import { TodolistApi, toDoListType } from "../api/todolist-api";
 import { Dispatch } from "redux";
 
-type ActionsType =
+type ToDoListActionsType =
   | DeleteToDoListActionType
   | AddToDoListActionType
   | ChangeHeadderTitleActionType
   | changeFilterActionType
-  | setTodoListACType;
+  | setTodoListACType
+  | setLoadingStatusACType;
 
 export const DELETE_TO_DO_LIST = "DELETE-TO-DO-LIST";
 export const ADD_NEW_TO_DO_LIST = "ADD-NEW-TO-DO-LIST";
@@ -34,11 +36,14 @@ export const AddToDoListAC = (
   toDoListId,
 });
 
-export const addToDoListTC = (title: string) => (dispatch: Dispatch) => {
-  TodolistApi.createToDoList(title).then((res) => {
-    dispatch(AddToDoListAC(title, res.data.data.item.id));
-  });
-};
+export const addToDoListTC =
+  (title: string) => (dispatch: Dispatch<ToDoListActionsType>) => {
+    dispatch(setLoadingStatusAC("loading"));
+    TodolistApi.createToDoList(title).then((res) => {
+      dispatch(AddToDoListAC(title, res.data.data.item.id));
+      dispatch(setLoadingStatusAC("succeeded"));
+    });
+  };
 
 export const ChangeHeadderTitleAC = (
   title: string,
@@ -50,9 +55,12 @@ export const ChangeHeadderTitleAC = (
 });
 
 export const changeHeadderTitleTC =
-  (title: string, toDoListId: string) => (dispatch: Dispatch) => {
+  (title: string, toDoListId: string) =>
+  (dispatch: Dispatch<ToDoListActionsType>) => {
+    dispatch(setLoadingStatusAC("loading"));
     TodolistApi.updateToDoListTitle(toDoListId, title).then(() => {
       dispatch(ChangeHeadderTitleAC(title, toDoListId));
+      dispatch(setLoadingStatusAC("succeeded"));
     });
   };
 
@@ -97,16 +105,20 @@ export const setTodoListAC = (todoList: toDoListType[]): setTodoListACType => ({
   todoList,
 });
 
-export const setTodoListTC = () => (dispatch: Dispatch) => {
-  TodolistApi.getToDoLists().then((res) => {
-    dispatch(setTodoListAC(res.data));
-  });
-};
+export const setTodoListTC =
+  () => (dispatch: Dispatch<ToDoListActionsType>) => {
+    TodolistApi.getToDoLists().then((res) => {
+      dispatch(setTodoListAC(res.data));
+      dispatch(setLoadingStatusAC("succeeded"));
+    });
+  };
 
 export const deleteTodolistTC =
-  (toDoListId: string) => (dispatch: Dispatch) => {
+  (toDoListId: string) => (dispatch: Dispatch<ToDoListActionsType>) => {
+    dispatch(setLoadingStatusAC("loading"));
     TodolistApi.deleteToDoList(toDoListId).then(() => {
       dispatch(DeleteToDoListAC(toDoListId));
+      dispatch(setLoadingStatusAC("succeeded"));
     });
   };
 
@@ -115,7 +127,7 @@ const intialToDoList: todoListDomainType[] = [];
 
 export const toDoListReducer = (
   state: todoListDomainType[] = intialToDoList,
-  action: ActionsType
+  action: ToDoListActionsType
 ): todoListDomainType[] => {
   switch (action.type) {
     case DELETE_TO_DO_LIST:

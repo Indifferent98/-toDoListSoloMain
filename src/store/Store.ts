@@ -1,3 +1,4 @@
+import { appReducer } from "./../Reducers/appReducer";
 import { TodolistApi } from "./../api/todolist-api";
 import { toDoListReducer } from "./../Reducers/toDoList-reducer";
 import { setTasksAC, taskReducer } from "./../Reducers/task-reducer";
@@ -16,6 +17,7 @@ import thunk from "redux-thunk";
 export const rootReducer = combineReducers({
   task: taskReducer,
   toDoList: toDoListReducer,
+  app: appReducer,
 });
 
 export type AppRootStateType = ReturnType<typeof rootReducer>;

@@ -83,6 +83,9 @@ export const ReduxStoreProviderDecorator = (storyFn: () => React.ReactNode) => {
         order: 0,
       },
     ],
+    app: {
+      status: "idle",
+    },
   };
 
   const storyBookStore = legacy_createStore(
