@@ -1,3 +1,4 @@
+import { setLoadingStatusAC, setLoadingStatusACType } from "./appReducer";
 import { useDispatch } from "react-redux";
 import {
   ModelTaskUpdateType,
@@ -44,7 +45,7 @@ type changeTaskTitleActionCreatorType = {
   toDoListId: string;
 };
 
-type actionTypes =
+type TaskActionTypes =
   | removeTaskActionCreatorType
   | changeCheckBoxStatusActionCreatorType
   | addTaskActionCreatorType
@@ -53,7 +54,8 @@ type actionTypes =
   | DeleteToDoListActionType
   | setTodoListACType
   | setTasksACType
-  | updateTaskStatusACType;
+  | updateTaskStatusACType
+  | setLoadingStatusACType;
 
 export const REMOVE_TASK = "REMOVE-TASK";
 export const CHANGE_CHECK_BOX_STATUS = "CHANGE-CHECK-BOX-STATUS";
@@ -68,7 +70,7 @@ const intialTask: useStateTaskType = {};
 
 export const taskReducer = (
   state: useStateTaskType = intialTask,
-  action: actionTypes
+  action: TaskActionTypes
 ): useStateTaskType => {
   switch (action.type) {
     case REMOVE_TASK:
@@ -145,9 +147,12 @@ export const removeTaskActionCreator = (
   toDoListId,
 });
 export const removeTaskTC =
-  (toDoListId: string, taskId: string) => (dispatch: Dispatch) => {
+  (toDoListId: string, taskId: string) =>
+  (dispatch: Dispatch<TaskActionTypes>) => {
+    dispatch(setLoadingStatusAC("loading"));
     TodolistApi.deleteTask(toDoListId, taskId).then(() => {
       dispatch(removeTaskActionCreator(taskId, toDoListId));
+      dispatch(setLoadingStatusAC("succeeded"));
     });
   };
 
@@ -164,7 +169,8 @@ export const changeCheckBoxStatusActionCreator = (
 
 export const changeCheckBoxStatusTC =
   (taskId: string, taskIsDone: boolean, toDoListId: string, title: string) =>
-  (dispatch: Dispatch) => {
+  (dispatch: Dispatch<TaskActionTypes>) => {
+    dispatch(setLoadingStatusAC("loading"));
     const status = taskIsDone ? TaskStatuses.Completed : TaskStatuses.New;
 
     TodolistApi.changeCheckBoxStatus(toDoListId, taskId, status, title).then(
@@ -172,6 +178,7 @@ export const changeCheckBoxStatusTC =
         dispatch(
           changeCheckBoxStatusActionCreator(taskId, taskIsDone, toDoListId)
         );
+        dispatch(setLoadingStatusAC("succeeded"));
       }
     );
   };
@@ -188,9 +195,12 @@ export const addTaskActionCreator = (
 });
 
 export const addTaskTC =
-  (title: string, toDoListId: string) => (disptach: Dispatch) => {
+  (title: string, toDoListId: string) =>
+  (dispatch: Dispatch<TaskActionTypes>) => {
+    dispatch(setLoadingStatusAC("loading"));
     TodolistApi.createTask(toDoListId, title).then((res) => {
-      disptach(addTaskActionCreator(title, toDoListId, res.data.data.item));
+      dispatch(addTaskActionCreator(title, toDoListId, res.data.data.item));
+      dispatch(setLoadingStatusAC("succeeded"));
     });
   };
 
@@ -207,9 +217,11 @@ export const changeTaskTitleActionCreator = (
 
 export const changeTaskTitleTC =
   (taskId: string, title: string, toDoListId: string) =>
-  (dispatch: Dispatch) => {
+  (dispatch: Dispatch<TaskActionTypes>) => {
+    dispatch(setLoadingStatusAC("loading"));
     TodolistApi.changeTaskTitle(toDoListId, taskId, title).then(() => {
       dispatch(changeTaskTitleActionCreator(taskId, title, toDoListId));
+      dispatch(setLoadingStatusAC("succeeded"));
     });
   };
 
@@ -228,11 +240,14 @@ export const setTasksAC = (
   toDoListId,
 });
 
-export const setTasksTC = (todoListId: string) => (dispatch: Dispatch) => {
-  TodolistApi.getTasks(todoListId).then((res) => {
-    dispatch(setTasksAC(res.data.items, todoListId));
-  });
-};
+export const setTasksTC =
+  (todoListId: string) => (dispatch: Dispatch<TaskActionTypes>) => {
+    dispatch(setLoadingStatusAC("loading"));
+    TodolistApi.getTasks(todoListId).then((res) => {
+      dispatch(setTasksAC(res.data.items, todoListId));
+      dispatch(setLoadingStatusAC("succeeded"));
+    });
+  };
 
 type updateTaskStatusACType = ReturnType<typeof updateTaskStatusAC>;
 
@@ -250,7 +265,9 @@ export const updateTaskStatusAC = (
 
 export const updateTaskStatusTC =
   (todoListId: string, taskId: string, data: ModelTaskUpdateType) =>
-  (dispatch: Dispatch, getState: () => AppRootStateType) => {
+  (dispatch: Dispatch<TaskActionTypes>, getState: () => AppRootStateType) => {
+    dispatch(setLoadingStatusAC("loading"));
+
     const task = getState().task[todoListId].find((t) => t.id === taskId);
 
     if (task) {
@@ -265,6 +282,7 @@ export const updateTaskStatusTC =
       };
       TodolistApi.changeTaskState(todoListId, taskId, model).then(() => {
         dispatch(updateTaskStatusAC(todoListId, taskId, { ...task, ...data }));
+        dispatch(setLoadingStatusAC("succeeded"));
       });
     }
   };
