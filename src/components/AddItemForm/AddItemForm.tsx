@@ -6,6 +6,7 @@ import AddIcon from "@mui/icons-material/Add";
 import AddBoxIcon from "@mui/icons-material/AddBox";
 type AddItemFormPropsType = {
   addItem: (title: string) => void;
+  disabled?: boolean;
 };
 export const AddItemForm: FC<AddItemFormPropsType> = React.memo((props) => {
   console.log("AddItemForm is called");
@@ -70,6 +71,7 @@ export const AddItemForm: FC<AddItemFormPropsType> = React.memo((props) => {
   return (
     <div>
       <TextField
+        disabled={props.disabled}
         placeholder="Input Title"
         value={title}
         onKeyDown={onKeyDownInputHandler}

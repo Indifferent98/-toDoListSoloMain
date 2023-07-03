@@ -17,6 +17,7 @@ type TaskPropsType = {
   changeTaskTitle: (title: string, id: string) => void;
 
   task: taskType;
+  disabled?: boolean;
 };
 
 export const Task = React.memo((props: TaskPropsType) => {
@@ -27,14 +28,18 @@ export const Task = React.memo((props: TaskPropsType) => {
 
   const changeTaskStatus = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
-      props.changeCheckBoxStatus(props.task.id, e.currentTarget.checked);
+      if (!props.disabled) {
+        props.changeCheckBoxStatus(props.task.id, e.currentTarget.checked);
+      }
     },
     [props.task.id]
   );
 
   const changeTaskTitle = useCallback(
     (title: string) => {
-      props.changeTaskTitle(title, props.task.id);
+      if (!props.disabled) {
+        props.changeTaskTitle(title, props.task.id);
+      }
     },
     [props.changeTaskTitle, props.task.id]
   );
@@ -53,18 +58,27 @@ export const Task = React.memo((props: TaskPropsType) => {
         disablePadding
         key={props.task.id}
         secondaryAction={
-          <IconButton size="small" onClick={removeButtonHandler}>
+          <IconButton
+            disabled={props.disabled}
+            size="small"
+            onClick={removeButtonHandler}
+          >
             <DeleteForeverIcon />
           </IconButton>
         }
       >
         <Checkbox
+          disabled={props.disabled}
           onChange={changeTaskStatus}
           size="small"
           checked={props.task.status === TaskStatuses.Completed ? true : false}
         />
 
-        <EditableSpan title={props.task.title} addItem={changeTaskTitle} />
+        <EditableSpan
+          disabled={props.disabled}
+          title={props.task.title}
+          addItem={changeTaskTitle}
+        />
       </ListItem>
     </div>
   );

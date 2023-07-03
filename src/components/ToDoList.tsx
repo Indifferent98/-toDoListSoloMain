@@ -142,7 +142,10 @@ const ToDoList = React.memo((props: DoToListPropType): JSX.Element => {
           </Button>
         </div>
       </Typography>
-      <AddItemForm addItem={addTaskButtonHandler} />
+      <AddItemForm
+        addItem={addTaskButtonHandler}
+        disabled={props.entityStatus === "loading"}
+      />
 
       <List>
         {tasks.map((t) => {
@@ -155,6 +158,7 @@ const ToDoList = React.memo((props: DoToListPropType): JSX.Element => {
               removeButtonHandler={removeButtonHandler}
               changeCheckBoxStatus={changeCheckBoxStatus}
               changeTaskTitle={changeTaskTitle}
+              disabled={props.entityStatus === "loading"}
             />
           );
         })}

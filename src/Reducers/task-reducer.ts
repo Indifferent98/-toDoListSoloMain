@@ -157,10 +157,24 @@ export const removeTaskTC =
   (toDoListId: string, taskId: string) =>
   (dispatch: Dispatch<TaskActionTypes>) => {
     dispatch(setLoadingStatusAC("loading"));
-    TodolistApi.deleteTask(toDoListId, taskId).then(() => {
-      dispatch(removeTaskActionCreator(taskId, toDoListId));
-      dispatch(setLoadingStatusAC("succeeded"));
-    });
+    TodolistApi.deleteTask(toDoListId, taskId)
+      .then((res) => {
+        if (res.data.resultCode === ResultCode.SUCCESS) {
+          dispatch(removeTaskActionCreator(taskId, toDoListId));
+          dispatch(setLoadingStatusAC("succeeded"));
+        } else {
+          dispatch(setLoadingStatusAC("failed"));
+          dispatch(setAppErrorStatusAC(res.data.messages[0]));
+        }
+      })
+      .catch((err) => {
+        if (err.message) {
+          dispatch(setAppErrorStatusAC(err.message));
+        } else {
+          dispatch(setAppErrorStatusAC("some error was occured"));
+        }
+        dispatch(setLoadingStatusAC("failed"));
+      });
   };
 
 export const changeCheckBoxStatusActionCreator = (
@@ -180,14 +194,26 @@ export const changeCheckBoxStatusTC =
     dispatch(setLoadingStatusAC("loading"));
     const status = taskIsDone ? TaskStatuses.Completed : TaskStatuses.New;
 
-    TodolistApi.changeCheckBoxStatus(toDoListId, taskId, status, title).then(
-      () => {
-        dispatch(
-          changeCheckBoxStatusActionCreator(taskId, taskIsDone, toDoListId)
-        );
-        dispatch(setLoadingStatusAC("succeeded"));
-      }
-    );
+    TodolistApi.changeCheckBoxStatus(toDoListId, taskId, status, title)
+      .then((res) => {
+        if (res.data.resultCode === ResultCode.SUCCESS) {
+          dispatch(
+            changeCheckBoxStatusActionCreator(taskId, taskIsDone, toDoListId)
+          );
+          dispatch(setLoadingStatusAC("succeeded"));
+        } else {
+          dispatch(setLoadingStatusAC("failed"));
+          dispatch(setAppErrorStatusAC(res.data.messages[0]));
+        }
+      })
+      .catch((err) => {
+        if (err.message) {
+          dispatch(setAppErrorStatusAC(err.message));
+        } else {
+          dispatch(setAppErrorStatusAC("some error was occured"));
+        }
+        dispatch(setLoadingStatusAC("failed"));
+      });
   };
 
 export const addTaskActionCreator = (
@@ -205,10 +231,24 @@ export const addTaskTC =
   (title: string, toDoListId: string) =>
   (dispatch: Dispatch<TaskActionTypes>) => {
     dispatch(setLoadingStatusAC("loading"));
-    TodolistApi.createTask(toDoListId, title).then((res) => {
-      dispatch(addTaskActionCreator(title, toDoListId, res.data.data.item));
-      dispatch(setLoadingStatusAC("succeeded"));
-    });
+    TodolistApi.createTask(toDoListId, title)
+      .then((res) => {
+        if (res.data.resultCode === ResultCode.SUCCESS) {
+          dispatch(addTaskActionCreator(title, toDoListId, res.data.data.item));
+          dispatch(setLoadingStatusAC("succeeded"));
+        } else {
+          dispatch(setLoadingStatusAC("failed"));
+          dispatch(setAppErrorStatusAC(res.data.messages[0]));
+        }
+      })
+      .catch((err) => {
+        if (err.message) {
+          dispatch(setAppErrorStatusAC(err.message));
+        } else {
+          dispatch(setAppErrorStatusAC("some error was occured"));
+        }
+        dispatch(setLoadingStatusAC("failed"));
+      });
   };
 
 export const changeTaskTitleActionCreator = (
@@ -226,19 +266,23 @@ export const changeTaskTitleTC =
   (taskId: string, title: string, toDoListId: string) =>
   (dispatch: Dispatch<TaskActionTypes>) => {
     dispatch(setLoadingStatusAC("loading"));
-    TodolistApi.changeTaskTitle(toDoListId, taskId, title).then((res) => {
-      if (res.data.resultCode === ResultCode.SUCCESS) {
-        dispatch(changeTaskTitleActionCreator(taskId, title, toDoListId));
-        dispatch(setLoadingStatusAC("succeeded"));
-      } else {
-        if (res.data.messages[0].length) {
-          dispatch(setAppErrorStatusAC(res.data.messages[0]));
+    TodolistApi.changeTaskTitle(toDoListId, taskId, title)
+      .then((res) => {
+        if (res.data.resultCode === ResultCode.SUCCESS) {
+          dispatch(changeTaskTitleActionCreator(taskId, title, toDoListId));
+          dispatch(setLoadingStatusAC("succeeded"));
         } else {
-          dispatch(setAppErrorStatusAC("Some error occured"));
+          if (res.data.messages[0].length) {
+            dispatch(setAppErrorStatusAC(res.data.messages[0]));
+          } else {
+            dispatch(setAppErrorStatusAC("Some error occured"));
+          }
+          dispatch(setLoadingStatusAC("failed"));
         }
-        dispatch(setLoadingStatusAC("failed"));
-      }
-    });
+      })
+      .catch((err) => {
+        dispatch(setAppErrorStatusAC(err.data.messages));
+      });
   };
 
 type setTasksACType = {
@@ -259,10 +303,24 @@ export const setTasksAC = (
 export const setTasksTC =
   (todoListId: string) => (dispatch: Dispatch<TaskActionTypes>) => {
     dispatch(setLoadingStatusAC("loading"));
-    TodolistApi.getTasks(todoListId).then((res) => {
-      dispatch(setTasksAC(res.data.items, todoListId));
-      dispatch(setLoadingStatusAC("succeeded"));
-    });
+    TodolistApi.getTasks(todoListId)
+      .then((res) => {
+        if (!res.data.error) {
+          dispatch(setTasksAC(res.data.items, todoListId));
+          dispatch(setLoadingStatusAC("succeeded"));
+        } else {
+          dispatch(setLoadingStatusAC("failed"));
+          dispatch(setAppErrorStatusAC(res.data.error));
+        }
+      })
+      .catch((err) => {
+        if (err.message) {
+          dispatch(setAppErrorStatusAC(err.message));
+        } else {
+          dispatch(setAppErrorStatusAC("some error was occured"));
+        }
+        dispatch(setLoadingStatusAC("failed"));
+      });
   };
 
 type updateTaskStatusACType = ReturnType<typeof updateTaskStatusAC>;
@@ -296,20 +354,29 @@ export const updateTaskStatusTC =
         startDate: task.startDate,
         ...data,
       };
-      TodolistApi.changeTaskState(todoListId, taskId, model).then((res) => {
-        if (res.data.resultCode === ResultCode.SUCCESS) {
-          dispatch(
-            updateTaskStatusAC(todoListId, taskId, { ...task, ...data })
-          );
-          dispatch(setLoadingStatusAC("succeeded"));
-        } else {
-          if (res.data.messages[0].length) {
-            dispatch(setAppErrorStatusAC(res.data.messages[0]));
+      TodolistApi.changeTaskState(todoListId, taskId, model)
+        .then((res) => {
+          if (res.data.resultCode === ResultCode.SUCCESS) {
+            dispatch(
+              updateTaskStatusAC(todoListId, taskId, { ...task, ...data })
+            );
+            dispatch(setLoadingStatusAC("succeeded"));
           } else {
-            dispatch(setAppErrorStatusAC("Some error occured"));
+            if (res.data.messages[0]) {
+              dispatch(setAppErrorStatusAC(res.data.messages[0]));
+            } else {
+              dispatch(setAppErrorStatusAC("Some error occured"));
+            }
+            dispatch(setLoadingStatusAC("failed"));
+          }
+        })
+        .catch((err) => {
+          if (err.message) {
+            dispatch(setAppErrorStatusAC(err.message));
+          } else {
+            dispatch(setAppErrorStatusAC("some error was occured"));
           }
           dispatch(setLoadingStatusAC("failed"));
-        }
-      });
+        });
     }
   };
