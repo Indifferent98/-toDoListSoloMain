@@ -1,3 +1,4 @@
+import { handleServerNetworkError } from "./../untils/errorUtils";
 import {
   setAppErrorStatusAC,
   setAppErrorStatusACType,
@@ -168,12 +169,7 @@ export const removeTaskTC =
         }
       })
       .catch((err) => {
-        if (err.message) {
-          dispatch(setAppErrorStatusAC(err.message));
-        } else {
-          dispatch(setAppErrorStatusAC("some error was occured"));
-        }
-        dispatch(setLoadingStatusAC("failed"));
+        handleServerNetworkError(err, dispatch);
       });
   };
 
@@ -207,12 +203,7 @@ export const changeCheckBoxStatusTC =
         }
       })
       .catch((err) => {
-        if (err.message) {
-          dispatch(setAppErrorStatusAC(err.message));
-        } else {
-          dispatch(setAppErrorStatusAC("some error was occured"));
-        }
-        dispatch(setLoadingStatusAC("failed"));
+        handleServerNetworkError(err, dispatch);
       });
   };
 
@@ -242,12 +233,7 @@ export const addTaskTC =
         }
       })
       .catch((err) => {
-        if (err.message) {
-          dispatch(setAppErrorStatusAC(err.message));
-        } else {
-          dispatch(setAppErrorStatusAC("some error was occured"));
-        }
-        dispatch(setLoadingStatusAC("failed"));
+        handleServerNetworkError(err, dispatch);
       });
   };
 
@@ -272,7 +258,7 @@ export const changeTaskTitleTC =
           dispatch(changeTaskTitleActionCreator(taskId, title, toDoListId));
           dispatch(setLoadingStatusAC("succeeded"));
         } else {
-          if (res.data.messages[0].length) {
+          if (res.data.messages[0]) {
             dispatch(setAppErrorStatusAC(res.data.messages[0]));
           } else {
             dispatch(setAppErrorStatusAC("Some error occured"));
@@ -281,7 +267,7 @@ export const changeTaskTitleTC =
         }
       })
       .catch((err) => {
-        dispatch(setAppErrorStatusAC(err.data.messages));
+        handleServerNetworkError(err, dispatch);
       });
   };
 
@@ -314,12 +300,7 @@ export const setTasksTC =
         }
       })
       .catch((err) => {
-        if (err.message) {
-          dispatch(setAppErrorStatusAC(err.message));
-        } else {
-          dispatch(setAppErrorStatusAC("some error was occured"));
-        }
-        dispatch(setLoadingStatusAC("failed"));
+        handleServerNetworkError(err, dispatch);
       });
   };
 
@@ -371,12 +352,7 @@ export const updateTaskStatusTC =
           }
         })
         .catch((err) => {
-          if (err.message) {
-            dispatch(setAppErrorStatusAC(err.message));
-          } else {
-            dispatch(setAppErrorStatusAC("some error was occured"));
-          }
-          dispatch(setLoadingStatusAC("failed"));
+          handleServerNetworkError(err, dispatch);
         });
     }
   };

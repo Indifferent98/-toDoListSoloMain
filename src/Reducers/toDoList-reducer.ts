@@ -12,6 +12,7 @@ import React from "react";
 import { v1 } from "uuid";
 import { TodolistApi, toDoListType } from "../api/todolist-api";
 import { Dispatch } from "redux";
+import { handleServerNetworkError } from "../untils/errorUtils";
 
 type ToDoListActionsType =
   | DeleteToDoListActionType
@@ -60,12 +61,7 @@ export const addToDoListTC =
         }
       })
       .catch((err) => {
-        if (err.message) {
-          dispatch(setAppErrorStatusAC(err.message));
-          dispatch(setLoadingStatusAC("failed"));
-        } else {
-          dispatch(setAppErrorStatusAC("some error was occured"));
-        }
+        handleServerNetworkError(err, dispatch);
       });
   };
 
@@ -97,12 +93,7 @@ export const changeHeadderTitleTC =
         }
       })
       .catch((err) => {
-        if (err.message) {
-          dispatch(setAppErrorStatusAC(err.message));
-          dispatch(setLoadingStatusAC("failed"));
-        } else {
-          dispatch(setAppErrorStatusAC("some error was occured"));
-        }
+        handleServerNetworkError(err, dispatch);
       });
   };
 
@@ -166,12 +157,7 @@ export const setTodoListTC =
         }
       })
       .catch((err) => {
-        if (err.message) {
-          dispatch(setAppErrorStatusAC(err.message));
-          dispatch(setLoadingStatusAC("failed"));
-        } else {
-          dispatch(setAppErrorStatusAC("some error was occured"));
-        }
+        handleServerNetworkError(err, dispatch);
       });
   };
 
@@ -210,12 +196,7 @@ export const deleteTodolistTC =
         }
       })
       .catch((err) => {
-        if (err.message) {
-          dispatch(setAppErrorStatusAC(err.message));
-          dispatch(setLoadingStatusAC("failed"));
-        } else {
-          dispatch(setAppErrorStatusAC("some error was occured"));
-        }
+        handleServerNetworkError(err, dispatch);
         dispatch(changeTodolistEntityStatusAC("failed", toDoListId));
       });
   };
