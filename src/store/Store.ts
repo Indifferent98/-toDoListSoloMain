@@ -1,4 +1,4 @@
-import { appReducer } from "./../Reducers/appReducer";
+import { appReducer } from "../Reducers/app-reducer";
 import { TodolistApi } from "./../api/todolist-api";
 import { toDoListReducer } from "./../Reducers/toDoList-reducer";
 import { setTasksAC, taskReducer } from "./../Reducers/task-reducer";

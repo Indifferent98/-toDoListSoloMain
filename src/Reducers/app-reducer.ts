@@ -2,7 +2,7 @@ import React from "react";
 
 export type RequestStatusType = "idle" | "loading" | "succeeded" | "failed";
 
-type initialStateType = {
+export type initialStateType = {
   status: RequestStatusType;
   error: null | string;
 };

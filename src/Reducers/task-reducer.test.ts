@@ -6,6 +6,7 @@ import {
   changeTaskTitleActionCreator,
   removeTaskActionCreator,
   taskReducer,
+  updateTaskStatusAC,
   useStateTaskType,
 } from "./task-reducer";
 import { TaskPriorities } from "../api/todolist-api";
@@ -219,4 +220,64 @@ test("Task title should be changed", () => {
 
   expect(result["toDoListId_2"][3].title).toBe("hello");
   expect(initialTasks["toDoListId_2"][3].title).toBe("Cucumber");
+});
+
+test("any Task status should be changed", () => {
+  const task = {
+    id: "9988",
+    title: "test-task",
+    status: 2,
+    addedDate: "",
+    deadline: "",
+    description: "",
+    order: 3,
+    priority: TaskPriorities.High,
+    startDate: "",
+    todoListId: "toDoListId_2",
+  };
+
+  const result = taskReducer(
+    initialTasks,
+    updateTaskStatusAC("toDoListId_2", "3", task)
+  );
+
+  expect(result["toDoListId_2"][2]).toEqual(task);
+
+  expect(initialTasks["toDoListId_2"][2]).toEqual({
+    id: "3",
+    title: "Beer",
+    status: 0,
+    addedDate: "",
+    deadline: "",
+    description: "",
+    order: 0,
+    priority: TaskPriorities.Low,
+    startDate: "",
+    todoListId: "toDoListId_2",
+  });
+
+  expect(initialTasks["toDoListId_2"][3]).toEqual({
+    id: "4",
+    title: "Cucumber",
+    status: 0,
+    addedDate: "",
+    deadline: "",
+    description: "",
+    order: 0,
+    priority: TaskPriorities.Low,
+    startDate: "",
+    todoListId: "toDoListId_2",
+  });
+  expect(initialTasks["toDoListId_1"][2]).toEqual({
+    id: "3",
+    title: "React",
+    status: 0,
+    addedDate: "",
+    deadline: "",
+    description: "",
+    order: 0,
+    priority: TaskPriorities.Low,
+    startDate: "",
+    todoListId: "toDoListId_1",
+  });
 });

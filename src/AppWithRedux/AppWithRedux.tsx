@@ -23,7 +23,7 @@ import LinearProgress from "@mui/material/LinearProgress";
 import Container from "@mui/material/Container";
 import { useSelector } from "react-redux";
 import { AppRootStateType } from "../store/Store";
-import { RequestStatusType } from "../Reducers/appReducer";
+import { RequestStatusType } from "../Reducers/app-reducer";
 import { CustomizedSnackbars } from "../components/ErrorSnackBar/ErrorSnackBar";
 
 function AppWithRedux(): JSX.Element {

@@ -11,6 +11,8 @@ import {
   DeleteToDoListAC,
   DeleteToDoListActionType,
   changeFilterActionType,
+  changeTodolistEntityStatusAC,
+  setTodoListAC,
   toDoListReducer,
   todoListDomainType,
 } from "./toDoList-reducer";
@@ -135,12 +137,7 @@ test(CHANGE_FILTER, () => {
       entityStatus: "idle",
     },
   ];
-  const action: changeFilterActionType = {
-    type: CHANGE_FILTER,
 
-    toDoListId: toDoListId_2,
-    filter: "completed",
-  };
   const result = toDoListReducer(
     state,
     ChangeFilterAC("completed", toDoListId_2)
@@ -154,4 +151,64 @@ test(CHANGE_FILTER, () => {
   expect(state[0].filter).toBe("all");
   expect(state).not.toBe(result);
   expect(state).not.toEqual(result);
+});
+
+test("Todolist entity status should be changed", () => {
+  const toDoListId_1 = v1();
+  const toDoListId_2 = v1();
+  const state: todoListDomainType[] = [
+    {
+      id: toDoListId_1,
+      filter: "all",
+      title: "What to buy",
+      addedDate: "",
+      order: 0,
+      entityStatus: "idle",
+    },
+    {
+      filter: "all",
+      id: toDoListId_2,
+      title: "What to learn",
+      addedDate: "",
+      order: 0,
+      entityStatus: "idle",
+    },
+  ];
+
+  const result = toDoListReducer(
+    state,
+    changeTodolistEntityStatusAC("loading", toDoListId_2)
+  );
+
+  expect(result[1].entityStatus).toBe("loading");
+  expect(result[0].entityStatus).toBe("idle");
+});
+
+test("Todolist should add new properties", () => {
+  const toDoListId_1 = v1();
+  const toDoListId_2 = v1();
+  const state: todoListDomainType[] = [
+    {
+      id: toDoListId_1,
+      filter: "all",
+      title: "What to buy",
+      addedDate: "",
+      order: 0,
+      entityStatus: "idle",
+    },
+    {
+      filter: "all",
+      id: toDoListId_2,
+      title: "What to learn",
+      addedDate: "",
+      order: 0,
+      entityStatus: "idle",
+    },
+  ];
+
+  const result = toDoListReducer(state, setTodoListAC(state));
+  expect(result[0].entityStatus).toBeDefined();
+  expect(result[1].entityStatus).toBeDefined();
+  expect(result[0].filter).toBeDefined();
+  expect(result[1].filter).toBeDefined();
 });

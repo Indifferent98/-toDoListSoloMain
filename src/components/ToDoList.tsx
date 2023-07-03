@@ -28,7 +28,7 @@ import { setTasksAC, setTasksTC } from "../Reducers/task-reducer";
 
 import { AnyAction, Dispatch } from "redux";
 import { AppDispatchType } from "../store/Store";
-import { RequestStatusType } from "../Reducers/appReducer";
+import { RequestStatusType } from "../Reducers/app-reducer";
 
 export type filterType = "all" | "active" | "completed";
 type DoToListPropType = {
