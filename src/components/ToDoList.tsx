@@ -28,6 +28,7 @@ import { setTasksAC, setTasksTC } from "../Reducers/task-reducer";
 
 import { AnyAction, Dispatch } from "redux";
 import { AppDispatchType } from "../store/Store";
+import { RequestStatusType } from "../Reducers/appReducer";
 
 export type filterType = "all" | "active" | "completed";
 type DoToListPropType = {
@@ -46,6 +47,7 @@ type DoToListPropType = {
   deleteToDoList: (toDoListId: string) => void;
   changeTaskTitle: (id: string, title: string, toDoListId: string) => void;
   changeHeadderTitle: (title: string, toDoListId: string) => void;
+  entityStatus: RequestStatusType;
 };
 
 const ToDoList = React.memo((props: DoToListPropType): JSX.Element => {
@@ -124,12 +126,17 @@ const ToDoList = React.memo((props: DoToListPropType): JSX.Element => {
         variant="h5"
       >
         <div style={{ display: "flex", marginLeft: "10px" }}>
-          <EditableSpan addItem={changeHeadderTitle} title={props.title} />
+          <EditableSpan
+            addItem={changeHeadderTitle}
+            title={props.title}
+            disabled={props.entityStatus === "loading"}
+          />
           <Button
             variant="contained"
             size="small"
             sx={{ marginLeft: "10px" }}
             onClick={deleteToDoListHandler}
+            disabled={props.entityStatus === "loading"}
           >
             del <DeleteForeverIcon />
           </Button>

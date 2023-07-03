@@ -20,7 +20,8 @@ type ToDoListActionsType =
   | changeFilterActionType
   | setTodoListACType
   | setLoadingStatusACType
-  | setAppErrorStatusACType;
+  | setAppErrorStatusACType
+  | changeTodolistEntityStatusACType;
 
 export const DELETE_TO_DO_LIST = "DELETE-TO-DO-LIST";
 export const ADD_NEW_TO_DO_LIST = "ADD-NEW-TO-DO-LIST";
@@ -150,6 +151,19 @@ export type todoListDomainType = toDoListType & {
 };
 const intialToDoList: todoListDomainType[] = [];
 
+type changeTodolistEntityStatusACType = ReturnType<
+  typeof changeTodolistEntityStatusAC
+>;
+export const changeTodolistEntityStatusAC = (
+  status: RequestStatusType,
+  todolistId: string
+) =>
+  ({
+    type: "TODOLIST/CHANGE-TODOLIST-ENTITY-STATUS",
+    todolistId,
+    status,
+  } as const);
+
 export const toDoListReducer = (
   state: todoListDomainType[] = intialToDoList,
   action: ToDoListActionsType
@@ -185,6 +199,11 @@ export const toDoListReducer = (
         filter: "all" as filterType,
         entityStatus: "idle" as RequestStatusType,
       }));
+
+    case "TODOLIST/CHANGE-TODOLIST-ENTITY-STATUS":
+      return state.map((t) =>
+        t.id === action.todolistId ? { ...t, entityStatus: action.status } : t
+      );
 
     default:
       return state;

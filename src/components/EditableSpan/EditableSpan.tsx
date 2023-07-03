@@ -4,6 +4,7 @@ import React, { ChangeEvent, FC, useState } from "react";
 type EditableSpanPropsType = {
   title: string;
   addItem: (title: string) => void;
+  disabled?: boolean;
 };
 
 export const EditableSpan: FC<EditableSpanPropsType> = React.memo((props) => {
@@ -23,6 +24,7 @@ export const EditableSpan: FC<EditableSpanPropsType> = React.memo((props) => {
   return editMode ? (
     <Typography variant="h5">
       <TextField
+        disabled={props.disabled}
         sx={{ width: "170px" }}
         value={value}
         onChange={onChangeInputHandler}

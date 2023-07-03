@@ -67,6 +67,7 @@ export const AppWithReduxDarkModeStory: Story = {
         title: "what to buy",
         addedDate: "",
         order: 0,
+        entityStatus: "idle",
       },
       {
         id: "333",
@@ -74,6 +75,7 @@ export const AppWithReduxDarkModeStory: Story = {
         title: "what to learn",
         addedDate: "",
         order: 0,
+        entityStatus: "idle",
       },
     ];
     const task: useStateTaskType = {
@@ -136,6 +138,7 @@ export const AppWithReduxDarkModeStory: Story = {
         <Grid key={t.id} item>
           <Paper elevation={5}>
             <ToDoList
+              entityStatus={t.entityStatus}
               deleteToDoList={action("toDoList has been deleted")}
               key={t.id}
               toDoListId={t.id}

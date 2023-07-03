@@ -64,6 +64,7 @@ function AppWithRedux(): JSX.Element {
             filter={t.filter}
             changeTaskTitle={changeTaskTitle}
             changeHeadderTitle={changeHeadderTitle}
+            entityStatus={t.entityStatus}
           />
         </Paper>
       </Grid>

@@ -273,6 +273,7 @@ function App(): JSX.Element {
       <Grid item>
         <Paper elevation={5}>
           <ToDoList
+            entityStatus={t.entityStatus}
             deleteToDoList={deleteToDoList}
             key={t.id}
             toDoListId={t.id}

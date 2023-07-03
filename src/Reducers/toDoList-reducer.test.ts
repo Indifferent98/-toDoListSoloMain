@@ -27,6 +27,7 @@ test("DELETE TO DO LIST TEST", () => {
       title: "What to buy",
       addedDate: "",
       order: 0,
+      entityStatus: "idle",
     },
     {
       filter: "all",
@@ -34,6 +35,7 @@ test("DELETE TO DO LIST TEST", () => {
       title: "What to learn",
       addedDate: "",
       order: 0,
+      entityStatus: "idle",
     },
   ];
 
@@ -53,6 +55,7 @@ test("ADD-NEW-TO-DO-LIST test", () => {
       title: "What to buy",
       addedDate: "",
       order: 0,
+      entityStatus: "idle",
     },
     {
       filter: "all",
@@ -60,6 +63,7 @@ test("ADD-NEW-TO-DO-LIST test", () => {
       title: "What to learn",
       addedDate: "",
       order: 0,
+      entityStatus: "idle",
     },
   ];
 
@@ -83,6 +87,7 @@ test(CHANGE_HEADDER_TITLE, () => {
       title: "What to buy",
       addedDate: "",
       order: 0,
+      entityStatus: "idle",
     },
     {
       filter: "all",
@@ -90,6 +95,7 @@ test(CHANGE_HEADDER_TITLE, () => {
       title: "What to learn",
       addedDate: "",
       order: 0,
+      entityStatus: "idle",
     },
   ];
 
@@ -118,6 +124,7 @@ test(CHANGE_FILTER, () => {
       title: "What to buy",
       addedDate: "",
       order: 0,
+      entityStatus: "idle",
     },
     {
       filter: "all",
@@ -125,6 +132,7 @@ test(CHANGE_FILTER, () => {
       title: "What to learn",
       addedDate: "",
       order: 0,
+      entityStatus: "idle",
     },
   ];
   const action: changeFilterActionType = {

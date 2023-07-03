@@ -53,6 +53,7 @@ function AppWithReducer(): JSX.Element {
       title: "What to buy",
       addedDate: "",
       order: 0,
+      entityStatus: "idle",
     },
     {
       filter: "all",
@@ -60,6 +61,7 @@ function AppWithReducer(): JSX.Element {
       title: "What to learn",
       addedDate: "",
       order: 0,
+      entityStatus: "idle",
     },
   ]);
 
@@ -304,6 +306,7 @@ function AppWithReducer(): JSX.Element {
       <Grid item>
         <Paper elevation={5}>
           <ToDoList
+            entityStatus={t.entityStatus}
             deleteToDoList={deleteToDoList}
             key={t.id}
             toDoListId={t.id}
