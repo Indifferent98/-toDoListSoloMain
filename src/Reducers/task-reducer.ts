@@ -1,4 +1,7 @@
-import { handleServerNetworkError } from "./../untils/errorUtils";
+import {
+  handleServerAppError,
+  handleServerNetworkError,
+} from "./../untils/errorUtils";
 import {
   setAppErrorStatusAC,
   setAppErrorStatusACType,
@@ -10,6 +13,7 @@ import {
   ModelTaskUpdateType,
   TodolistApi,
   taskType,
+  toDoListType,
 } from "./../api/todolist-api";
 import {
   ADD_NEW_TO_DO_LIST,
@@ -164,8 +168,7 @@ export const removeTaskTC =
           dispatch(removeTaskActionCreator(taskId, toDoListId));
           dispatch(setLoadingStatusAC("succeeded"));
         } else {
-          dispatch(setLoadingStatusAC("failed"));
-          dispatch(setAppErrorStatusAC(res.data.messages[0]));
+          handleServerAppError(res.data, dispatch);
         }
       })
       .catch((err) => {
@@ -198,8 +201,7 @@ export const changeCheckBoxStatusTC =
           );
           dispatch(setLoadingStatusAC("succeeded"));
         } else {
-          dispatch(setLoadingStatusAC("failed"));
-          dispatch(setAppErrorStatusAC(res.data.messages[0]));
+          handleServerAppError(res.data, dispatch);
         }
       })
       .catch((err) => {
@@ -228,8 +230,7 @@ export const addTaskTC =
           dispatch(addTaskActionCreator(title, toDoListId, res.data.data.item));
           dispatch(setLoadingStatusAC("succeeded"));
         } else {
-          dispatch(setLoadingStatusAC("failed"));
-          dispatch(setAppErrorStatusAC(res.data.messages[0]));
+          handleServerAppError(res.data, dispatch);
         }
       })
       .catch((err) => {
@@ -258,12 +259,7 @@ export const changeTaskTitleTC =
           dispatch(changeTaskTitleActionCreator(taskId, title, toDoListId));
           dispatch(setLoadingStatusAC("succeeded"));
         } else {
-          if (res.data.messages[0]) {
-            dispatch(setAppErrorStatusAC(res.data.messages[0]));
-          } else {
-            dispatch(setAppErrorStatusAC("Some error occured"));
-          }
-          dispatch(setLoadingStatusAC("failed"));
+          handleServerAppError(res.data, dispatch);
         }
       })
       .catch((err) => {
@@ -343,12 +339,7 @@ export const updateTaskStatusTC =
             );
             dispatch(setLoadingStatusAC("succeeded"));
           } else {
-            if (res.data.messages[0]) {
-              dispatch(setAppErrorStatusAC(res.data.messages[0]));
-            } else {
-              dispatch(setAppErrorStatusAC("Some error occured"));
-            }
-            dispatch(setLoadingStatusAC("failed"));
+            handleServerAppError(res.data, dispatch);
           }
         })
         .catch((err) => {

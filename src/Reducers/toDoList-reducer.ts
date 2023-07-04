@@ -1,3 +1,4 @@
+import { handleServerAppError } from "./../untils/errorUtils";
 import {
   RequestStatusType,
   setAppErrorStatusAC,
@@ -13,6 +14,7 @@ import { v1 } from "uuid";
 import { TodolistApi, toDoListType } from "../api/todolist-api";
 import { Dispatch } from "redux";
 import { handleServerNetworkError } from "../untils/errorUtils";
+import { AxiosError } from "axios";
 
 type ToDoListActionsType =
   | DeleteToDoListActionType
@@ -56,11 +58,10 @@ export const addToDoListTC =
           dispatch(AddToDoListAC(title, res.data.data.item.id));
           dispatch(setLoadingStatusAC("succeeded"));
         } else {
-          dispatch(setLoadingStatusAC("failed"));
-          dispatch(setAppErrorStatusAC(res.data.messages[0]));
+          handleServerAppError<{ item: toDoListType }>(res.data, dispatch);
         }
       })
-      .catch((err) => {
+      .catch((err: AxiosError) => {
         handleServerNetworkError(err, dispatch);
       });
   };
@@ -84,12 +85,7 @@ export const changeHeadderTitleTC =
           dispatch(ChangeHeadderTitleAC(title, toDoListId));
           dispatch(setLoadingStatusAC("succeeded"));
         } else {
-          if (res.data.messages[0].length) {
-            dispatch(setAppErrorStatusAC(res.data.messages[0]));
-          } else {
-            dispatch(setAppErrorStatusAC("Some error occured"));
-          }
-          dispatch(setLoadingStatusAC("failed"));
+          handleServerAppError(res.data, dispatch);
         }
       })
       .catch((err) => {
@@ -191,8 +187,7 @@ export const deleteTodolistTC =
           dispatch(setLoadingStatusAC("succeeded"));
           dispatch(changeTodolistEntityStatusAC("idle", toDoListId));
         } else {
-          dispatch(setLoadingStatusAC("failed"));
-          dispatch(setAppErrorStatusAC(res.data.messages[0]));
+          handleServerAppError(res.data, dispatch);
         }
       })
       .catch((err) => {

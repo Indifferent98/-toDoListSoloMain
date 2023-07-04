@@ -5,6 +5,7 @@ import {
 } from "./../Reducers/app-reducer";
 import { Dispatch } from "redux";
 import { setAppErrorStatusAC } from "../Reducers/app-reducer";
+import { responseType } from "../api/todolist-api";
 
 export const handleServerNetworkError = (
   err: { message: string },
@@ -20,8 +21,8 @@ export const handleServerNetworkError = (
 
 type errorUntilsDispatchType = setAppErrorStatusACType | setLoadingStatusACType;
 
-export const handleServerAppError = (
-  data: any,
+export const handleServerAppError = <T>(
+  data: responseType<T>,
   dispatch: Dispatch<errorUntilsDispatchType>
 ) => {
   if (data.messages[0]) {

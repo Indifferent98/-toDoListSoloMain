@@ -18,7 +18,7 @@ export type toDoListType = {
   addedDate: string;
   order: number;
 };
-type responseType<D = {}> = {
+export type responseType<D = {}> = {
   resultCode: number;
   messages: string[];
   data: D;
