@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useReducer, useState } from "react";
 import "./App.css";
-import { ToDoList, filterType } from "./components/ToDoList";
+import { ToDoList, filterType } from "./components/ToDoLists/Todolist/ToDoList";
 import { v1 } from "uuid";
 
 import { AddItemForm } from "./components/AddItemForm/AddItemForm";

@@ -22,7 +22,7 @@ import {
   createTheme,
 } from "@mui/material";
 import { AddItemForm } from "./components/AddItemForm/AddItemForm";
-import { ToDoList } from "./components/ToDoList";
+import { ToDoList } from "./components/ToDoLists/Todolist/ToDoList";
 import { filterType } from "./components/ToDoListWithReduxMain";
 import { todoListDomainType } from "./Reducers/toDoList-reducer";
 import { useStateTaskType } from "./Reducers/task-reducer";

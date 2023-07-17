@@ -7,7 +7,7 @@ import {
   setLoadingStatusACType,
 } from "./app-reducer";
 import { GetToDoLists } from "./../stories/todolists-api.stories";
-import { filterType } from "./../components/ToDoList";
+import { filterType } from "../components/ToDoLists/Todolist/ToDoList";
 import React from "react";
 
 import { v1 } from "uuid";

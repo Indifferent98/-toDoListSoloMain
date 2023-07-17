@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import { ToDoList } from "../components/ToDoList";
+import { ToDoList } from "../components/ToDoLists/Todolist/ToDoList";
 
 import { AddItemForm } from "../components/AddItemForm/AddItemForm";
 
@@ -25,51 +25,16 @@ import { useSelector } from "react-redux";
 import { AppRootStateType } from "../store/Store";
 import { RequestStatusType } from "../Reducers/app-reducer";
 import { CustomizedSnackbars } from "../components/ErrorSnackBar/ErrorSnackBar";
+import { Login } from "../features/Login";
+import { Route, Routes } from "react-router-dom";
+import { Todolists } from "../components/ToDoLists/ToDoLists";
 
 function AppWithRedux(): JSX.Element {
-  const {
-    deleteToDoList,
-    changeCheckBoxStatus,
-    changeFilter,
-    removeTask,
-    task,
-    addTask,
-    changeTaskTitle,
-    changeHeadderTitle,
-    toDoList,
-    theme,
-    isDarkMode,
-    addNewToDoList,
-    changeTheme,
-  } = useAppWithRedux();
+  const { theme, isDarkMode, changeTheme } = useAppWithRedux();
 
   const status = useSelector<AppRootStateType, RequestStatusType>(
     (state) => state.app.status
   );
-
-  const applicationToDoLists = toDoList.map((t) => {
-    return (
-      <Grid key={t.id} item>
-        <Paper elevation={5}>
-          <ToDoList
-            deleteToDoList={deleteToDoList}
-            key={t.id}
-            toDoListId={t.id}
-            changeCheckBoxStatus={changeCheckBoxStatus}
-            changeFilter={changeFilter}
-            removeTask={removeTask}
-            title={t.title}
-            tasks={task[t.id]}
-            addTask={addTask}
-            filter={t.filter}
-            changeTaskTitle={changeTaskTitle}
-            changeHeadderTitle={changeHeadderTitle}
-            entityStatus={t.entityStatus}
-          />
-        </Paper>
-      </Grid>
-    );
-  });
 
   return (
     <ThemeProvider theme={theme}>
@@ -100,13 +65,9 @@ function AppWithRedux(): JSX.Element {
             </Toolbar>
             {status === "loading" && <LinearProgress />}
           </AppBar>
+
           <Container fixed>
-            <Grid container sx={{ p: "15px 0" }}>
-              <AddItemForm addItem={addNewToDoList} />
-            </Grid>
-            <Grid container spacing={4}>
-              {applicationToDoLists}
-            </Grid>
+            <Todolists />
           </Container>
         </div>
       </CssBaseline>

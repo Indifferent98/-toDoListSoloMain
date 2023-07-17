@@ -8,8 +8,8 @@ import {
   useState,
 } from "react";
 import s from "./ToDoList.module.css";
-import { AddItemForm } from "./AddItemForm/AddItemForm";
-import { EditableSpan } from "./EditableSpan/EditableSpan";
+import { AddItemForm } from "../../AddItemForm/AddItemForm";
+import { EditableSpan } from "../../EditableSpan/EditableSpan";
 import {
   Button,
   Checkbox,
@@ -20,15 +20,15 @@ import {
 } from "@mui/material";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import React from "react";
-import { Task } from "./task/Task";
+import { Task } from "../../task/Task";
 
-import { TaskStatuses, TodolistApi, taskType } from "../api/todolist-api";
+import { TaskStatuses, TodolistApi, taskType } from "../../../api/todolist-api";
 import { useDispatch } from "react-redux";
-import { setTasksAC, setTasksTC } from "../Reducers/task-reducer";
+import { setTasksAC, setTasksTC } from "../../../Reducers/task-reducer";
 
 import { AnyAction, Dispatch } from "redux";
-import { AppDispatchType } from "../store/Store";
-import { RequestStatusType } from "../Reducers/app-reducer";
+import { AppDispatchType } from "../../../store/Store";
+import { RequestStatusType } from "../../../Reducers/app-reducer";
 
 export type filterType = "all" | "active" | "completed";
 type DoToListPropType = {
