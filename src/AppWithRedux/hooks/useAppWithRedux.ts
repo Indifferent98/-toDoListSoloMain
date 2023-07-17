@@ -3,21 +3,12 @@ import { createTheme } from "@mui/material";
 import { useState, useCallback, ChangeEvent, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
-  removeTaskActionCreator,
-  changeTaskTitleActionCreator,
-  changeCheckBoxStatusActionCreator,
-  addTaskActionCreator,
   useStateTaskType,
   removeTaskTC,
-  changeTaskTitleTC,
-  changeCheckBoxStatusTC,
   addTaskTC,
   updateTaskStatusTC,
 } from "../../Reducers/task-reducer";
 import {
-  DeleteToDoListAC,
-  AddToDoListAC,
-  ChangeHeadderTitleAC,
   ChangeFilterAC,
   todoListDomainType,
   setTodoListTC,
@@ -27,8 +18,6 @@ import {
 } from "../../Reducers/toDoList-reducer";
 import { filterType } from "../../components/ToDoListWithReduxMain";
 import { AppDispatchType, AppRootStateType } from "../../store/Store";
-
-import { toDoListType } from "../../api/todolist-api";
 
 export const useAppWithRedux = () => {
   const [isDarkMode, setDarkMode] = useState<boolean>(false);
@@ -134,7 +123,6 @@ export const useAppWithRedux = () => {
     theme,
     isDarkMode,
     addNewToDoList,
-
     changeTheme,
   };
 };
