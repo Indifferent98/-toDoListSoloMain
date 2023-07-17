@@ -26,7 +26,7 @@ import { AppRootStateType } from "../store/Store";
 import { RequestStatusType } from "../Reducers/app-reducer";
 import { CustomizedSnackbars } from "../components/ErrorSnackBar/ErrorSnackBar";
 import { Login } from "../features/Login";
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import { Todolists } from "../components/ToDoLists/ToDoLists";
 
 function AppWithRedux(): JSX.Element {
@@ -71,11 +71,12 @@ function AppWithRedux(): JSX.Element {
               <Route path="/Login" element={<Login />} />
               <Route path="/" element={<Todolists />} />
               <Route
-                path="*"
+                path="/404"
                 element={
-                  <h1 style={{ textAlign: "center" }}> Page not found</h1>
+                  <h1 style={{ textAlign: "center" }}>404: Page not found</h1>
                 }
               />
+              <Route path="*" element={<Navigate to={"404"} />} />
             </Routes>
           </Container>
         </div>
