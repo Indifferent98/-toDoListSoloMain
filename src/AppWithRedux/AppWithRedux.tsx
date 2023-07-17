@@ -67,7 +67,16 @@ function AppWithRedux(): JSX.Element {
           </AppBar>
 
           <Container fixed>
-            <Todolists />
+            <Routes>
+              <Route path="/Login" element={<Login />} />
+              <Route path="/" element={<Todolists />} />
+              <Route
+                path="*"
+                element={
+                  <h1 style={{ textAlign: "center" }}> Page not found</h1>
+                }
+              />
+            </Routes>
           </Container>
         </div>
       </CssBaseline>
