@@ -1,3 +1,4 @@
+import { AuthReducer } from "./../features/Auth-reducer";
 import { appReducer } from "../Reducers/app-reducer";
 import { TodolistApi } from "./../api/todolist-api";
 import { toDoListReducer } from "./../Reducers/toDoList-reducer";
@@ -18,6 +19,7 @@ export const rootReducer = combineReducers({
   task: taskReducer,
   toDoList: toDoListReducer,
   app: appReducer,
+  auth: AuthReducer,
 });
 
 export type AppRootStateType = ReturnType<typeof rootReducer>;

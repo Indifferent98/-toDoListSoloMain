@@ -1,3 +1,4 @@
+import { setLoadingStatusAC } from "./../Reducers/app-reducer";
 import { ResultCode } from "./../Reducers/toDoList-reducer";
 import { authApi } from "./../api/todolist-api";
 import { Dispatch } from "redux";
@@ -18,12 +19,12 @@ export const AuthReducer = (
   state: initialStateType = initialState,
   action: actionsType
 ) => {
-  //   switch (key) {
-  //     case value:
-  //       break;
-  //     default:
-  //       return state;
-  //   }
+  switch (action.type) {
+    case "login/SET-IS-LOGGED-IN":
+      return { ...state, isLoggedIn: action.isLoggedIn };
+    default:
+      return state;
+  }
 };
 
 type actionsType = LoginACType;
@@ -34,11 +35,14 @@ export const LoginAC = (isLoggedIn: boolean) =>
     isLoggedIn,
   } as const);
 
-export const LoginTC = (loginData: loginType) => async (dispatch: Dispatch) => {
+export const LoginTC = (loginForm: loginType) => async (dispatch: Dispatch) => {
+  dispatch(setLoadingStatusAC("loading"));
+
   try {
-    const result = await authApi.login(loginData);
+    const result = await authApi.login(loginForm);
     if (result.data.resultCode === ResultCode.SUCCESS) {
       dispatch(LoginAC(true));
+      dispatch(setLoadingStatusAC("succeeded"));
     } else {
       handleServerAppError(result.data, dispatch);
     }

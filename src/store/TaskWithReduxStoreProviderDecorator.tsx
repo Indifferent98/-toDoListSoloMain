@@ -83,6 +83,9 @@ export const TaskWithReduxProviderDecorator = (
       status: "idle",
       error: null,
     },
+    auth: {
+      isLoggedIn: false,
+    },
   };
 
   const storyBookStore = legacy_createStore(
