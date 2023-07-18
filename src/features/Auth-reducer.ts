@@ -2,6 +2,10 @@ import { ResultCode } from "./../Reducers/toDoList-reducer";
 import { authApi } from "./../api/todolist-api";
 import { Dispatch } from "redux";
 import { loginType } from "../api/todolist-api";
+import {
+  handleServerAppError,
+  handleServerNetworkError,
+} from "../untils/errorUtils";
 
 type initialStateType = {
   isLoggedIn: boolean;
@@ -31,8 +35,15 @@ export const LoginAC = (isLoggedIn: boolean) =>
   } as const);
 
 export const LoginTC = (loginData: loginType) => async (dispatch: Dispatch) => {
-  const result = await authApi.login(loginData);
-  if (result.data.resultCode === ResultCode.SUCCESS) {
-    dispatch(LoginAC(true));
+  try {
+    const result = await authApi.login(loginData);
+    if (result.data.resultCode === ResultCode.SUCCESS) {
+      dispatch(LoginAC(true));
+    } else {
+      handleServerAppError(result.data, dispatch);
+    }
+  } catch (e) {
+    const error = e as { message: string };
+    handleServerNetworkError(error, dispatch);
   }
 };
