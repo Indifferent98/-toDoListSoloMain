@@ -1,14 +1,12 @@
-// const settings = {
-//   withCredentials: true,
-//   headers: {
-//     "API-KEY": "2ca10f7e-8d65-43a0-a381-2411fab70789",
-//   },
-// };
-
 import axios, { AxiosResponse } from "axios";
 
 const instance = axios.create({
   baseURL: "https://social-network.samuraijs.com/api/1.1/todo-lists",
+  withCredentials: true,
+});
+
+const authInstance = axios.create({
+  baseURL: "https://social-network.samuraijs.com/api/1.1/auth",
   withCredentials: true,
 });
 
@@ -76,6 +74,13 @@ type responseTaskType = {
   items: taskType[];
   totalCount: number;
   error: string;
+};
+
+export type loginType = {
+  email: string;
+  password: string;
+  rememberMe?: boolean;
+  captcha?: boolean;
 };
 
 export const TodolistApi = {
@@ -155,5 +160,15 @@ export const TodolistApi = {
     >(`/${toDoListId}/tasks/${taskId}`, {
       ...model,
     });
+  },
+};
+
+export const authApi = {
+  login(loginData: loginType) {
+    return authInstance.post<
+      responseType<{ userId: number }>,
+      AxiosResponse<responseType<{ userId: number }>>,
+      loginType
+    >(`/login`, loginData);
   },
 };
