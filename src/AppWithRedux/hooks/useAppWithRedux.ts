@@ -1,3 +1,4 @@
+import { setLoadingStatusAC } from "./../../Reducers/app-reducer";
 import { TaskStatuses, TodolistApi } from "./../../api/todolist-api";
 import { createTheme } from "@mui/material";
 import { useState, useCallback, ChangeEvent, useEffect } from "react";
@@ -32,9 +33,15 @@ export const useAppWithRedux = () => {
     (state) => state.task,
     (prev, next) => prev === next
   );
-
+  const isLoggedIn = useSelector<AppRootStateType, boolean>(
+    (state) => state.auth.isLoggedIn
+  );
   useEffect(() => {
-    dispatch(setTodoListTC());
+    if (isLoggedIn) {
+      dispatch(setTodoListTC());
+    } else {
+      dispatch(setLoadingStatusAC("succeeded"));
+    }
   }, []);
 
   const themeMode = isDarkMode ? "dark" : "light";

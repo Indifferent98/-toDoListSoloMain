@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./App.css";
 import { ToDoList } from "../components/ToDoLists/Todolist/ToDoList";
 
@@ -21,13 +21,14 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Button from "@mui/material/Button";
 import LinearProgress from "@mui/material/LinearProgress";
 import Container from "@mui/material/Container";
-import { useSelector } from "react-redux";
-import { AppRootStateType } from "../store/Store";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatchType, AppRootStateType } from "../store/Store";
 import { RequestStatusType } from "../Reducers/app-reducer";
 import { CustomizedSnackbars } from "../components/ErrorSnackBar/ErrorSnackBar";
 import { Login } from "../features/Login";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { Todolists } from "../components/ToDoLists/ToDoLists";
+import { meTC } from "../features/Auth-reducer";
 
 function AppWithRedux(): JSX.Element {
   const { theme, isDarkMode, changeTheme } = useAppWithRedux();
@@ -35,6 +36,10 @@ function AppWithRedux(): JSX.Element {
   const status = useSelector<AppRootStateType, RequestStatusType>(
     (state) => state.app.status
   );
+  const dispatch: AppDispatchType = useDispatch();
+  useEffect(() => {
+    dispatch(meTC());
+  }, []);
 
   return (
     <ThemeProvider theme={theme}>

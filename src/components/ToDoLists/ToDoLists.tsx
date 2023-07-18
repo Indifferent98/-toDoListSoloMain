@@ -4,8 +4,15 @@ import { AddItemForm } from "../AddItemForm/AddItemForm";
 import { ToDoList } from "./Todolist/ToDoList";
 import { useAppWithRedux } from "../../AppWithRedux/hooks/useAppWithRedux";
 import Paper from "@mui/material/Paper";
+import { useSelector } from "react-redux";
+import { AppRootStateType } from "../../store/Store";
+import { Navigate } from "react-router-dom";
 
 export const Todolists = () => {
+  const isLoggedIn = useSelector<AppRootStateType, boolean>(
+    (state) => state.auth.isLoggedIn
+  );
+
   const {
     deleteToDoList,
     changeCheckBoxStatus,
@@ -16,10 +23,11 @@ export const Todolists = () => {
     changeTaskTitle,
     changeHeadderTitle,
     toDoList,
-
     addNewToDoList,
   } = useAppWithRedux();
-
+  if (!isLoggedIn) {
+    return <Navigate to={"/Login"} />;
+  }
   const applicationToDoLists = toDoList.map((t) => {
     return (
       <Grid key={t.id} item>

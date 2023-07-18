@@ -51,3 +51,20 @@ export const LoginTC = (loginForm: loginType) => async (dispatch: Dispatch) => {
     handleServerNetworkError(error, dispatch);
   }
 };
+
+export const meTC = () => async (dispatch: Dispatch) => {
+  dispatch(setLoadingStatusAC("loading"));
+
+  try {
+    const result = await authApi.me();
+    if (result.data.resultCode === ResultCode.SUCCESS) {
+      dispatch(LoginAC(true));
+      dispatch(setLoadingStatusAC("succeeded"));
+    } else {
+      handleServerAppError(result.data, dispatch);
+    }
+  } catch (e) {
+    const error = e as { message: string };
+    handleServerNetworkError(error, dispatch);
+  }
+};

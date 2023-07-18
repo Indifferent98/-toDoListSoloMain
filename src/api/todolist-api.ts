@@ -82,6 +82,7 @@ export type loginType = {
   rememberMe?: boolean;
   captcha?: boolean;
 };
+export type meResponseType = { id: number; email: string; login: string };
 
 export const TodolistApi = {
   getToDoLists() {
@@ -170,5 +171,11 @@ export const authApi = {
       AxiosResponse<responseType<{ userId: number }>>,
       loginType
     >(`/login`, loginData);
+  },
+  me() {
+    return authInstance.get<
+      responseType,
+      AxiosResponse<responseType<meResponseType>>
+    >(`/me`);
   },
 };
