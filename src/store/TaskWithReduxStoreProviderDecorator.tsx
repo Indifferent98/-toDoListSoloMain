@@ -82,6 +82,7 @@ export const TaskWithReduxProviderDecorator = (
     app: {
       status: "idle",
       error: null,
+      isInitialized: false,
     },
     auth: {
       isLoggedIn: false,

@@ -10,6 +10,7 @@ test("Status should be changed", () => {
   const initialState: initialStateType = {
     status: "loading",
     error: null,
+    isInitialized: false,
   };
 
   const result = appReducer(initialState, setLoadingStatusAC("succeeded"));
@@ -24,6 +25,7 @@ test("ErrorStatus should be changed", () => {
   const initialState: initialStateType = {
     status: "loading",
     error: null,
+    isInitialized: false,
   };
 
   const result1 = appReducer(initialState, setAppErrorStatusAC(null));

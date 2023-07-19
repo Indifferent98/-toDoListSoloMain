@@ -1,4 +1,7 @@
-import { setLoadingStatusAC } from "./../Reducers/app-reducer";
+import {
+  changeInitializedStatusAC,
+  setLoadingStatusAC,
+} from "./../Reducers/app-reducer";
 import { ResultCode } from "./../Reducers/toDoList-reducer";
 import { authApi } from "./../api/todolist-api";
 import { Dispatch } from "redux";
@@ -66,5 +69,25 @@ export const meTC = () => async (dispatch: Dispatch) => {
   } catch (e) {
     const error = e as { message: string };
     handleServerNetworkError(error, dispatch);
+  } finally {
+    dispatch(changeInitializedStatusAC(true));
+  }
+};
+
+export const signOutTC = () => async (dispatch: Dispatch) => {
+  dispatch(setLoadingStatusAC("loading"));
+  try {
+    const result = await authApi.signOut();
+    if (result.data.resultCode === ResultCode.SUCCESS) {
+      dispatch(LoginAC(false));
+      dispatch(setLoadingStatusAC("succeeded"));
+    } else {
+      handleServerAppError(result.data, dispatch);
+    }
+  } catch (e) {
+    const error = e as { message: string };
+    handleServerNetworkError(error, dispatch);
+  } finally {
+    dispatch(changeInitializedStatusAC(true));
   }
 };

@@ -29,10 +29,16 @@ import { Login } from "../features/Login";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { Todolists } from "../components/ToDoLists/ToDoLists";
 import { meTC } from "../features/Auth-reducer";
+import { CircularProgress } from "@mui/material";
 
 function AppWithRedux(): JSX.Element {
-  const { theme, isDarkMode, changeTheme } = useAppWithRedux();
-
+  const { theme, isDarkMode, changeTheme, signOut } = useAppWithRedux();
+  const isInitialized = useSelector<AppRootStateType, boolean>(
+    (state) => state.app.isInitialized
+  );
+  const isLoggedIn = useSelector<AppRootStateType, boolean>(
+    (state) => state.auth.isLoggedIn
+  );
   const status = useSelector<AppRootStateType, RequestStatusType>(
     (state) => state.app.status
   );
@@ -40,6 +46,21 @@ function AppWithRedux(): JSX.Element {
   useEffect(() => {
     dispatch(meTC());
   }, []);
+
+  if (!isInitialized) {
+    return (
+      <div
+        style={{
+          position: "fixed",
+          top: "30%",
+          textAlign: "center",
+          width: "100%",
+        }}
+      >
+        <CircularProgress />
+      </div>
+    );
+  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -66,7 +87,11 @@ function AppWithRedux(): JSX.Element {
                   label={isDarkMode ? "Dark mode" : "Light mode"}
                 />
               </FormGroup>
-              <Button color="inherit">Login</Button>
+              {isLoggedIn && (
+                <Button color="inherit" onClick={signOut}>
+                  Log out
+                </Button>
+              )}
             </Toolbar>
             {status === "loading" && <LinearProgress />}
           </AppBar>

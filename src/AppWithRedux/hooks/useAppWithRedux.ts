@@ -1,3 +1,4 @@
+import { signOutTC } from "./../../features/Auth-reducer";
 import { setLoadingStatusAC } from "./../../Reducers/app-reducer";
 import { TaskStatuses, TodolistApi } from "./../../api/todolist-api";
 import { createTheme } from "@mui/material";
@@ -113,6 +114,10 @@ export const useAppWithRedux = () => {
     [dispatch]
   );
 
+  const signOut = useCallback(() => {
+    dispatch(signOutTC());
+  }, []);
+
   const changeTheme = (e: ChangeEvent<HTMLInputElement>) => {
     setDarkMode(e.currentTarget.checked);
   };
@@ -131,5 +136,6 @@ export const useAppWithRedux = () => {
     isDarkMode,
     addNewToDoList,
     changeTheme,
+    signOut,
   };
 };

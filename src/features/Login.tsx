@@ -37,8 +37,8 @@ export const Login = () => {
 
       if (!values.password) {
         errors.password = "Required";
-      } else if (values.password.trim().length < 6) {
-        errors.password = "Must be more than 5 characters";
+      } else if (values.password.trim().length < 4) {
+        errors.password = "Must be 4 or more  characters";
       }
 
       if (!values.email) {

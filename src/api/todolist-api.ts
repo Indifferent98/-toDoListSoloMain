@@ -178,4 +178,8 @@ export const authApi = {
       AxiosResponse<responseType<meResponseType>>
     >(`/me`);
   },
+
+  signOut() {
+    return authInstance.delete<responseType>(`/login`);
+  },
 };
