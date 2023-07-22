@@ -243,24 +243,6 @@ function App(): JSX.Element {
   };
 
   const applicationToDoLists = toDoList.map((t) => {
-    // const getFiltredTaskForRender = (
-    //   taskList: taskType[],
-    //   filterValue: filterType
-    // ) => {
-    //   switch (filterValue) {
-    //     case "active":
-    //       return taskList.filter((t) => t.status === TaskStatuses.New);
-    //     case "completed":
-    //       return taskList.filter((t) => t.status === TaskStatuses.Completed);
-
-    //     default:
-    //       return taskList;
-    //   }
-    // };
-    // let filtredTask: Array<taskType> = getFiltredTaskForRender(
-    //   task[t.id],
-    //   t.filter
-    // );
     const changeFilter = (status: filterType, toDoListId: string) => {
       setToDoList(
         toDoList.map((t) =>

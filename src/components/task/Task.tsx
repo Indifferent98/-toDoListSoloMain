@@ -1,10 +1,4 @@
-import {
-  Typography,
-  TextField,
-  ListItem,
-  Checkbox,
-  IconButton,
-} from "@mui/material";
+import { ListItem, Checkbox, IconButton } from "@mui/material";
 import React, { ChangeEvent, useCallback } from "react";
 import { EditableSpan } from "../EditableSpan/EditableSpan";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
@@ -51,7 +45,6 @@ export const Task = React.memo((props: TaskPropsType) => {
           ? { opacity: 0.6 }
           : { opacity: 1 }
       }
-      // className={s.flexStyle}
       key={props.task.id}
     >
       <ListItem

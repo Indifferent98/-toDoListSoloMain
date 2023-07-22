@@ -1,6 +1,6 @@
 import React from "react";
 import { Provider } from "react-redux";
-import { AppRootStateType, store } from "./Store";
+import { AppRootStateType } from "./Store";
 
 import { combineReducers, legacy_createStore } from "redux";
 import { taskReducer } from "../Reducers/task-reducer";

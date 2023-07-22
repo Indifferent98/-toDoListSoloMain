@@ -8,12 +8,11 @@ import {
   setLoadingStatusAC,
   setLoadingStatusACType,
 } from "./app-reducer";
-import { useDispatch } from "react-redux";
+
 import {
   ModelTaskUpdateType,
   TodolistApi,
   taskType,
-  toDoListType,
 } from "./../api/todolist-api";
 import {
   ADD_NEW_TO_DO_LIST,
@@ -24,11 +23,8 @@ import {
   SET_TODOLIST,
   setTodoListACType,
 } from "./toDoList-reducer";
-import React from "react";
 
-import { v1 } from "uuid";
-
-import { TaskPriorities, TaskStatuses } from "../api/todolist-api";
+import { TaskStatuses } from "../api/todolist-api";
 import { Dispatch } from "redux";
 import { AppRootStateType } from "../store/Store";
 

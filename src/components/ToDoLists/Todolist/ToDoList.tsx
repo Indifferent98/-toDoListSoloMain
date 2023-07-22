@@ -1,32 +1,16 @@
-import {
-  ChangeEvent,
-  KeyboardEvent,
-  memo,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
+import { useCallback, useEffect } from "react";
 import s from "./ToDoList.module.css";
 import { AddItemForm } from "../../AddItemForm/AddItemForm";
 import { EditableSpan } from "../../EditableSpan/EditableSpan";
-import {
-  Button,
-  Checkbox,
-  IconButton,
-  List,
-  ListItem,
-  Typography,
-} from "@mui/material";
+import { Button, List, Typography } from "@mui/material";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import React from "react";
 import { Task } from "../../task/Task";
 
-import { TaskStatuses, TodolistApi, taskType } from "../../../api/todolist-api";
+import { TaskStatuses, taskType } from "../../../api/todolist-api";
 import { useDispatch } from "react-redux";
-import { setTasksAC, setTasksTC } from "../../../Reducers/task-reducer";
+import { setTasksTC } from "../../../Reducers/task-reducer";
 
-import { AnyAction, Dispatch } from "redux";
 import { AppDispatchType } from "../../../store/Store";
 import { RequestStatusType } from "../../../Reducers/app-reducer";
 
@@ -150,8 +134,6 @@ const ToDoList = React.memo((props: DoToListPropType): JSX.Element => {
       <List>
         {tasks.map((t) => {
           return (
-            // <TaskWithRedux key={t.id} id={t.id} toDoListId={props.toDoListId} />
-
             <Task
               key={t.id}
               task={t}

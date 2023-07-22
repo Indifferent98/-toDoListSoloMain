@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
 import { Menu } from "@mui/icons-material";
 
-import AppWithRedux from "./AppWithRedux/AppWithRedux";
+import AppWithRedux from "./App/AppWithRedux";
 import { ReduxStoreProviderDecorator } from "./store/ReduxStoreProviderDecorator";
 import { ThemeProvider } from "@emotion/react";
 import {

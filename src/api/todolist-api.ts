@@ -157,7 +157,6 @@ export const TodolistApi = {
       responseType,
       AxiosResponse<responseType>,
       requairedTaskType
-      //  model:requairedTaskType
     >(`/${toDoListId}/tasks/${taskId}`, {
       ...model,
     });

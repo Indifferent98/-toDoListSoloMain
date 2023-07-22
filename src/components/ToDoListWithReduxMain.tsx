@@ -27,7 +27,6 @@ import {
   todoListDomainType,
 } from "../Reducers/toDoList-reducer";
 import { TaskStatuses, taskType } from "../api/todolist-api";
-import { v1 } from "uuid";
 
 export type filterType = "all" | "active" | "completed";
 type DoToListPropType = {
@@ -49,10 +48,7 @@ export const ToDoListWithRedux: React.FC<DoToListPropType> = ({ toDoList }) => {
   });
 
   const addTaskButtonHandler = useCallback(
-    (title: string): void => {
-      // dispatch(
-      // );
-    },
+    (title: string): void => {},
     [dispatch]
   );
   const buttonFilterStyle = {

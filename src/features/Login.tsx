@@ -13,7 +13,7 @@ import { LoginTC } from "./Auth-reducer";
 import { loginType } from "../api/todolist-api";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatchType, AppRootStateType } from "../store/Store";
-import { NavLink, Navigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
 type formikErrorType = {
   email?: string;

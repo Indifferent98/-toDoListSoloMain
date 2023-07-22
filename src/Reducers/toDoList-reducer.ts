@@ -6,11 +6,10 @@ import {
   setLoadingStatusAC,
   setLoadingStatusACType,
 } from "./app-reducer";
-import { GetToDoLists } from "./../stories/todolists-api.stories";
+
 import { filterType } from "../components/ToDoLists/Todolist/ToDoList";
 import React from "react";
 
-import { v1 } from "uuid";
 import { TodolistApi, toDoListType } from "../api/todolist-api";
 import { Dispatch } from "redux";
 import { handleServerNetworkError } from "../untils/errorUtils";

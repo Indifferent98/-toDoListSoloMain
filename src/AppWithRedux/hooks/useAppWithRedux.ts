@@ -1,6 +1,6 @@
 import { signOutTC } from "./../../features/Auth-reducer";
 import { setLoadingStatusAC } from "./../../Reducers/app-reducer";
-import { TaskStatuses, TodolistApi } from "./../../api/todolist-api";
+import { TaskStatuses } from "./../../api/todolist-api";
 import { createTheme } from "@mui/material";
 import { useState, useCallback, ChangeEvent, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";

@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useReducer, useState } from "react";
+import React, { useReducer, useState } from "react";
 import "./App.css";
 import { ToDoList, filterType } from "./components/ToDoLists/Todolist/ToDoList";
 import { v1 } from "uuid";
@@ -26,7 +26,6 @@ import {
   ChangeHeadderTitleAC,
   DeleteToDoListAC,
   toDoListReducer,
-  todoListDomainType,
 } from "./Reducers/toDoList-reducer";
 import {
   addTaskActionCreator,
