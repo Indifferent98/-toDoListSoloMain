@@ -22,7 +22,7 @@ import { AppDispatchType, AppRootStateType } from "../store/Store";
 import { RequestStatusType } from "../Reducers/app-reducer";
 import { CustomizedSnackbars } from "../components/ErrorSnackBar/ErrorSnackBar";
 import { Login } from "../features/Login";
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Link, Navigate, Route, Routes } from "react-router-dom";
 import { Todolists } from "../components/ToDoLists/ToDoLists";
 import { meTC } from "../features/Auth-reducer";
 import { CircularProgress } from "@mui/material";
@@ -74,7 +74,9 @@ function AppWithRedux(): JSX.Element {
                 <Menu />
               </IconButton>
               <Typography variant="h6" component="span" sx={{ flexGrow: 1 }}>
-                ToDoLists
+                <Link style={{ color: "White" }} to={"/"}>
+                  ToDoLists
+                </Link>
               </Typography>
               <FormGroup>
                 <FormControlLabel

@@ -30,7 +30,7 @@ export const CustomizedSnackbars = () => {
 
   return (
     <>
-      <Snackbar open={!!error} autoHideDuration={6666} onClose={handleClose}>
+      <Snackbar open={!!error} autoHideDuration={4500} onClose={handleClose}>
         <Alert onClose={handleClose} severity="error" sx={{ width: "100%" }}>
           {error}
         </Alert>
