@@ -8,7 +8,6 @@ type EditableSpanPropsType = {
 };
 
 export const EditableSpan: FC<EditableSpanPropsType> = React.memo((props) => {
-  console.log("EditableSpan");
   const [editMode, setEditMode] = useState<boolean>(false);
   const [value, setValue] = useState<string>(props.title);
   const onChangeInputHandler = (e: ChangeEvent<HTMLInputElement>) => {

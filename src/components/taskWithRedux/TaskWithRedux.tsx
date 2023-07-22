@@ -43,8 +43,6 @@ export const TaskWithRedux = React.memo((props: TaskPropsType) => {
     );
   };
 
-  console.log("TaskWithRedux is Called");
-
   return (
     <div
       style={

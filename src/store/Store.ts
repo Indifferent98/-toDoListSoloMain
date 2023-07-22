@@ -1,9 +1,8 @@
 import { AuthReducer } from "./../features/Auth-reducer";
 import { appReducer } from "../Reducers/app-reducer";
-import { TodolistApi } from "./../api/todolist-api";
+
 import { toDoListReducer } from "./../Reducers/toDoList-reducer";
-import { setTasksAC, taskReducer } from "./../Reducers/task-reducer";
-import React from "react";
+import { taskReducer } from "./../Reducers/task-reducer";
 import { ThunkDispatch } from "redux-thunk";
 import {
   AnyAction,

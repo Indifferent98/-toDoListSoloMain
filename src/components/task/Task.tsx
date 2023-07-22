@@ -15,7 +15,6 @@ type TaskPropsType = {
 };
 
 export const Task = React.memo((props: TaskPropsType) => {
-  console.log("task is Called");
   const removeButtonHandler = useCallback(() => {
     props.removeButtonHandler(props.task.id);
   }, [props.task.id]);

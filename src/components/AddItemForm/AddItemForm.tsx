@@ -8,7 +8,6 @@ type AddItemFormPropsType = {
   disabled?: boolean;
 };
 export const AddItemForm: FC<AddItemFormPropsType> = React.memo((props) => {
-  console.log("AddItemForm is called");
   const [error, setError] = useState<boolean>(false);
   const [title, setTitle] = useState<string>("");
   const trimmedTask = title.trim();

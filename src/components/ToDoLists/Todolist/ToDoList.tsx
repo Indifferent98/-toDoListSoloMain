@@ -35,7 +35,6 @@ type DoToListPropType = {
 };
 
 const ToDoList = React.memo((props: DoToListPropType): JSX.Element => {
-  console.log("todolist is called");
   let styleForDoTolist = "ToDoList1";
   let tasks = props.tasks;
   const dispatch: AppDispatchType = useDispatch();
@@ -183,7 +182,6 @@ type ButtonWithMemoPropsType = {
     | "warning";
 };
 const ButtonWithMemo = React.memo((props: ButtonWithMemoPropsType) => {
-  console.log(props.title, " is render");
   const onclickHandler = useCallback(() => {
     props.onClick();
   }, []);
